@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>纯展示菜单</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .menu-list {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .menu-item {
+      background: #fff;
+      border-radius: 6px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      margin-bottom: 16px;
+    }
+    .menu-item img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 4px;
+      margin-right: 16px;
+    }
+    .menu-item .info {
+      flex: 1;
+    }
+    .menu-item .title {
+      font-size: 1.2em;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+    .menu-item .desc {
+      font-size: 0.95em;
+      color: #666;
+      margin-bottom: 8px;
+    }
+    .menu-item .price {
+      font-size: 1em;
+      color: #e74c3c;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>我们的菜单（仅供查看）</h1>
+  <div class="menu-list">
+    <!-- 菜单项 1 -->
+    <div class="menu-item">
+      <!-- 如果没有图片，可以删掉 <img> 标签这一行 -->
+      <img src="https://example.com/img1.jpg" alt="抹茶拿铁" />
+      <div class="info">
+        <div class="title">抹茶拿铁</div>
+        <div class="desc">精选日本抹茶粉，搭配鲜牛奶，口感丝滑。</div>
+        <div class="price">¥28.00</div>
+      </div>
+    </div>
+
+    <!-- 菜单项 2 -->
+    <div class="menu-item">
+      <img src="https://example.com/img2.jpg" alt="经典芝士蛋糕" />
+      <div class="info">
+        <div class="title">经典芝士蛋糕</div>
+        <div class="desc">入口浓郁、细腻，甜度适中。</div>
+        <div class="price">¥45.00</div>
+      </div>
+    </div>
+
+    <!-- 如果还有更多商品，按以下模板再复制一段即可 -->
+    <!--
+    <div class="menu-item">
+      <img src="图片链接" alt="商品名称" />
+      <div class="info">
+        <div class="title">商品名称</div>
+        <div class="desc">商品描述（可选）。</div>
+        <div class="price">¥价格</div>
+      </div>
+    </div>
+    -->
+  </div>
+</body>
+</html>
