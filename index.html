@@ -5,168 +5,205 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Batman1788 Menu</title>
   <style>
-    /* ========== 全局基础样式 ========== */
+    /* ========== 全局重置与基础样式 ========== */
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
     body {
-      font-family: "微软雅黑", "Helvetica Neue", Arial, sans-serif;
-      background-color: #f5f5f5;
+      font-family: "微软雅黑", Arial, sans-serif;
+      background-color: #f9f9f9;
       color: #333;
       line-height: 1.5;
-      padding: 10px; /* 手机端边距减小 */
+      padding: 10px; /* 手机端略微留白 */
     }
     h1 {
       text-align: center;
-      font-size: 1.8rem;
-      font-weight: bold;
-      margin-top: 10px;
-      margin-bottom: 20px;
+      font-size: 1.6rem;
+      margin-bottom: 16px;
       color: #111;
     }
 
-    /* ========== 容器与卡片样式 ========== */
-    .menu-container {
+    /* ========== 菜单列表容器 ========== */
+    .menu-list {
       display: flex;
       flex-wrap: wrap;
-      gap: 16px; /* 卡片之间的间距 */
+      gap: 12px;          /* 卡片之间的间距 */
       justify-content: center;
-      max-width: 1000px;
+      max-width: 1000px;  /* 最大宽度，超出时居中 */
       margin: 0 auto;
     }
+
+    /* ========== 菜单项（卡片）基础样式 ========== */
     .menu-item {
       background-color: #fff;
       border-radius: 8px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
       display: flex;
-      flex-direction: column; /* 默认竖排（便于手机端） */
-      width: 100%; /* 手机端时卡片占满宽度 */
-      max-width: 480px; /* 在大屏上卡片最大宽度 */
+      flex-direction: column; /* 默认竖向排列（移动端友好） */
+      width: 100%;            /* 手机时卡片占满宽度 */
+      max-width: 480px;       /* 大屏时卡片最大宽度 */
       overflow: hidden;
     }
-    /* 卡片内图片 */
+    /* 图片：移动端全宽；大屏时再改为固定大小 */
     .menu-item img {
       display: block;
       width: 100%;
       height: auto;
       object-fit: cover;
-      /* 让图片高宽比自动，根据图片原本比例缩放 */
     }
-    /* 卡片内文字容器 */
+    /* 文字容器 */
     .menu-item .info {
-      padding: 12px 14px;
+      padding: 10px 12px;
     }
     .menu-item .title {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       font-weight: 600;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       color: #222;
       line-height: 1.3;
     }
     .menu-item .desc {
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       color: #555;
-      margin-bottom: 10px;
-      max-height: 4.5em; /* 控制描述行数，大约 3 行 */
+      margin-bottom: 8px;
+      /* 控制描述行数，避免过长 */
+      max-height: 4.2em; /* 大约 3 行 */
       overflow: hidden;
     }
     .menu-item .price {
-      font-size: 1rem;
+      font-size: 0.95rem;
       color: #e74c3c;
       font-weight: bold;
       margin-top: 4px;
     }
 
-    /* ========== 大屏（桌面）样式调整 ========== */
+    /* ========== 宽屏（平板/桌面）样式调整 ========== */
     @media screen and (min-width: 600px) {
       .menu-item {
-        /* 桌面端用 flex-row 左图右文 */
-        flex-direction: row;
-        width: calc(50% - 16px); /* 两列布局，卡片之间 gap 16px */
+        flex-direction: row;     /* 左图右文 */
+        width: calc(50% - 12px); /* 两列并排，减去 gap */
       }
       .menu-item img {
-        width: 160px;
-        height: 160px;
-        flex-shrink: 0;
-        /* 保证图片固定大小，文字区域自适应 */
+        width: 140px;
+        height: 140px;
+        flex-shrink: 0; /* 保持固定大小，不被压缩 */
       }
       .menu-item .info {
-        padding: 14px 16px;
+        padding: 12px 14px;
       }
       .menu-item .title {
         font-size: 1.15rem;
       }
       .menu-item .desc {
-        font-size: 0.9rem;
+        font-size: 0.88rem;
       }
       .menu-item .price {
-        font-size: 0.95rem;
+        font-size: 0.93rem;
       }
     }
 
-    /* ========== 超大屏（更宽的桌面）样式可以视情况再调整 ========== */
+    /* ========== 超宽屏（更大桌面）三列布局可选 ========== */
     @media screen and (min-width: 1000px) {
       .menu-item {
-        width: calc(33.333% - 16px); /* 三列等分 */
+        width: calc(33.333% - 12px); /* 三列并排 */
       }
     }
   </style>
 </head>
 <body>
   <h1>Batman1788 Menu</h1>
-  <div class="menu-container">
-    <!-- ======= 菜单项 1：Mafia Funeral ======= -->
+  <div class="menu-list">
+    <!-- 菜单项 1 -->
     <div class="menu-item">
       <img src="https://raw.githubusercontent.com/ha05di/batman1788Menu/main/Mafia%20Funeral.jpg"
            alt="Mafia Funeral" />
       <div class="info">
         <div class="title">Mafia Funeral (Indica) THC 25%</div>
         <div class="desc">
-          Mafia Funeral is a hybrid weed strain made from a genetic cross between Falcon 9 and Menthol. This strain from Compound Genetics is a potent and flavorful bud that will send you to a blissful state of relaxation and euphoria. Mafia Funeral has dark green buds with purple hues and orange hairs, covered in frosty trichomes. Mafia Funeral is 20-25% THC, making this strain an ideal choice for experienced cannabis consumers.
+          Mafia Funeral is a hybrid weed strain made from a genetic cross between Falcon 9 and Menthol. This strain from Compound Genetics is a potent and flavorful bud that will send you to a blissful state of relaxation and euphoria. Mafia Funeral has dark green buds with purple hues and orange hairs, covered in frosty trichomes. Mafia Funeral is 20–25% THC, making this strain an ideal choice for experienced cannabis consumers.
         </div>
-        <div class="price">Q – $140  H – $270  OZ – $400</div>
+        <div class="price">Q – $140   H – $270   OZ – $400</div>
       </div>
     </div>
 
-    <!-- ======= 菜单项 2：Orange Durban ======= -->
+    <!-- 菜单项 2 -->
     <div class="menu-item">
-      <img src="https://raw.githubusercontent.com/ha05di/batman1788Menu/main/Orange%20Durban.jpg"
+      <img src="https://raw.githubusercontent.com/ha05di/batman1788Menu/main/orange.jpg"
            alt="Orange Durban" />
       <div class="info">
         <div class="title">Orange Durban (Sativa) THC 22%</div>
         <div class="desc">
-          Orange Durban is a citrus-heavy version of the African Indica strain Durban Poison. Parent strains Orange Juice Bud and Durban Poison come together to offer consumers notes of sweet orange intermixed with pine and earthy undertones. This strain’s bright, fruity flavors are underpinned by a stimulating physical energy that encourages activity.
+          Orange Durban is a citrus-heavy version of the African landrace strain Durban Poison. Parent strains Orange Juice Bud and Durban Poison come together to offer consumers notes of sweet orange intermixed with pine and earthy undertones. This strain’s bright, fruity flavors are underpinned by a stimulating physical energy that encourages activity.
         </div>
-        <div class="price">Q – $130  H – $240  OZ – $380</div>
+        <div class="price">Q – $130   H – $240   OZ – $380</div>
       </div>
     </div>
 
-    <!-- ======= 菜单项 3：Lemon Bean ======= -->
+    <!-- 菜单项 3 -->
     <div class="menu-item">
-      <img src="https://raw.githubusercontent.com/ha05di/batman1788Menu/main/Lemon%20Bean.jpg"
+      <img src="https://raw.githubusercontent.com/ha05di/batman1788Menu/main/lemon%20bean%20(2).jpg"
            alt="Lemon Bean" />
       <div class="info">
         <div class="title">Lemon Bean (Sativa) THC 21%</div>
         <div class="desc">
-          Lemon Bean is a sativa weed strain made from a genetic cross between Lemon Tree and Eddy Lepp. Lemon Bean is 21% THC, making this strain an ideal choice for experienced cannabis consumers. Lemon Bean features light green buds with bright orange hairs and sticky amber trichomes.
+          Lemon Bean is a sativa weed strain made from a genetic cross between Lemon Tree and Eddy Lepp. Lemon Bean is 21% THC, making this strain an ideal choice for experienced cannabis consumers. Lemon Bean effects include feeling energetic, focused, and uplifted.
         </div>
-        <div class="price">Q – $120  H – $230  OZ – $350</div>
+        <div class="price">Q – $120   H – $220   OZ – $360</div>
       </div>
     </div>
 
-    <!-- ======= 如果有更多商品，就按照下面格式复制粘贴 ======= -->
+    <!-- 菜单项 4 -->
+    <div class="menu-item">
+      <img src="https://raw.githubusercontent.com/ha05di/batman1788Menu/main/Triple%20Burger.jpg"
+           alt="Triple Burger" />
+      <div class="info">
+        <div class="title">Triple Burger (Indica) THC 25%</div>
+        <div class="desc">
+          Triple Burger is a mostly indica weed strain made from a genetic cross between GMO and Double Burger. This strain is a creation of Skunk House Genetics, a breeder known for producing potent and gassy strains. Triple Burger has a pungent aroma of garlic, butter, and diesel that will fill the room.
+        </div>
+        <div class="price">Q – $120   H – $220   OZ – $360</div>
+      </div>
+    </div>
+
+    <!-- 菜单项 5 -->
+    <div class="menu-item">
+      <img src="https://raw.githubusercontent.com/ha05di/batman1788Menu/main/carts.jpg"
+           alt="THC Cartridge & Pen" />
+      <div class="info">
+        <div class="title">1ml THC Cartridge & Pen (Ready to Go) 85%</div>
+        <div class="desc">
+          1ml THC 85%, 即插即用，方便快捷。
+        </div>
+        <div class="price">1 Set – $280   Cart – $230   Pen – $50</div>
+      </div>
+    </div>
+
+    <!-- 菜单项 6 -->
+    <div class="menu-item">
+      <img src="https://raw.githubusercontent.com/ha05di/batman1788Menu/main/joints.jpg"
+           alt="Joints Ready To Go" />
+      <div class="info">
+        <div class="title">Joints (Ready To Go)</div>
+        <div class="desc">
+          1g 售价，预先卷好，随时享用。
+        </div>
+        <div class="price">1 for $40   3 for $100   5 for $150   8 for $220</div>
+      </div>
+    </div>
+
+    <!-- 如果还有更多商品，可复制上面一个 .menu-item 模块，保持相同结构即可 -->
     <!--
     <div class="menu-item">
       <img src="https://raw.githubusercontent.com/ha05di/batman1788Menu/main/Your%20Item.jpg"
            alt="Your Item" />
       <div class="info">
-        <div class="title">Your Item (品类 / THC XX%)</div>
+        <div class="title">Your Item (XXX) THC XX%</div>
         <div class="desc">
-          这里写你的商品描述，简洁易读。最好控制在3行以内。
+          这里写您的商品描述，建议控制在 2–3 行以内，以保证卡片高度适中。
         </div>
-        <div class="price">Q – $XXX  H – $YYY  OZ – $ZZZ</div>
+        <div class="price">Q – $XXX   H – $YYY   OZ – $ZZZ</div>
       </div>
     </div>
     -->
