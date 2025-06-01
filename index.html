@@ -5,121 +5,170 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Batman1788 Menu</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f9f9f9;
+    /* ========== 全局基础样式 ========== */
+    * {
+      box-sizing: border-box;
       margin: 0;
-      padding: 20px;
+      padding: 0;
+    }
+    body {
+      font-family: "微软雅黑", "Helvetica Neue", Arial, sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+      line-height: 1.5;
+      padding: 10px; /* 手机端边距减小 */
     }
     h1 {
       text-align: center;
-      margin-bottom: 24px;
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      color: #111;
     }
-    .menu-list {
-      max-width: 800px;
+
+    /* ========== 容器与卡片样式 ========== */
+    .menu-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px; /* 卡片之间的间距 */
+      justify-content: center;
+      max-width: 1000px;
       margin: 0 auto;
     }
     .menu-item {
-      background: #fff;
-      border-radius: 6px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
       display: flex;
-      align-items: center;
-      padding: 12px;
-      margin-bottom: 16px;
+      flex-direction: column; /* 默认竖排（便于手机端） */
+      width: 100%; /* 手机端时卡片占满宽度 */
+      max-width: 480px; /* 在大屏上卡片最大宽度 */
+      overflow: hidden;
     }
+    /* 卡片内图片 */
     .menu-item img {
-      width: 100px;
-      height: 100px;
+      display: block;
+      width: 100%;
+      height: auto;
       object-fit: cover;
-      border-radius: 4px;
-      margin-right: 16px;
+      /* 让图片高宽比自动，根据图片原本比例缩放 */
     }
+    /* 卡片内文字容器 */
     .menu-item .info {
-      flex: 1;
+      padding: 12px 14px;
     }
     .menu-item .title {
-      font-size: 1.2em;
-      font-weight: bold;
-      margin-bottom: 6px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #222;
+      line-height: 1.3;
     }
     .menu-item .desc {
-      font-size: 0.95em;
-      color: #666;
-      margin-bottom: 8px;
+      font-size: 0.95rem;
+      color: #555;
+      margin-bottom: 10px;
+      max-height: 4.5em; /* 控制描述行数，大约 3 行 */
+      overflow: hidden;
     }
     .menu-item .price {
-      font-size: 1em;
+      font-size: 1rem;
       color: #e74c3c;
       font-weight: bold;
+      margin-top: 4px;
+    }
+
+    /* ========== 大屏（桌面）样式调整 ========== */
+    @media screen and (min-width: 600px) {
+      .menu-item {
+        /* 桌面端用 flex-row 左图右文 */
+        flex-direction: row;
+        width: calc(50% - 16px); /* 两列布局，卡片之间 gap 16px */
+      }
+      .menu-item img {
+        width: 160px;
+        height: 160px;
+        flex-shrink: 0;
+        /* 保证图片固定大小，文字区域自适应 */
+      }
+      .menu-item .info {
+        padding: 14px 16px;
+      }
+      .menu-item .title {
+        font-size: 1.15rem;
+      }
+      .menu-item .desc {
+        font-size: 0.9rem;
+      }
+      .menu-item .price {
+        font-size: 0.95rem;
+      }
+    }
+
+    /* ========== 超大屏（更宽的桌面）样式可以视情况再调整 ========== */
+    @media screen and (min-width: 1000px) {
+      .menu-item {
+        width: calc(33.333% - 16px); /* 三列等分 */
+      }
     }
   </style>
 </head>
 <body>
   <h1>Batman1788 Menu</h1>
-  <div class="menu-list">
-    <!-- 菜单项 1 -->
+  <div class="menu-container">
+    <!-- ======= 菜单项 1：Mafia Funeral ======= -->
     <div class="menu-item">
-      <!-- 如果没有图片，可以删掉 <img> 标签这一行 -->
-      <img src="https://raw.githubusercontent.com/ha05di/batman1788Menu/main/Mafia%20Funeral.jpg" alt="Mafia Funeral" />
+      <img src="https://raw.githubusercontent.com/ha05di/batman1788Menu/main/Mafia%20Funeral.jpg"
+           alt="Mafia Funeral" />
       <div class="info">
-        <div class="title">Mafia Funeral(Indica) THC 25%</div>
-        <div class="desc">Mafia Funeral is a hybrid weed strain made from a genetic cross between Falcon 9 and Menthol. This strain from Compound Genetics is a potent and flavorful bud that will send you to a blissful state of relaxation and euphoria. Mafia Funeral has dark green buds with purple hues and orange hairs, covered in frosty trichomes. Mafia Funeral is 20-25% THC, making this strain an ideal choice for experienced cannabis consumers. </div>
-        <div class="price">Q-$140  H-$270  OZ-$400</div>
+        <div class="title">Mafia Funeral (Indica) THC 25%</div>
+        <div class="desc">
+          Mafia Funeral is a hybrid weed strain made from a genetic cross between Falcon 9 and Menthol. This strain from Compound Genetics is a potent and flavorful bud that will send you to a blissful state of relaxation and euphoria. Mafia Funeral has dark green buds with purple hues and orange hairs, covered in frosty trichomes. Mafia Funeral is 20-25% THC, making this strain an ideal choice for experienced cannabis consumers.
+        </div>
+        <div class="price">Q – $140  H – $270  OZ – $400</div>
       </div>
     </div>
 
-    <!-- 菜单项 2 -->
+    <!-- ======= 菜单项 2：Orange Durban ======= -->
     <div class="menu-item">
-      <img src="https://raw.githubusercontent.com/ha05di/batman1788Menu/main/orange.jpg" />
+      <img src="https://raw.githubusercontent.com/ha05di/batman1788Menu/main/Orange%20Durban.jpg"
+           alt="Orange Durban" />
       <div class="info">
-        <div class="title">Orange Durban （Sativa)THC 22%</div>
-        <div class="desc">Orange Durban is a citrus-heavy version of the African landrace strain Durban Poison. Parent strains Orange Juice Bud and Durban Poison come together to offer consumers notes of sweet orange intermixed with pine and earthy undertones. This strain’s bright, fruity flavors are underpinned by a stimulating physical energy that encourages activity.   </div>
-        <div class="price">Q-$130  H - $240  OZ-$380</div>
+        <div class="title">Orange Durban (Sativa) THC 22%</div>
+        <div class="desc">
+          Orange Durban is a citrus-heavy version of the African Indica strain Durban Poison. Parent strains Orange Juice Bud and Durban Poison come together to offer consumers notes of sweet orange intermixed with pine and earthy undertones. This strain’s bright, fruity flavors are underpinned by a stimulating physical energy that encourages activity.
+        </div>
+        <div class="price">Q – $130  H – $240  OZ – $380</div>
       </div>
     </div>
 
-    <!-- 菜单项 3 -->
+    <!-- ======= 菜单项 3：Lemon Bean ======= -->
     <div class="menu-item">
-      <img src="https://raw.githubusercontent.com/ha05di/batman1788Menu/main/lemon%20bean%20(2).jpg" />
+      <img src="https://raw.githubusercontent.com/ha05di/batman1788Menu/main/Lemon%20Bean.jpg"
+           alt="Lemon Bean" />
       <div class="info">
-        <div class="title">Lemon Bean (Sativa)THC 21%</div>
-        <div class="desc">Lemon Bean is a sativa weed strain made from a genetic cross between  Lemon Tree and Eddy 
-Lepp. Lemon Bean is 21% THC, making this strain an ideal choice for experienced cannabis consumers. Lemon Bean effects include feeling energetic,  focused, and uplifted. .</div>
-        <div class="price">Q-$120  H-$220  OZ-$360</div>
-      </div>
-    </div>
-    
-        <!-- 菜单项 4 -->
-    <div class="menu-item">
-      <img src="https://raw.githubusercontent.com/ha05di/batman1788Menu/main/Triple%20Burger.jpg" />
-      <div class="info">
-        <div class="title">Triple Burger (Indica)THC 25%</div>
-        <div class="desc">Triple Burger is a mostly indica weed strain made from a genetic cross between GMO and Double Burger. This strain is a creation of Skunk House Genetics, a breeder known for producing potent and gassy strains. Triple Burger has a pungent aroma of garlic, butter, and diesel that will fill the room. </div>
-        <div class="price">Q-$120  H-$220  OZ-$360</div>
+        <div class="title">Lemon Bean (Sativa) THC 21%</div>
+        <div class="desc">
+          Lemon Bean is a sativa weed strain made from a genetic cross between Lemon Tree and Eddy Lepp. Lemon Bean is 21% THC, making this strain an ideal choice for experienced cannabis consumers. Lemon Bean features light green buds with bright orange hairs and sticky amber trichomes.
+        </div>
+        <div class="price">Q – $120  H – $230  OZ – $350</div>
       </div>
     </div>
 
-        <!-- 菜单项 2 -->
+    <!-- ======= 如果有更多商品，就按照下面格式复制粘贴 ======= -->
+    <!--
     <div class="menu-item">
-      <img src="https://raw.githubusercontent.com/ha05di/batman1788Menu/main/carts.jpg" />
+      <img src="https://raw.githubusercontent.com/ha05di/batman1788Menu/main/Your%20Item.jpg"
+           alt="Your Item" />
       <div class="info">
-        <div class="title">1ml THC Cartridge&Pen Ready to go 85%</div>
-        <div class="desc">1ml THC85% </div>
-        <div class="price">1Set-$280 Carts-$230 Pen-$50</div>
+        <div class="title">Your Item (品类 / THC XX%)</div>
+        <div class="desc">
+          这里写你的商品描述，简洁易读。最好控制在3行以内。
+        </div>
+        <div class="price">Q – $XXX  H – $YYY  OZ – $ZZZ</div>
       </div>
     </div>
-
-        <!-- 菜单项 2 -->
-    <div class="menu-item">
-      <img src="https://raw.githubusercontent.com/ha05di/batman1788Menu/main/joints.jpg" />
-      <div class="info">
-        <div class="title">Joint’s Ready To Go</div>
-        <div class="desc">1g</div>
-        <div class="price">1for $40 /3for $100 /5for $150 /8for$220</div>
-      </div>
-    </div>
-    
     -->
   </div>
 </body>
