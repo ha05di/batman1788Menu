@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Batman1788 Menu (可下单，发送至 Telegram)</title>
+  <title>Batman1788 Menu</title>
   <style>
-    /* ========= 全局重置与基础样式 ========= */
+    /* ========== 全局重置与基础样式 ========== */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -25,64 +25,7 @@
       color: #111;
     }
 
-    /* ========= 顶部左上角“汉堡”图标按钮 ========= */
-    .top-left-options {
-      position: fixed;
-      top: 10px;
-      left: 10px;
-      z-index: 20;
-    }
-    .options-dropdown {
-      position: relative;
-      display: inline-block;
-    }
-    .options-btn {
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      line-height: 1;
-      cursor: pointer;
-      color: #333;
-      padding: 4px;
-    }
-    .options-btn:hover {
-      color: #000;
-    }
-    .options-content {
-      display: none;
-      position: absolute;
-      top: 110%;
-      left: 0;
-      background-color: #fff;
-      min-width: 140px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-      border-radius: 4px;
-      overflow: hidden;
-      font-size: 0.9rem;
-    }
-    .options-content a {
-      display: block;
-      padding: 8px 12px;
-      color: #333;
-      text-decoration: none;
-    }
-    .options-content a:hover {
-      background-color: #f0f0f0;
-    }
-    .options-dropdown.show .options-content {
-      display: block;
-    }
-    @media screen and (max-width: 400px) {
-      .options-btn {
-        font-size: 1.3rem;
-      }
-      .options-content {
-        min-width: 120px;
-        font-size: 0.85rem;
-      }
-    }
-
-    /* ========= 菜单列表容器 ========= */
+    /* ========== 菜单列表容器 ========== */
     .menu-list {
       display: flex;
       flex-wrap: wrap;
@@ -92,7 +35,7 @@
       margin: 0 auto;
     }
 
-    /* ========= 菜单项（卡片）基础样式 ========= */
+    /* ========== 菜单项（卡片）基础样式 ========== */
     .menu-item {
       background-color: #fff;
       border-radius: 8px;
@@ -102,14 +45,16 @@
       width: 100%;            /* 手机时卡片占满宽度 */
       max-width: 480px;       /* 大屏时卡片最大宽度 */
       overflow: hidden;
-      position: relative;     /* 使徽章可以在此容器内绝对定位 */
+      position: relative;     /* 使徽章可以绝对定位在此容器内 */
     }
+    /* 图片：移动端全宽；大屏时再改为固定大小 */
     .menu-item img {
       display: block;
       width: 100%;
       height: auto;
       object-fit: cover;
     }
+    /* 文字容器 */
     .menu-item .info {
       padding: 10px 12px;
     }
@@ -124,16 +69,17 @@
       font-size: 0.9rem;
       color: #555;
       margin-bottom: 8px;
+      /* 控制描述行数，避免过长 */
       max-height: 4.2em; /* 大约 3 行 */
       overflow: hidden;
     }
 
-    /* ========= 徽章（Badge）样式 ========= */
+    /* ========== 徽章（Badge）公共样式 ========== */
     .badge {
       position: absolute;
       top: 10px;
-      left: 10px;
-      padding: 6px 10px;
+      left: 10px;           /* 可改为 right: 8px; 放在右上角 */
+      padding: 6px 8px;
       font-size: 1rem;
       font-weight: bold;
       color: #fff;
@@ -148,7 +94,7 @@
       background-color: #dc3545; /* 红色 */
     }
 
-    /* ========= 三栏价位（默认移动端） ========= */
+    /* ========== 三栏价位（默认移动端） ========== */
     .price {
       display: flex;
       justify-content: space-between;
@@ -178,35 +124,7 @@
       font-weight: 600;
     }
 
-    /* ========= 下单区域样式 ========= */
-    .order-area {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-top: 10px;
-    }
-    .order-area input[type="number"] {
-      width: 60px;
-      padding: 4px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      text-align: center;
-      font-size: 0.95rem;
-    }
-    .order-area button {
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      padding: 6px 10px;
-      font-size: 0.95rem;
-      cursor: pointer;
-    }
-    .order-area button:hover {
-      background-color: #0069d9;
-    }
-
-    /* ========= 宽屏（平板/桌面）样式调整 ========= */
+    /* ========== 宽屏（平板/桌面）样式调整 ========== */
     @media screen and (min-width: 600px) {
       .menu-item {
         flex-direction: row;     /* 左图右文 */
@@ -227,8 +145,8 @@
         font-size: 0.88rem;
       }
       .price {
-        gap: 8px;          
-        margin-top: 10px;  
+        gap: 8px;          /* 大屏时块间距更大 */
+        margin-top: 10px;  /* 大屏卡片顶部间距略增 */
       }
       .price .tier {
         padding: 8px 6px;
@@ -239,18 +157,9 @@
       .price .tier .tier-value {
         font-size: 1.05rem;
       }
-      .order-area {
-        margin-top: 12px;
-      }
-      .order-area input[type="number"] {
-        width: 70px;
-        font-size: 1rem;
-      }
-      .order-area button {
-        font-size: 1rem;
-        padding: 7px 12px;
-      }
     }
+
+    /* ========== 超宽屏（三列布局） ========== */
     @media screen and (min-width: 1000px) {
       .menu-item {
         width: calc(33.333% - 12px); /* 三列并排 */
@@ -259,24 +168,10 @@
   </style>
 </head>
 <body>
-  <!-- ===== 左上角“汉堡”按钮 ===== -->
-  <div class="top-left-options">
-    <div class="options-dropdown">
-      <button class="options-btn">☰</button>
-      <div class="options-content">
-        <a href="#new-arrivals">New</a>
-        <a href="#hot-sales">Hot</a>
-        <a href="#all-items">All</a>
-      </div>
-    </div>
-  </div>
-  <!-- ===== /左上角“汉堡”按钮 ===== -->
-
   <h1>Batman1788 Menu</h1>
   <div class="menu-list">
     <!-- 菜单项 1：标记为 “New” -->
-    <div class="menu-item" id="new-arrivals" data-name="Mafia Funeral">
-      <div class="badge new">New</div>
+    <div class="menu-item">
       <img src="https://raw.githubusercontent.com/ha05di/batman1788Menu/main/Mafia%20Funeral.jpg"
            alt="Mafia Funeral" />
       <div class="info">
@@ -298,17 +193,11 @@
             <div class="tier-value">$400</div>
           </div>
         </div>
-        <!-- 下单区域 -->
-        <div class="order-area">
-          <input type="number" min="1" value="1" class="quantity-input" />
-          <button class="order-btn">下单</button>
-        </div>
       </div>
     </div>
 
     <!-- 菜单项 2：标记为 “Hot” -->
-    <div class="menu-item" id="hot-sales" data-name="Orange Durban">
-      <div class="badge hot">Hot</div>
+    <div class="menu-item">
       <img src="https://raw.githubusercontent.com/ha05di/batman1788Menu/main/orange.jpg"
            alt="Orange Durban" />
       <div class="info">
@@ -330,16 +219,12 @@
             <div class="tier-value">$380</div>
           </div>
         </div>
-        <!-- 下单区域 -->
-        <div class="order-area">
-          <input type="number" min="1" value="1" class="quantity-input" />
-          <button class="order-btn">下单</button>
-        </div>
       </div>
     </div>
 
     <!-- 菜单项 3：无徽章 -->
-    <div class="menu-item" data-name="Lemon Bean">
+    <div class="menu-item">
+      <div class="badge hot">Hot</div>
       <img src="https://raw.githubusercontent.com/ha05di/batman1788Menu/main/lemon%20bean%20(2).jpg"
            alt="Lemon Bean" />
       <div class="info">
@@ -361,16 +246,11 @@
             <div class="tier-value">$360</div>
           </div>
         </div>
-        <!-- 下单区域 -->
-        <div class="order-area">
-          <input type="number" min="1" value="1" class="quantity-input" />
-          <button class="order-btn">下单</button>
-        </div>
       </div>
     </div>
 
     <!-- 菜单项 4：标记为 “New” -->
-    <div class="menu-item" data-name="Triple Burger">
+    <div class="menu-item">
       <div class="badge new">New</div>
       <img src="https://raw.githubusercontent.com/ha05di/batman1788Menu/main/Triple%20Burger.jpg"
            alt="Triple Burger" />
@@ -393,23 +273,17 @@
             <div class="tier-value">$360</div>
           </div>
         </div>
-        <!-- 下单区域 -->
-        <div class="order-area">
-          <input type="number" min="1" value="1" class="quantity-input" />
-          <button class="order-btn">下单</button>
-        </div>
       </div>
     </div>
 
     <!-- 菜单项 5：标记为 “Hot” -->
-    <div class="menu-item" data-name="THC Cartridge & Pen">
-      <div class="badge hot">Hot</div>
+    <div class="menu-item">
       <img src="https://raw.githubusercontent.com/ha05di/batman1788Menu/main/carts.jpg"
            alt="THC Cartridge & Pen" />
       <div class="info">
         <div class="title">1ml THC Cartridge & Pen (Ready to Go) 85%</div>
         <div class="desc">
-          1ml THC 85%，即插即用，方便快捷。
+          1ml THC 85%，Plug and play, convenient and fast.
         </div>
         <div class="price">
           <div class="tier">
@@ -425,22 +299,17 @@
             <div class="tier-value">$50</div>
           </div>
         </div>
-        <!-- 下单区域 -->
-        <div class="order-area">
-          <input type="number" min="1" value="1" class="quantity-input" />
-          <button class="order-btn">下单</button>
-        </div>
       </div>
     </div>
 
     <!-- 菜单项 6：无徽章 -->
-    <div class="menu-item" id="all-items" data-name="Joints (Ready To Go)">
+    <div class="menu-item">
       <img src="https://raw.githubusercontent.com/ha05di/batman1788Menu/main/joints.jpg"
            alt="Joints Ready To Go" />
       <div class="info">
         <div class="title">Joints (Ready To Go)</div>
         <div class="desc">
-          1g 售价，预先卷好，随时享用。
+          1g Pre-rolled and ready to enjoy.
         </div>
         <div class="price">
           <div class="tier">
@@ -460,63 +329,37 @@
             <div class="tier-value">$220</div>
           </div>
         </div>
-        <!-- 下单区域 -->
-        <div class="order-area">
-          <input type="number" min="1" value="1" class="quantity-input" />
-          <button class="order-btn">下单</button>
+      </div>
+    </div>
+
+    <!-- 菜单项 7：无徽章 -->
+    <div class="menu-item">
+      <img src="https://raw.githubusercontent.com/ha05di/batman1788Menu/main/wonka.jpg"
+           alt="Wonka Gummies" />
+      <div class="info">
+        <div class="title">Edibles Wonka Gummies (600mg per pack)</div>
+        <div class="desc">
+          Wonka proudly presents Sharks 600mg THC, an edible that's sure to make a splash. Crafted with precision and expertise, these gummy sharks are designed to provide the ultimate THC-infused experience, right to your doorstep.
+        </div>
+        <div class="price">
+          <div class="tier">
+            <div class="tier-label">1 Pack</div>
+            <div class="tier-value">$150</div>
+          </div>
+          <div class="tier">
+            <div class="tier-label">2 Packs</div>
+            <div class="tier-value">$280</div>
+          </div>
+          <div class="tier">
+            <div class="tier-label">—</div>
+            <div class="tier-value">—</div>
+          </div>
         </div>
       </div>
     </div>
+
+    <!-- 如果还有更多商品，每个商品直接复制 .menu-item 模块，
+         在需要高亮的卡片里加 <div class="badge new">New</div> 或 <div class="badge hot">Hot</div> -->
   </div>
-
-  <!-- ========= 脚本：控制“汉堡”下拉 & “下单”按钮发送到 Telegram ========= -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      // “汉堡”下拉逻辑
-      const dropdown = document.querySelector(".options-dropdown");
-      const btn = document.querySelector(".options-btn");
-      btn.addEventListener("click", function(e) {
-        e.stopPropagation();
-        dropdown.classList.toggle("show");
-      });
-      document.addEventListener("click", function() {
-        if (dropdown.classList.contains("show")) {
-          dropdown.classList.remove("show");
-        }
-      });
-
-      // “下单”按钮逻辑：跳转到 Telegram Bot，预填订单信息
-      const orderButtons = document.querySelectorAll(".order-btn");
-      orderButtons.forEach(btn => {
-        btn.addEventListener("click", function() {
-          const menuItem = btn.closest(".menu-item");
-          const itemName = menuItem.getAttribute("data-name") || "商品";
-          const qtyInput = menuItem.querySelector(".quantity-input");
-          const quantity = qtyInput.value || 1;
-
-          // 数量校验
-          if (quantity < 1) {
-            alert("数量需为整数，且至少 1 件");
-            qtyInput.value = 1;
-            return;
-          }
-
-          // 构造要发送给 Bot 的消息内容
-          const message = `下单请求：\n商品：${itemName}\n数量：${quantity}`;
-          const encodedMessage = encodeURIComponent(message);
-
-          // 把下面的 BOT_USERNAME 替换成你的 Telegram Bot 用户名（不含 @）
-          const BOT_USERNAME = "YourBotUsername";
-          // 深链接，让用户打开 Telegram 与 Bot 聊天，并自动发送 /start 参数
-          // 这里把订单信息拼接到 start 参数里，Bot 在收到 /start_<payload> 后需在后端解析
-          const payload = `order_${btoa(message)}`; // 用 base64 编码，Bot 解析时用 atob 还原
-          const deepLink = `https://t.me/${BOT_USERNAME}?start=${payload}`;
-
-          // 跳转到 Telegram 深链接页面
-          window.location.href = deepLink;
-        });
-      });
-    });
-  </script>
 </body>
 </html>
