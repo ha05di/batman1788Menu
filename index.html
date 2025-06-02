@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Batman1788 Menu</title>
   <style>
-    /* ========= 全局重置与基础样式 ========= */
+    /* ========== 全局重置与基础样式 ========== */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -25,64 +25,7 @@
       color: #111;
     }
 
-    /* ========= 顶部左上角“汉堡”图标按钮 ========= */
-    .top-left-options {
-      position: fixed;
-      top: 10px;
-      left: 10px;
-      z-index: 20;
-    }
-    .options-dropdown {
-      position: relative;
-      display: inline-block;
-    }
-    .options-btn {
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      line-height: 1;
-      cursor: pointer;
-      color: #333;
-      padding: 4px;
-    }
-    .options-btn:hover {
-      color: #000;
-    }
-    .options-content {
-      display: none;
-      position: absolute;
-      top: 110%;
-      left: 0;
-      background-color: #fff;
-      min-width: 140px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-      border-radius: 4px;
-      overflow: hidden;
-      font-size: 0.9rem;
-    }
-    .options-content a {
-      display: block;
-      padding: 8px 12px;
-      color: #333;
-      text-decoration: none;
-    }
-    .options-content a:hover {
-      background-color: #f0f0f0;
-    }
-    .options-dropdown.show .options-content {
-      display: block;
-    }
-    @media screen and (max-width: 400px) {
-      .options-btn {
-        font-size: 1.3rem;
-      }
-      .options-content {
-        min-width: 120px;
-        font-size: 0.85rem;
-      }
-    }
-
-    /* ========= 菜单列表容器 ========= */
+    /* ========== 菜单列表容器 ========== */
     .menu-list {
       display: flex;
       flex-wrap: wrap;
@@ -92,7 +35,7 @@
       margin: 0 auto;
     }
 
-    /* ========= 菜单项（卡片）基础样式 ========= */
+    /* ========== 菜单项（卡片）基础样式 ========== */
     .menu-item {
       background-color: #fff;
       border-radius: 8px;
@@ -104,12 +47,14 @@
       overflow: hidden;
       position: relative;     /* 使徽章可以绝对定位在此容器内 */
     }
+    /* 图片：移动端全宽；大屏时再改为固定大小 */
     .menu-item img {
       display: block;
       width: 100%;
       height: auto;
       object-fit: cover;
     }
+    /* 文字容器 */
     .menu-item .info {
       padding: 10px 12px;
     }
@@ -124,16 +69,17 @@
       font-size: 0.9rem;
       color: #555;
       margin-bottom: 8px;
+      /* 控制描述行数，避免过长 */
       max-height: 4.2em; /* 大约 3 行 */
       overflow: hidden;
     }
 
-    /* ========= 徽章（Badge）样式（放大版） ========= */
+    /* ========== 徽章（Badge）公共样式 ========== */
     .badge {
       position: absolute;
       top: 10px;
-      left: 10px;
-      padding: 6px 10px;
+      left: 10px;           /* 可改为 right: 8px; 放在右上角 */
+      padding: 6px 8px;
       font-size: 1rem;
       font-weight: bold;
       color: #fff;
@@ -148,7 +94,7 @@
       background-color: #dc3545; /* 红色 */
     }
 
-    /* ========= 三栏价位（默认移动端） ========= */
+    /* ========== 三栏价位（默认移动端） ========== */
     .price {
       display: flex;
       justify-content: space-between;
@@ -178,7 +124,7 @@
       font-weight: 600;
     }
 
-    /* ========= 宽屏（平板/桌面）样式调整 ========= */
+    /* ========== 宽屏（平板/桌面）样式调整 ========== */
     @media screen and (min-width: 600px) {
       .menu-item {
         flex-direction: row;     /* 左图右文 */
@@ -187,7 +133,7 @@
       .menu-item img {
         width: 140px;
         height: 140px;
-        flex-shrink: 0;
+        flex-shrink: 0; /* 保持固定大小，不被压缩 */
       }
       .menu-item .info {
         padding: 12px 14px;
@@ -199,8 +145,8 @@
         font-size: 0.88rem;
       }
       .price {
-        gap: 8px;          
-        margin-top: 10px;  
+        gap: 8px;          /* 大屏时块间距更大 */
+        margin-top: 10px;  /* 大屏卡片顶部间距略增 */
       }
       .price .tier {
         padding: 8px 6px;
@@ -212,6 +158,8 @@
         font-size: 1.05rem;
       }
     }
+
+    /* ========== 超宽屏（三列布局） ========== */
     @media screen and (min-width: 1000px) {
       .menu-item {
         width: calc(33.333% - 12px); /* 三列并排 */
@@ -220,24 +168,10 @@
   </style>
 </head>
 <body>
-  <!-- ===== 左上角“汉堡”按钮 ===== -->
-  <div class="top-left-options">
-    <div class="options-dropdown">
-      <button class="options-btn">☰</button>
-      <div class="options-content">
-        <a href="#new-arrivals">New Iteams</a>
-        <a href="#hot-sales">Hot Sale</a>
-        <a href="#all-items">All Iteams</a>
-      </div>
-    </div>
-  </div>
-  <!-- ===== /左上角“汉堡”按钮 ===== -->
-
   <h1>Batman1788 Menu</h1>
   <div class="menu-list">
     <!-- 菜单项 1：标记为 “New” -->
-    <div class="menu-item" id="new-arrivals">
-      <div class="badge new">New</div>
+    <div class="menu-item">
       <img src="https://raw.githubusercontent.com/ha05di/batman1788Menu/main/Mafia%20Funeral.jpg"
            alt="Mafia Funeral" />
       <div class="info">
@@ -263,8 +197,7 @@
     </div>
 
     <!-- 菜单项 2：标记为 “Hot” -->
-    <div class="menu-item" id="hot-sales">
-      <div class="badge hot">Hot</div>
+    <div class="menu-item">
       <img src="https://raw.githubusercontent.com/ha05di/batman1788Menu/main/orange.jpg"
            alt="Orange Durban" />
       <div class="info">
@@ -291,6 +224,7 @@
 
     <!-- 菜单项 3：无徽章 -->
     <div class="menu-item">
+      <div class="badge hot">Hot</div>
       <img src="https://raw.githubusercontent.com/ha05di/batman1788Menu/main/lemon%20bean%20(2).jpg"
            alt="Lemon Bean" />
       <div class="info">
@@ -344,7 +278,6 @@
 
     <!-- 菜单项 5：标记为 “Hot” -->
     <div class="menu-item">
-      <div class="badge hot">Hot</div>
       <img src="https://raw.githubusercontent.com/ha05di/batman1788Menu/main/carts.jpg"
            alt="THC Cartridge & Pen" />
       <div class="info">
@@ -370,7 +303,7 @@
     </div>
 
     <!-- 菜单项 6：无徽章 -->
-    <div class="menu-item" id="all-items">
+    <div class="menu-item">
       <img src="https://raw.githubusercontent.com/ha05di/batman1788Menu/main/joints.jpg"
            alt="Joints Ready To Go" />
       <div class="info">
@@ -398,25 +331,35 @@
         </div>
       </div>
     </div>
+
+    <!-- 菜单项 7：无徽章 -->
+    <div class="menu-item">
+      <img src="https://raw.githubusercontent.com/ha05di/batman1788Menu/main/wonka.jpg"
+           alt="Wonka Gummies" />
+      <div class="info">
+        <div class="title">Edibles Wonka Gummies (600mg per pack)</div>
+        <div class="desc">
+          Wonka proudly presents Sharks 600mg THC, an edible that's sure to make a splash. Crafted with precision and expertise, these gummy sharks are designed to provide the ultimate THC-infused experience, right to your doorstep.
+        </div>
+        <div class="price">
+          <div class="tier">
+            <div class="tier-label">1 Pack</div>
+            <div class="tier-value">$150</div>
+          </div>
+          <div class="tier">
+            <div class="tier-label">2 Packs</div>
+            <div class="tier-value">$280</div>
+          </div>
+          <div class="tier">
+            <div class="tier-label">—</div>
+            <div class="tier-value">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 如果还有更多商品，每个商品直接复制 .menu-item 模块，
+         在需要高亮的卡片里加 <div class="badge new">New</div> 或 <div class="badge hot">Hot</div> -->
   </div>
-
-  <!-- ========= 脚本：控制“汉堡”下拉显示/隐藏 ========= -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const dropdown = document.querySelector(".options-dropdown");
-      const btn = document.querySelector(".options-btn");
-      
-      btn.addEventListener("click", function(e) {
-        e.stopPropagation();
-        dropdown.classList.toggle("show");
-      });
-
-      document.addEventListener("click", function() {
-        if (dropdown.classList.contains("show")) {
-          dropdown.classList.remove("show");
-        }
-      });
-    });
-  </script>
 </body>
 </html>
