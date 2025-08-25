@@ -371,18 +371,20 @@
 </style>
 
 <script>
-  // 关闭广告
-  function closeAd(){
+  // 全局关闭函数（按钮 onclick 用）
+  window.closeAd = function () {
     const m = document.getElementById('adModal');
     if (m) m.style.display = 'none';
-  }
+  };
 
-  // 点击背景关闭
+  // 点击背景关闭（判断点击到背景本身才执行）
   (function(){
     const m = document.getElementById('adModal');
     if (!m) return;
     m.addEventListener('click', function(e){
-      if (e.target.id === 'adModal') closeAd();
+      if (e.target === m) {
+        window.closeAd();
+      }
     });
   })();
 
@@ -392,13 +394,13 @@
   fetch(AD_URL)
     .then(res => res.json())
     .then(rows => {
-      if (!(rows?.length)) return;
+      if (!rows || !rows.length) return;
       const r = rows[0] || {};
       const enabled = String(r.enabled || '').toLowerCase() === 'yes';
       const adImg = r.img || '';
       if (!enabled || !adImg) return;
 
-      // 设置广告图片并显示
+      // 设置广告图并显示
       document.querySelector('#adModal img').src = adImg;
       document.getElementById('adModal').style.display = 'flex';
     })
@@ -407,6 +409,7 @@
 <!-- 🔼 广告弹窗 🔼 -->
 </body>
 </html>
+
 
 
 
