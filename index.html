@@ -220,6 +220,21 @@
     const SHEET_TAB_NOTICE = "notice";
     const MENU_URL = `https://opensheet.elk.sh/${SHEET_ID}/${SHEET_TAB_MENU}`;
     const NOTICE_URL = `https://opensheet.elk.sh/${SHEET_ID}/${SHEET_TAB_NOTICE}`;
+    const AD_URL     = `https://opensheet.elk.sh/${SHEET_ID}/ad`;
+
+    // ---- 广告开关 ----
+    fetch(AD_URL)
+      .then(res=>res.json())
+      .then(rows=>{
+        if(rows.length > 0 && rows[0].enabled && rows[0].enabled.toLowerCase() === "yes"){
+          const adImg = rows[0].img || "";
+          if(adImg){
+            document.querySelector("#adModal img").src = adImg;
+            document.getElementById("adModal").style.display = "flex";
+          }
+        }
+      })
+      .catch(err=>console.error("广告加载失败", err));
 
     // 跑马灯: 第一条永远显示，第二条起每天澳洲10AM轮换
     fetch(NOTICE_URL)
@@ -310,20 +325,21 @@
         console.error(err);
       });
   </script>
-  <!-- 🔽 广告弹窗放这里 🔽 -->
-<div class="ad-modal-bg" id="adModal">
+<!-- 🔽 广告弹窗 🔽 -->
+<div class="ad-modal-bg" id="adModal" style="display:none">
   <div class="ad-modal">
-    <img src="https://raw.githubusercontent.com/ha05di/batman1788Menu/main/newsbanner.png" alt="Promo" />
+    <img src="" alt="Promo" />
     <button class="ad-close" onclick="closeAd()">×</button>
   </div>
 </div>
 
 <style>
-  /* 广告弹窗背景 */
+  /* 广告弹窗样式 */
   .ad-modal-bg {
     position: fixed; inset: 0;
     background: rgba(0,0,0,0.78);
-    display: flex; align-items: center; justify-content: center;
+    display: none;  /* 默认隐藏 */
+    align-items: center; justify-content: center;
     z-index: 10000;
   }
   .ad-modal {
@@ -355,23 +371,42 @@
 </style>
 
 <script>
-  // 打开时自动显示广告
-  window.addEventListener('load', function(){
-    document.getElementById('adModal').style.display = 'flex';
-  });
-
-  // 关闭广告函数
+  // 关闭广告
   function closeAd(){
-    document.getElementById('adModal').style.display = 'none';
+    const m = document.getElementById('adModal');
+    if (m) m.style.display = 'none';
   }
 
-  // 点击背景也能关闭
-  document.getElementById('adModal').addEventListener('click', function(e){
-    if(e.target.id === 'adModal'){ closeAd(); }
-  });
+  // 点击背景关闭
+  (function(){
+    const m = document.getElementById('adModal');
+    if (!m) return;
+    m.addEventListener('click', function(e){
+      if (e.target.id === 'adModal') closeAd();
+    });
+  })();
+
+  // ---- 从 Google Sheet 控制广告 ----
+  const AD_URL = `https://opensheet.elk.sh/${SHEET_ID}/ad`;
+
+  fetch(AD_URL)
+    .then(res => res.json())
+    .then(rows => {
+      if (!(rows?.length)) return;
+      const r = rows[0] || {};
+      const enabled = String(r.enabled || '').toLowerCase() === 'yes';
+      const adImg = r.img || '';
+      if (!enabled || !adImg) return;
+
+      // 设置广告图片并显示
+      document.querySelector('#adModal img').src = adImg;
+      document.getElementById('adModal').style.display = 'flex';
+    })
+    .catch(err => console.error('广告加载失败', err));
 </script>
-<!-- 🔼 广告弹窗放这里 🔼 -->
+<!-- 🔼 广告弹窗 🔼 -->
 </body>
 </html>
+
 
 
