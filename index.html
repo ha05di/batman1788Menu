@@ -108,6 +108,26 @@
     .order-summary th,.order-summary td{ padding:6px 4px; border-bottom:1px dashed #2a2a2a; word-break:break-word; overflow-wrap:anywhere; }
     .order-summary th{ color:#ddd; font-weight:700; text-align:left; }
     .order-summary .ar{ text-align:right; }
+    /* === Item 列宽 & 省略号 === */
+    .order-summary th:nth-child(1),
+    .order-summary td:nth-child(1){ width:44%; }   /* Item */
+    .order-summary th:nth-child(2),
+    .order-summary td:nth-child(2){ width:14%; }   /* Spec */
+    .order-summary th:nth-child(3),
+    .order-summary td:nth-child(3){ width:10%; }   /* Qty */
+    .order-summary th:nth-child(4),
+    .order-summary td:nth-child(4){ width:16%; }   /* Price */
+    .order-summary th:nth-child(5),
+    .order-summary td:nth-child(5){ width:16%; }   /* Subtotal */
+    .order-summary th:nth-child(6),
+    .order-summary td:nth-child(6){ width:40px; }  /* 删除按钮 */
+
+    .order-summary .item-cell{
+      display:block;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis; /* 超长显示省略号 */
+    }
     .order-summary .os-total{ display:flex; justify-content:flex-end; font-weight:900; margin-top:6px; }
     .order-summary .os-meta{ color:#bbb; font-size:.92em; margin-top:6px; line-height:1.4; }
 
@@ -552,7 +572,7 @@
       const rowsHtml = cart.map((it, i) => {
         const sub = it.qty * it.price;
         return `<tr>
-          <td>${esc(it.name)}</td>
+          <td><span class="item-cell" title="${esc(it.name)}">${esc(it.name)}</span></td>
           <td>${esc(it.spec || '')}</td>
           <td class="ar">×${it.qty}</td>
           <td class="ar">${money(it.price)}</td>
@@ -789,5 +809,6 @@
   </script>
 </body>
 </html>
+
 
 
