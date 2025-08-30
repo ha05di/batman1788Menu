@@ -264,8 +264,8 @@
     const NOTICE_URL = `https://opensheet.elk.sh/${SHEET_ID}/${SHEET_TAB_NOTICE}`;
     const AD_URL     = `https://opensheet.elk.sh/${SHEET_ID}/ad`;
 
-    /* ★ 新增：PROMO 规则（来自 promo sheet）
-       建议列：enabled | type | value | min_subtotal | code | auto | stack | desc */
+    /* PROMO 规则（来自 promo sheet）
+       列：enabled | type | value | min_subtotal | code | auto | stack | desc | start | end */
     const PROMO_URL  = `https://opensheet.elk.sh/${SHEET_ID}/promo`;
 
     const PICKUP_ADDRESS = "1 Kingston St, Malvern East VIC 3145, Australia"; // ★ 自取默认地址
@@ -291,6 +291,22 @@
       return /^(?:y|yes|true|1|sold(?:\s*out)?|售罄|缺货)$/i.test(String(v||'').trim());
     }
     function isYes(v){ return /^(?:y|yes|true|1)$/i.test(String(v||'').trim()); }
+
+    // ★ Melbourne 当天 YYYY-MM-DD
+    function ymdMel(){
+      const d = new Date(new Date().toLocaleString("en-US",{timeZone:"Australia/Melbourne"}));
+      const mm = String(d.getMonth()+1).padStart(2,'0');
+      const dd = String(d.getDate()).padStart(2,'0');
+      return `${d.getFullYear()}-${mm}-${dd}`;
+    }
+    // ★ 判断 promo 是否在 start/end 有效期内（没填日期则一直有效）
+    function isActiveNow(p){
+      if(!p.start && !p.end) return true;
+      const today = ymdMel();
+      const s = p.start || '0000-01-01';
+      const e = p.end   || '9999-12-31';
+      return s <= today && today <= e;
+    }
 
     function getShipMethod(){
       return document.querySelector('input[name="ship"]:checked')?.value || 'delivery';
@@ -344,22 +360,24 @@
 
     // ======= PROMO rules (load once) =======
     let PROMO_RULES = [];
-    let MANUAL_PROMO = null;   // {code,type,value,min,stack,desc}
+    let MANUAL_PROMO = null;   // {code,type,value,min,stack,desc,start,end}
     function normalizePromoRow(r){
       return {
         enabled: isYes(r.enabled),
-        type: String(r.type||'').trim().toLowerCase(),   // freeship | minus | percent
+        type: String(r.type||'').trim().toLowerCase(),   // freeship | minus | percent | info | gift
         value: Number(r.value || 0) || 0,
         min: Number(r.min_subtotal || r.min || 0) || 0,
         code: String(r.code||'').trim().toUpperCase(),
         auto: isYes(r.auto),
         stack: isYes(r.stack),
-        desc: String(r.desc||r.note||'').trim()
+        desc: String(r.desc||r.note||'').trim(),
+        start: String(r.start||'').trim(),   // YYYY-MM-DD
+        end:   String(r.end||'').trim()      // YYYY-MM-DD
       };
     }
     function loadPromos(){
       return fetch(PROMO_URL).then(r=>r.json()).then(rows=>{
-        PROMO_RULES = (rows||[]).map(normalizePromoRow).filter(p=>p.enabled);
+        PROMO_RULES = (rows||[]).map(normalizePromoRow).filter(p=>p.enabled && isActiveNow(p));
       }).catch(()=>{ PROMO_RULES = []; });
     }
 
@@ -450,7 +468,6 @@
     function getApplicablePromos(subtotal){
       const autos = PROMO_RULES.filter(p=>p.auto && subtotal >= p.min);
       const manualOk = (MANUAL_PROMO && subtotal >= MANUAL_PROMO.min) ? [MANUAL_PROMO] : [];
-      // 简单策略：自动促销全部生效；若手动优惠码存在，也允许与自动叠加（若未来要更严，可用 p.stack 控制）
       return [...autos, ...manualOk];
     }
     function calcPromo(subtotal, baseShipping){
@@ -470,10 +487,12 @@
           const d = subtotal * (p.value/100);
           discount += d;
           lines.push(p.desc || (`${p.value}% off`));
+        }else if (p.type === 'info' || p.type === 'gift' || ((p.type==='percent'||p.type==='minus') && p.value<=0)) {
+          // 只展示文案，不改价
+          if (p.desc) lines.push(p.desc);
         }
       });
 
-      // 折扣最多不超过小计
       discount = Math.min(discount, subtotal);
 
       let shipping = baseShipping;
@@ -498,7 +517,6 @@
         return;
       }
 
-      // 确保已加载规则
       if(!PROMO_RULES.length){
         await loadPromos().catch(()=>{});
       }
@@ -592,7 +610,6 @@
       renderOrderSummary();
       document.getElementById('checkoutBg').classList.add('active');
       document.body.classList.add('modal-open');
-      // 打开时加载一次 PROMO（若尚未加载）
       if(!PROMO_RULES.length) loadPromos().catch(()=>{});
     }
     function closeCheckout(){
@@ -636,17 +653,15 @@
         items: cart.map(x=>({name:x.name,spec:x.spec,price:x.price,qty:x.qty})),
         name, phone, address: addr, notes,
         delivery: ship,
-        // ★ 把结算数字与促销带上（后端可选用）
         checkout: {
           subtotal,
           discount: Math.round(promoCalc.discount),
           shipping_fee: Math.round(promoCalc.shipping),
           total: Math.round(promoCalc.grand),
-          promo_applied: promoCalc.promos.map(p=>({code:p.code||'', type:p.type, value:p.value, min:p.min, desc:p.desc}))
+          promo_applied: promoCalc.promos.map(p=>({code:p.code||'', type:p.type, value:p.value, min:p.min, desc:p.desc, start:p.start||'', end:p.end||''}))
         }
       };
 
-      // 绑定校验
       const tgChatId = localStorage.getItem('tg_chat_id');
       if (!tgChatId) {
         msg.className = 'checkout-msg err';
@@ -759,7 +774,7 @@
     document.querySelectorAll('input[name="ship"]').forEach(el=> el.addEventListener('change', onShipChange));
     onShipChange();
     renderCartBar();
-    // 预加载一次 PROMO
+    // 预加载 PROMO
     loadPromos().catch(()=>{});
 
     // Expose
