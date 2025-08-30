@@ -241,6 +241,44 @@
     @media (max-width:360px){
       .order-summary table tbody td:nth-child(4)::before{ content:""; margin:0; }
     }
+    /* 手机端：一排整齐 + 去掉小计 + 商品名全显示 */
+    @media (max-width:640px){
+      /* 商品名：允许换行、显示完整；右侧给删除按钮留空 */
+      .order-summary table tbody td:nth-child(1){
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        padding-right: 44px;           /* 避免与垃圾桶重叠 */
+        margin-bottom: 2px;
+      }
+
+      /* Spec / Qty / Price 摆到同一排并统一对齐 */
+      .order-summary table tbody td:nth-child(2),
+      .order-summary table tbody td:nth-child(3),
+      .order-summary table tbody td:nth-child(4){
+        display: inline-flex !important;
+        align-items: baseline;
+        gap: 6px;                      /* 标签与值 */
+        margin-right: 0;               /* 由分隔符控制间距 */
+        padding: 2px 0 !important;
+        white-space: nowrap !important;/* 不换行（×1/$120 不拆） */
+        font-size: .96em;
+        line-height: 1.25;
+        font-variant-numeric: tabular-nums;
+      }
+      /* 分隔点让三块更整齐 */
+      .order-summary table tbody td:nth-child(2)::after,
+      .order-summary table tbody td:nth-child(3)::after{
+        content: "·";
+        color: #666;
+        margin: 0 10px;
+      }
+
+      /* 去掉每一项的小计行（Subtotal） */
+      .order-summary table tbody td:nth-child(5){
+        display: none !important;
+      }
+    }
 
 
     .radio-group label{ margin-right:12px; cursor:pointer; }
@@ -941,6 +979,7 @@
   </script>
 </body>
 </html>
+
 
 
 
