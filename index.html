@@ -169,6 +169,56 @@
         white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
       }
     }
+    /* —— 手机端卡片式布局 —— */
+    @media (max-width: 640px){
+      /* 不要表头 */
+      .order-summary thead{ display:none; }
+
+      /* 每行当一张卡 */
+      .order-summary tbody tr{
+        display:block;
+        position:relative;
+        padding:10px 0 6px;
+        border-bottom:1px dashed #2a2a2a;
+      }
+
+      /* 单元格改为“标签：值” */
+      .order-summary tbody td{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        padding:6px 2px;
+        word-break:normal;
+        overflow-wrap:normal;
+      }
+
+      /* 第一格：商品名（加粗、金色、单行省略号） */
+      .order-summary tbody td:nth-child(1){
+        display:block;
+        font-weight:800;
+        color:var(--bat-gold);
+        white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+        padding-right:44px;           /* 给右上角垃圾桶留空间 */
+      }
+
+      /* 后面几格加上标签 */
+      .order-summary tbody td:nth-child(2)::before{ content:"Spec";     color:#bbb; margin-right:8px; }
+      .order-summary tbody td:nth-child(3)::before{ content:"Qty";      color:#bbb; margin-right:8px; }
+      .order-summary tbody td:nth-child(4)::before{ content:"Price";    color:#bbb; margin-right:8px; }
+      .order-summary tbody td:nth-child(5)::before{ content:"Subtotal"; color:#bbb; margin-right:8px; }
+
+      /* 数值对齐更好看 */
+      .order-summary tbody td:nth-child(4),
+      .order-summary tbody td:nth-child(5){ font-variant-numeric: tabular-nums; }
+
+      /* 垃圾桶按钮固定在右上角 */
+      .order-summary tbody td:nth-child(6){
+        position:absolute;
+        right:0; top:6px;
+        display:block;                /* 只保留按钮本身 */
+        padding:0;
+      }
+    }
 
     .radio-group label{ margin-right:12px; cursor:pointer; }
     .radio-group input{ vertical-align:middle; margin-right:6px; }
@@ -868,4 +918,5 @@
   </script>
 </body>
 </html>
+
 
