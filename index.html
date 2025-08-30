@@ -140,6 +140,36 @@
     .order-summary .rm-btn:hover{ background:#ff5555; border-color:#ff5555; }
     .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
 
+    /* 表头不要被硬拆行 */
+    .order-summary th{ white-space:nowrap; }
+
+    /* <=560px：手机优化 */
+    @media (max-width:560px){
+      /* 让列宽按内容自适应（覆盖原来的 table-layout:fixed） */
+      .order-summary table{ table-layout:auto; }
+
+      /* 不在任意位置断词；间距略放大一点 */
+      .order-summary th,.order-summary td{
+        word-break: normal;        /* 覆盖 break-word */
+        overflow-wrap: normal;     /* 覆盖 anywhere   */
+        padding: 6px 6px;
+      }
+
+      /* 数值列的对齐方式 */
+      .order-summary th:nth-child(2), .order-summary td:nth-child(2){ text-align:center; min-width:42px; } /* Spec */
+      .order-summary th:nth-child(3), .order-summary td:nth-child(3){ text-align:center; min-width:42px; } /* Qty  */
+      .order-summary th:nth-child(4), .order-summary td:nth-child(4){ text-align:right; }                   /* Price*/
+      .order-summary th:nth-child(5), .order-summary td:nth-child(5){ text-align:right; }                   /* Subt.*/
+
+      /* 垃圾桶按钮单元 */
+      .order-summary th:nth-child(6), .order-summary td:nth-child(6){ width:36px; text-align:right; }
+
+      /* Item 列太长时用省略号，不撑破 */
+      .order-summary tbody td:nth-child(1){
+        white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      }
+    }
+
     .radio-group label{ margin-right:12px; cursor:pointer; }
     .radio-group input{ vertical-align:middle; margin-right:6px; }
     .radio-group{
@@ -838,3 +868,4 @@
   </script>
 </body>
 </html>
+
