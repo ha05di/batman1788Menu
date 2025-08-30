@@ -218,6 +218,58 @@
         font-variant-numeric: tabular-nums;
       }
     }
+    /* 手机端：商品名一行；下面把 Spec / Qty / Price 放在同一排；Subtotal 另起一行 */
+    @media (max-width:640px){
+      /* 隐藏表头，使用标签伪元素 */
+      .order-summary thead{ display:none; }
+
+      /* 每行像卡片一样排版 */
+      .order-summary tbody tr{
+        display:block; position:relative;
+        padding:10px 0 8px; border-bottom:1px dashed #2a2a2a;
+      }
+      .order-summary tbody td{
+        display:block; padding:6px 2px;
+        border-bottom:none;
+        word-break:normal;           /* 不要把数字/符号拆开 */
+        overflow-wrap:normal;
+      }
+
+      /* 1) 商品名（第一格） */
+      .order-summary tbody td:nth-child(1){
+        font-weight:800; color:var(--bat-gold);
+        white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+        padding-right:42px;          /* 右上角留给删除按钮 */
+      }
+
+      /* 2) 让 Spec / Qty / Price 同一排 */
+      .order-summary tbody td:nth-child(2),
+      .order-summary tbody td:nth-child(3),
+      .order-summary tbody td:nth-child(4){
+        display:inline-flex;         /* 关键：并排 */
+        align-items:center;
+        gap:6px;                     /* 标签与值间距 */
+        margin-right:16px;           /* 三块之间的距离 */
+        padding:2px 0;
+        white-space:nowrap;          /* 不换行（×1 不会拆开） */
+        font-variant-numeric:tabular-nums;
+      }
+      .order-summary tbody td:nth-child(2)::before{ content:"Spec";  color:#bbb; margin-right:6px; }
+      .order-summary tbody td:nth-child(3)::before{ content:"Qty";   color:#bbb; margin-right:6px; }
+      .order-summary tbody td:nth-child(4)::before{ content:"Price"; color:#bbb; margin-right:6px; }
+
+      /* 3) Subtotal 单独一行，左右对齐 */
+      .order-summary tbody td:nth-child(5){
+        display:flex; justify-content:space-between;
+        padding-top:6px; white-space:nowrap;
+      }
+      .order-summary tbody td:nth-child(5)::before{ content:"Subtotal"; color:#bbb; margin-right:8px; }
+
+      /* 4) 删除按钮固定在行右上角 */
+      .order-summary tbody td:nth-child(6){
+        position:absolute; right:0; top:6px; display:block; padding:0;
+      }
+    }
 
 
     .radio-group label{ margin-right:12px; cursor:pointer; }
@@ -918,6 +970,7 @@
   </script>
 </body>
 </html>
+
 
 
 
