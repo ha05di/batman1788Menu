@@ -1,206 +1,241 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Batman1788 Menu</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Google tag (gtag.js) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- 可选：Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-5DBPBMP3K1"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag(){ dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'G-5DBPBMP3K1');
   </script>
+
   <style>
-    :root {
-      --bat-black: #18191b;
-      --bat-card: rgba(35,36,39,0.90);
-      --bat-gold: #ffe02e;
-      --bat-yellow: #ffdf2b;
-      --bat-gray: #eee;
+    :root{
+      --bat-black:#18191b;
+      --bat-card:rgba(35,36,39,.90);
+      --bat-gold:#ffe02e;
+      --accent:#ffe02e;
+      --err:#ff5555;
+      --ok:#4cd964;
     }
-    body {
-      margin: 0; background: var(--bat-black); color: #fff;
-      font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif;
+
+    *{ box-sizing:border-box; }
+    body{ margin:0; background:var(--bat-black); color:#fff; font-family:'Segoe UI','PingFang SC','Microsoft YaHei',Arial,sans-serif; }
+    a{ color:var(--bat-gold); }
+
+    .header{
+      padding:14px 0 7px; text-align:center; font-size:1.25em; font-weight:800; letter-spacing:2px;
+      background:var(--bat-black); color:var(--bat-gold);
+      text-shadow:0 2px 24px #000, 0 1px 0 #fff3; border-bottom:1.5px solid #2c2c2e;
+      position:sticky; top:0; z-index:9;
     }
-    .header {
-      padding: 14px 0 7px 0;
-      text-align: center;
-      font-size: 1.25em;
-      font-weight: 800;
-      letter-spacing: 2px;
-      background: var(--bat-black);
-      color: var(--bat-gold);
-      text-shadow: 0 2px 24px #000, 0 1px 0 #fff3;
-      border-bottom: 1.5px solid #2c2c2e;
-      position: sticky; top: 0; z-index: 9;
+
+    .marquee-wrap{ background:#2a2927; border-bottom:1.2px solid #282828; overflow:hidden; position:sticky; top:0; z-index:22; height:38px; }
+    .marquee-text{ color:var(--bat-gold); font-size:1.03em; font-weight:600; line-height:38px; white-space:nowrap; will-change:transform; text-shadow:0 1px 10px #0006; }
+
+    .menu-wrap{ max-width:530px; margin:0 auto; padding:18px 0 120px; }
+
+    .menu-item{
+      display:flex; background:var(--bat-card); border-radius:18px; margin:0 12px 18px; padding:13px 12px 18px;
+      border:1.2px solid var(--bat-gold); box-shadow:0 3px 14px #ffe02e1b, 0 0 0 1.6px #ffe02e33; transition:.15s; position:relative; overflow:hidden;
     }
-    .header .bat-logo {
-      font-size: 1.4em;
-      vertical-align: middle;
-      margin-right: 9px;
-      filter: drop-shadow(0 2px 4px #ffe02e55);
+    .menu-item::before{
+      content:""; position:absolute; inset:0;
+      background:url('https://raw.githubusercontent.com/ha05di/batman1788shop/main/logo.png') center/85% no-repeat;
+      opacity:.23; pointer-events:none;
     }
-    .marquee-wrap {
-      background: #2a2927;
-      border-bottom: 1.2px solid #282828;
-      overflow: hidden;
-      position: sticky;
-      top: 0;
-      z-index: 22;
-      height: 38px;
+    .menu-item>*{ position:relative; z-index:1; }
+    .menu-img{
+      width:68px; height:68px; border-radius:13px; object-fit:cover; background:#252323; margin-right:13px;
+      border:1.3px solid var(--bat-gold); box-shadow:0 2px 10px #ffe02e3a; cursor:pointer; transition:box-shadow .18s; flex-shrink:0;
     }
-    .marquee-text {
-      color: var(--bat-gold);
-      font-size: 1.03em; font-weight: 600; line-height:38px;
-      white-space: nowrap;
-      position: sticky;top: 0;z-index: 22;
-      will-change: transform;
-      text-shadow:0 1px 10px #0006;
+    .menu-img:hover{ box-shadow:0 4px 20px #ffe02ea0; }
+    .menu-info{ flex:1; min-width:0; display:flex; flex-direction:column; }
+    .menu-name{ font-size:1.15em; font-weight:700; margin-bottom:2.5px; color:var(--bat-gold); display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+    .menu-badge{ background:linear-gradient(90deg,#ffe02e,#ffc400); color:#111; border-radius:9px; font-size:.83em; font-weight:600; padding:2px 9px; box-shadow:0 1px 5px #ffe02e44; }
+    .menu-type{ background:#303030; color:var(--bat-gold); font-size:.8em; border-radius:7px; padding:2px 8px; border:1px solid #ffe02e2c; }
+    .menu-title{ color:var(--bat-gold); font-size:.95em; margin-right:4px; }
+    .menu-thccbd{ color:#ffe02e; font-size:.97em; font-weight:500; }
+    .menu-desc{ font-size:.97em; color:#f8f6c7; margin-top:7px; line-height:1.48; text-shadow:0 1px 4px #1a17084f; }
+    .menu-bottom-prices{ display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
+    .menu-spec{ background:#2d2c22; color:var(--bat-gold); font-size:1.01em; border-radius:7px; padding:6px 12px; border:1.1px solid var(--bat-gold); box-shadow:0 1px 6px #ffe02e22; font-weight:900; cursor:pointer; }
+    .menu-price{ color:#ffe02e; font-weight:900; font-size:1.02em; margin-left:3px; }
+
+    /* 售罄的按钮置灰、不可点 */
+    .menu-spec[disabled]{
+      opacity:.55;
+      cursor:not-allowed;
+      filter:grayscale(0.3);
+      border-color:#666;
+      box-shadow:none;
     }
-    .menu-wrap { max-width: 530px; margin: 0 auto; padding: 18px 0 70px 0;}
-    .menu-item {
-      display: flex; 
-      background: var(--bat-card); 
-      border-radius: 18px;
-      box-shadow: 0 3px 14px #ffe02e1b, 0 0 0 1.6px #ffe02e33;
-      margin:0 12px 18px 12px; 
-      padding: 13px 12px 18px 12px; 
-      align-items: flex-start;
-      border: 1.2px solid var(--bat-gold);
-      transition:.15s;
-      position: relative;
-      flex-direction: row;
-      overflow: hidden;
+
+    /* 底部购物车条 */
+    .cart-bar{
+      position:fixed; left:0; right:0; bottom:0; z-index:50; background:#101114; border-top:1px solid #2c2c2e; padding:10px 14px;
+      display:flex; align-items:center; justify-content:center; gap:10px;
     }
-    .menu-item::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: url('https://raw.githubusercontent.com/ha05di/batman1788shop/main/logo.png') center center/85% no-repeat;
-      opacity: 0.23;
-      pointer-events: none;
-      z-index: 0;
+    .cart-info{ color:#fff; font-weight:700; }
+    .cart-btn{ background:var(--accent); color:#111; border:none; padding:10px 16px; border-radius:10px; font-weight:900; cursor:pointer; }
+    .cart-btn:disabled{ opacity:.5; cursor:not-allowed; }
+
+    /* 结算弹窗（自适应，小屏只纵向滚动） */
+    .checkout-bg{
+      position:fixed; inset:0; padding:10px;
+      background:rgba(0,0,0,.72); display:none; align-items:center; justify-content:center; z-index:99;
     }
-    .menu-item > * { position: relative; z-index: 1; }
-    .menu-img {
-      width: 68px; height: 68px; border-radius: 13px; object-fit: cover;
-      background: #252323; margin-right: 13px; border: 1.3px solid var(--bat-gold);
-      box-shadow:0 2px 10px #ffe02e3a;
-      flex-shrink: 0;
-      cursor: pointer;
-      transition: box-shadow .18s;
+    .checkout-bg.active{ display:flex; }
+    .checkout{
+      width:min(560px, 92vw);
+      max-height:calc(100vh - 40px);
+      overflow-y:auto; overflow-x:hidden; -webkit-overflow-scrolling:touch;
+      background:#1f2024; border:1px solid #444; border-radius:16px; padding:16px; box-shadow:0 4px 30px #000a;
     }
-    .menu-img:hover { box-shadow:0 4px 20px #ffe02ea0; }
-    .menu-info { flex:1; min-width: 0; display:flex; flex-direction:column;}
-    .menu-name {
-      font-size: 1.35em; font-weight: 700; margin-bottom: 2.5px;
-      color: var(--bat-gold); display: flex; align-items:center;
-      text-shadow: 0 2px 7px #ffe02e1a, 0 0px 1px #000;
-      flex-wrap: wrap;
+    .checkout *{ min-width:0; }
+    .checkout h3{ margin:4px 0 12px; color:var(--bat-gold); }
+
+    .f{ display:flex; gap:10px; margin-bottom:10px; flex-wrap:wrap; }
+    .f .i{ flex:1; }
+    .i label{ display:block; font-size:.92em; color:#ddd; margin-bottom:6px; }
+    .i input,.i textarea{ width:100%; background:#121316; color:#fff; border:1px solid #3a3a3a; border-radius:10px; padding:10px 12px; outline:none; }
+
+    .checkout-actions{ display:flex; gap:10px; margin-top:10px; }
+    .btn{ background:#2b2c30; color:#fff; border:1px solid #444; padding:10px 14px; border-radius:10px; cursor:pointer; }
+    .btn.primary{ background:var(--accent); color:#111; border:none; font-weight:900; }
+    .checkout-msg{ margin-top:8px; font-size:.95em; }
+    .checkout-msg.ok{ color:var(--ok); }
+    .checkout-msg.err{ color:var(--err); }
+
+    /* 订单摘要 */
+    .order-summary{ background:#141519; border:1px solid #2f2f33; border-radius:12px; padding:10px 12px; margin:10px 0; }
+    .order-summary .os-head{ font-weight:800; color:#ffe02e; margin-bottom:6px; }
+    .order-summary table{ width:100%; border-collapse:collapse; font-size:.95em; table-layout:fixed; }
+    .order-summary th,.order-summary td{ padding:6px 4px; border-bottom:1px dashed #2a2a2a; word-break:break-word; overflow-wrap:anywhere; }
+    .order-summary th{ color:#ddd; font-weight:700; text-align:left; }
+    .order-summary .ar{ text-align:right; }
+    .order-summary .os-total{ display:flex; justify-content:flex-end; font-weight:900; margin-top:6px; }
+    .order-summary .os-meta{ color:#bbb; font-size:.92em; margin-top:6px; line-height:1.4; }
+
+    /* 订单摘要-删除按钮（垃圾桶图标） */
+    .order-summary .rm-btn{
+      background:#3a3b40; color:#fff; border:1px solid #555;
+      width:32px; height:28px; border-radius:8px; cursor:pointer;
+      display:inline-flex; align-items:center; justify-content:center;
+      font-size:16px; line-height:1;
     }
-    .menu-badge {
-      display: inline-block; background: linear-gradient(90deg, #ffe02e, #ffc400);
-      color: #111; border-radius: 9px; font-size: .83em; font-weight: 600;
-      padding: 2px 9px 2px 9px; margin-left: 7px; margin-right: 4px; letter-spacing: 1px;
-      box-shadow:0 1px 5px #ffe02e44;
+    .order-summary .rm-btn:hover{ background:#ff5555; border-color:#ff5555; }
+    .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
+
+    /* 自取/送货 单选 */
+    .radio-group label{ margin-right:12px; cursor:pointer; }
+    .radio-group input{ vertical-align:middle; margin-right:6px; }
+
+    /* Promo 小徽章 */
+    .promo-badge{max-width:530px;margin:8px auto 0;padding:0 12px;}
+    .promo-chip{
+      display:block;background:#232519;border:1px solid #ffe02e66;color:#ffe02e;
+      border-radius:10px;padding:9px 12px;font-weight:800;text-shadow:0 1px 0 #0006;
     }
-    .menu-type {
-      display:inline-block; background: #303030; color:var(--bat-gold);
-      font-size:.8em; border-radius:7px; padding:2px 8px; margin-left:6px;
-      border:1px solid #ffe02e2c;
+    .promo-chip small{display:block;color:#ddd;font-weight:600;margin-top:3px;}
+
+    /* 图片弹窗 */
+    .img-modal-bg{ position:fixed; inset:0; background:rgba(0,0,0,.75); display:none; justify-content:center; align-items:center; z-index:9999; }
+    .img-modal-bg.active{ display:flex; }
+    .img-modal-bg img{ max-width:90vw; max-height:84vh; border-radius:16px; box-shadow:0 2px 28px #000a; background:#111; }
+
+    /* 悬浮客服 */
+    .contact-fab{
+      position:fixed; right:21px; bottom:70px; z-index:60; background:#ffe02e; border-radius:50%;
+      box-shadow:0 3px 18px #0006; width:52px; height:52px; display:flex; align-items:center; justify-content:center; border:none; cursor:pointer;
     }
-    .menu-title { color:var(--bat-gold); font-size:.95em; margin-bottom:1px; margin-right:4px;}
-    .menu-thccbd { color:#ffe02e; font-size:0.97em; font-weight:500; margin-bottom:2px; margin-right:10px;}
-    .menu-desc { font-size:.97em; color:#f8f6c7; margin:7px 0 0 0; line-height:1.48; text-shadow:0 1px 4px #1a17084f;}
-    .menu-bottom-prices {
-      display: flex;
-      gap: 13px;
-      justify-content: flex-start;
-      margin-top: 17px;
-      position: static;
-      padding: 0 4px 0 4px;
-      flex-wrap: wrap;
+    .contact-fab:hover{ box-shadow:0 7px 28px #ffe02e55; transform:scale(1.05); }
+
+    .footer{ position:fixed; left:0; bottom:0; width:100vw; color:#ffc400; background:#18191b; font-size:.98em; text-align:center; padding:12px 0 9px; z-index:22; border-top:1.5px solid #2c2c2e; }
+
+    /* 打开弹窗时可选：锁定页面背景滚动 */
+    body.modal-open{ overflow:hidden; }
+
+    @media (max-width:700px){
+      .menu-wrap{ padding:5px 0 130px; }
+      .menu-item{ margin:0 3vw 15px; padding:10px 5px 18px; }
+      .menu-img{ width:54px; height:54px; margin-right:7px; }
+      .menu-name{ font-size:1.05em; }
     }
-    .menu-spec {
-      background: #2d2c22; color:var(--bat-gold); font-size:1.01em; border-radius:7px;
-      padding:2px 13px; margin-right:2px; display:inline-block; border:1.1px solid #ffe02e;
-      box-shadow:0 1px 6px #ffe02e22;
-      margin-bottom:0;
-      font-weight: 900;
-    }
-    .menu-price {
-      color: #ffe02e; font-weight: 900; font-size:1.08em; margin-left:4px;
-      text-shadow: 0 2px 7px #ffe02e1a, 0 0px 1px #000;
-    }
-    .footer { position:fixed; left:0; bottom:0; width:100vw; color:#ffc400; background:#18191b;
-      font-size:.98em; text-align:center; padding:12px 0 9px 0; z-index:22; border-top: 1.5px solid #2c2c2e;}
-    a { color: #ffe02e; text-decoration:underline; }
-    @media (max-width:700px) {
-      .menu-wrap { padding: 5px 0 63px 0;}
-      .menu-item { margin: 0 3vw 15px 3vw; padding: 10px 5px 18px 5px;}
-      .menu-img { width:54px; height:54px; margin-right:7px;}
-      .menu-name { font-size: 1em;}
-    }
-    @media (max-width:400px){
-      .menu-item { flex-direction: column; align-items: stretch;}
-      .menu-img { margin: 0 0 10px 0; }
-      .menu-bottom-prices { justify-content: center; gap: 7px;}
-    }
-    /* 图片放大弹窗 */
-    .img-modal-bg {
-      position: fixed; left: 0; top: 0; width: 100vw; height: 100vh;
-      background: rgba(0,0,0,0.75); display: none; justify-content: center; align-items: center; z-index: 9999;
-    }
-    .img-modal-bg.active { display: flex; }
-    .img-modal-bg img { max-width: 90vw; max-height: 84vh; border-radius: 16px; box-shadow: 0 2px 28px #000a; background: #111;}
-    /* 悬浮客服按钮 */
-    .contact-fab {
-      position: fixed;
-      right: 21px;
-      bottom: 26px;
-      z-index: 2000;
-      background: #ffe02e;
-      border-radius: 50%;
-      box-shadow: 0 3px 18px #0006;
-      padding: 0;
-      width: 52px;
-      height: 52px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: box-shadow .16s,transform .12s;
-      border: none;
-      text-decoration: none;
-    }
-    .contact-fab:hover {
-      box-shadow: 0 7px 28px #ffe02e55;
-      transform: scale(1.08);
-    }
-    @media (max-width: 480px){
-      .contact-fab { right: 12px; bottom: 12px; width: 44px; height: 44px;}
-      .contact-fab svg { width: 22px; height: 22px;}
+    @media (max-width:480px){
+      .contact-fab{ right:12px; bottom:72px; width:44px; height:44px; }
+      .contact-fab svg{ width:22px; height:22px; }
     }
   </style>
 </head>
 <body>
-  <div class="header">
-    <span class="bat-logo"></span> Batman1788 Menu
-  </div>
+  <div class="header">Batman1788 Menu</div>
+
   <div class="marquee-wrap">
-    <div class="marquee-inner" id="marqueeInner" style="white-space:nowrap;display:flex;">
+    <div id="marqueeInner" style="white-space:nowrap;display:flex;">
       <span class="marquee-text" id="marqueeText"></span>
       <span class="marquee-text" id="marqueeTextClone"></span>
     </div>
   </div>
-  <div class="menu-wrap" id="menu"></div>
-  <div class="footer">
-    Batman1788 &copy; Menu | <a href="https://t.me/batman1788" target="_blank">Telegram Order</a>
+
+  <!-- Promo 徽章 -->
+  <div id="promoBadge" class="promo-badge" style="display:none"></div>
+
+  <!-- 绑定 Telegram -->
+  <div style="max-width:530px;margin:10px auto 0; padding:0 12px; text-align:center;">
+    <button type="button" class="menu-spec" onclick="bindTelegram()">One-click binding Telegram</button>
   </div>
 
-  <!-- 悬浮客服按钮 -->
+  <div class="menu-wrap" id="menu"></div>
+
+  <!-- 底部购物车条 -->
+  <div class="cart-bar">
+    <div class="cart-info" id="cartInfo">Shopping Cart 0 Item · $0</div>
+    <button class="cart-btn" id="checkoutBtn" onclick="openCheckout()" disabled>Check Out</button>
+  </div>
+
+  <!-- 结算弹窗 -->
+  <div class="checkout-bg" id="checkoutBg">
+    <div class="checkout">
+      <h3>Fill in the information</h3>
+
+      <div class="f"><div class="i">
+        <label>Name</label><input id="custName" placeholder="Recipient's name" />
+      </div></div>
+
+      <!-- 配送方式 -->
+      <div class="f"><div class="i">
+        <label>Delivery method</label>
+        <div class="radio-group">
+          <label><input type="radio" name="ship" value="delivery" checked> Delivery</label>
+          <label><input type="radio" name="ship" value="pickup"> Pickup</label>
+        </div>
+      </div></div>
+
+      <div class="f">
+        <div class="i"><label>Phone No.</label><input id="custPhone" placeholder="+61 ..." /></div>
+        <div class="i"><label>Address</label><input id="custAddr" placeholder="Full address" /></div>
+      </div>
+
+      <div class="f"><div class="i">
+        <label>Notes (optional)</label><textarea id="custNotes" rows="3" placeholder="Example: Drop-off time / door note"></textarea>
+      </div></div>
+
+      <div id="orderSummary" class="order-summary"></div>
+
+      <div class="checkout-actions">
+        <button class="btn" onclick="closeCheckout()">Cancel</button>
+        <button class="btn primary" onclick="submitOrder()">Submit Order</button>
+      </div>
+      <div class="checkout-msg" id="checkoutMsg"></div>
+    </div>
+  </div>
+
+  <!-- 悬浮客服 -->
   <a href="https://t.me/batman1788" target="_blank" class="contact-fab" title="Customer Service">
     <svg width="28" height="28" viewBox="0 0 24 24" fill="#fff" style="vertical-align:middle">
       <circle cx="12" cy="12" r="12" fill="#ffe02e" />
@@ -208,220 +243,461 @@
     </svg>
   </a>
 
-  <!-- 图片弹窗组件 -->
+  <!-- 图片弹窗 -->
   <div class="img-modal-bg" id="imgModal" onclick="this.classList.remove('active')">
     <img id="imgModalPic" src="" />
   </div>
 
+  <div class="footer">
+    Batman1788 © Menu |
+    <a href="https://t.me/batman1788" target="_blank">Telegram Order</a>
+  </div>
+
+  <!-- 广告弹窗 -->
+  <div class="ad-modal-bg hidden" id="adModal">
+    <div class="ad-modal">
+      <img id="adImg" src="" alt="Promo" />
+      <button class="ad-close" type="button" onclick="window.closeAd()">×</button>
+    </div>
+  </div>
+  <style>
+    .ad-modal-bg{ position:fixed; inset:0; background:rgba(0,0,0,.78); display:flex; align-items:center; justify-content:center; z-index:10000; }
+    .hidden{ display:none!important; }
+    .ad-modal{ position:relative; max-width:90vw; max-height:80vh; border-radius:16px; overflow:hidden; box-shadow:0 4px 25px #000a; background:#111; }
+    .ad-modal img{ width:100%; height:auto; display:block; }
+    .ad-close{ position:absolute; top:6px; right:6px; background:rgba(0,0,0,.6); color:#fff; border:none; border-radius:50%; width:32px; height:32px; font-size:20px; font-weight:bold; cursor:pointer; line-height:30px; }
+    .ad-close:hover{ background:rgba(0,0,0,.85); }
+  </style>
+
   <script>
-    // ---- 修改这里即可 ----
+    // ======= Config =======
+    const API_BASE = ""; // 同域部署留空；若前后端分离，填你的后端完整域名
     const SHEET_ID = "1hUlRnvEy-k2Arz8SVKpRsAaBEFTyS6RDJBDfwDmM-Hs";
     const SHEET_TAB_MENU = "batmenu";
     const SHEET_TAB_NOTICE = "notice";
-    const MENU_URL = `https://opensheet.elk.sh/${SHEET_ID}/${SHEET_TAB_MENU}`;
+    const MENU_URL   = `https://opensheet.elk.sh/${SHEET_ID}/${SHEET_TAB_MENU}`;
     const NOTICE_URL = `https://opensheet.elk.sh/${SHEET_ID}/${SHEET_TAB_NOTICE}`;
     const AD_URL     = `https://opensheet.elk.sh/${SHEET_ID}/ad`;
+    const PROMO_URL  = `https://opensheet.elk.sh/${SHEET_ID}/promo`;
+    const PICKUP_ADDRESS = "1 Kingston St, Malvern East VIC 3145, Australia"; // ★ 自取默认地址（改成你的）
 
-    // ---- 广告开关 ----
-    fetch(AD_URL)
-      .then(res=>res.json())
-      .then(rows=>{
-        if(rows.length > 0 && rows[0].enabled && rows[0].enabled.toLowerCase() === "yes"){
-          const adImg = rows[0].img || "";
-          if(adImg){
-            document.querySelector("#adModal img").src = adImg;
-            document.getElementById("adModal").style.display = "flex";
-          }
+    // ======= Utils & State =======
+    const cart = [];
+    let activePromo = null; // 命中的活动（若有）
+
+    const CURRENCY = "$";
+    // 显示为整数（四舍五入）+ 千分位
+    function money(n){
+      const v = Number(n) || 0;
+      return CURRENCY + new Intl.NumberFormat('en-US', {
+        maximumFractionDigits: 0,
+        minimumFractionDigits: 0
+      }).format(v);
+    }
+    function normPrice(val){ const n = Number(String(val??'').replace(/[^\d.-]/g,'')); return Number.isFinite(n)? n : 0; }
+    function showImgModal(src){ document.getElementById('imgModalPic').src = src; document.getElementById('imgModal').classList.add('active'); }
+
+    // 识别“真/售罄”的写法
+    function isTrue(v){ return /^(y|yes|true|1|sold(?:\s*out)?|售罄|缺货)$/i.test(String(v||'').trim()); }
+
+    // 配送：delivery / pickup
+    function getShipMethod(){
+      return document.querySelector('input[name="ship"]:checked')?.value || 'delivery';
+    }
+    function onShipChange(){
+      const method = getShipMethod();
+      const addrInput = document.getElementById('custAddr');
+      if(method === 'pickup'){
+        addrInput.value = PICKUP_ADDRESS;
+        addrInput.disabled = true;
+      }else{
+        if(addrInput.value === PICKUP_ADDRESS) addrInput.value = "";
+        addrInput.disabled = false;
+        addrInput.placeholder = "Full address";
+      }
+      renderOrderSummary();
+    }
+
+    // 运费（含 promo 逻辑）
+    function getShippingFee(){
+      if (getShipMethod() !== 'delivery') return 0; // 自取 0
+
+      if (!activePromo) return 20; // 默认 20
+
+      const subtotal = cart.reduce((a,b)=>a + b.qty*b.price, 0);
+      const pass = subtotal >= (activePromo.min_total || 0);
+      if (!pass) return 20;
+
+      if (activePromo.free_ship) return 0; // 免邮
+      if (activePromo.ship_fee != null) return Number(activePromo.ship_fee) || 0; // 指定邮费
+      return 20;
+    }
+
+    // ======= 广告弹窗 =======
+    window.closeAd = function(){ const m = document.getElementById('adModal'); if(m) m.classList.add('hidden'); };
+    (function(){
+      fetch(AD_URL).then(r=>r.json()).then(rows=>{
+        if(rows && rows.length){
+          const r = rows[0]||{}; const enabled = String(r.enabled||'').trim().toLowerCase()==='yes';
+          const adImg = (r.img||'').trim();
+          if(enabled && adImg){ const m = document.getElementById('adModal'); const img = document.getElementById('adImg'); img.src = adImg; m.classList.remove('hidden'); }
         }
-      })
-      .catch(err=>console.error("广告加载失败", err));
+      }).catch(()=>{});
+    })();
 
-    // 跑马灯: 第一条永远显示，第二条起每天澳洲10AM轮换
-    fetch(NOTICE_URL)
-      .then(res=>res.json())
-      .then(rows=>{
+    // ======= 跑马灯 =======
+    (function(){
+      fetch(NOTICE_URL).then(r=>r.json()).then(rows=>{
         let notices = rows.map(r=>r.msg).filter(Boolean);
         let mainMsg = notices[0] || "";
         let others = notices.slice(1);
-
-        // 墨尔本时区每天10AM切换
         let now = new Date();
-        let melTime = new Date(now.toLocaleString("en-US", {timeZone: "Australia/Melbourne"}));
-        let localDate = melTime.getFullYear() * 372 + (melTime.getMonth()+1)*31 + melTime.getDate();
-        if (melTime.getHours() < 10) {
-          melTime.setDate(melTime.getDate()-1);
-          localDate = melTime.getFullYear() * 372 + (melTime.getMonth()+1)*31 + melTime.getDate();
-        }
-
-        let oneMsg = "";
-        if (others.length > 0) {
-          oneMsg = others[(localDate % others.length)];
-        }
-        let showText = mainMsg;
-        if (oneMsg) showText += "   |   " + oneMsg;
-
+        let mel = new Date(now.toLocaleString("en-US",{timeZone:"Australia/Melbourne"}));
+        if(mel.getHours() < 10) mel.setDate(mel.getDate()-1);
+        let idx = (mel.getFullYear()*372 + (mel.getMonth()+1)*31 + mel.getDate());
+        let oneMsg = others.length? others[idx % others.length] : "";
+        const showText = oneMsg? (mainMsg + "   |   " + oneMsg) : mainMsg;
         const marquee = document.getElementById('marqueeText');
         const clone = document.getElementById('marqueeTextClone');
-        marquee.innerText = showText;
-        clone.innerText = showText;
-
-        const inner = document.getElementById('marqueeInner');
-        let speed = 1.2;
-        let pos = 0;
-        function scroll() {
-          let unitWidth = marquee.offsetWidth;
-          pos -= speed;
-          if (Math.abs(pos) >= unitWidth) pos = 0;
-          inner.style.transform = `translateX(${pos}px)`;
-          requestAnimationFrame(scroll);
-        }
+        marquee.innerText = showText; clone.innerText = showText;
+        const inner = document.getElementById('marqueeInner'); let speed = 1.2; let pos = 0;
+        function scroll(){ const unitWidth = marquee.offsetWidth; pos -= speed; if(Math.abs(pos)>=unitWidth) pos = 0; inner.style.transform=`translateX(${pos}px)`; requestAnimationFrame(scroll); }
         setTimeout(scroll, 350);
       });
+    })();
 
-    // 放大图片函数
-    window.showImgModal = function(src){
-      document.getElementById('imgModalPic').src = src;
-      document.getElementById('imgModal').classList.add('active');
+    // ======= Promo 读取与展示 =======
+    function melKey(d){ return d.getFullYear()*10000 + (d.getMonth()+1)*100 + d.getDate(); }
+    function parseKey(s){
+      if(!s) return null;
+      const m = String(s).trim().match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})$/);
+      if(!m) return null;
+      return (+m[1])*10000 + (+m[2])*100 + (+m[3]);
+    }
+    function yes(v){ return /^(y|yes|true|1)$/i.test(String(v||'').trim()); }
+    async function loadPromo(){
+      try{
+        const rows = await fetch(PROMO_URL).then(r=>r.json());
+        const nowMel = new Date(new Date().toLocaleString("en-US",{timeZone:"Australia/Melbourne"}));
+        const today = melKey(nowMel);
+        const hit = (rows||[]).find(r=>{
+          if(!yes(r.enabled)) return false;
+          const s = parseKey(r.start), e = parseKey(r.end||r.start);
+          if(!s || !e) return false;
+          return today >= s && today <= e;
+        });
+        if(hit){
+          activePromo = {
+            name      : (hit.name||'').trim(),
+            free_ship : yes(hit.free_ship),
+            ship_fee  : (hit.ship_fee!==undefined && hit.ship_fee!=='' ? Number(hit.ship_fee) : null),
+            min_total : Number(hit.min_total||0) || 0,
+            gift      : (hit.gift||'').trim()
+          };
+        }else{
+          activePromo = null;
+        }
+        renderPromoBadge();
+        renderOrderSummary();
+      }catch(e){
+        activePromo = null;
+        renderPromoBadge();
+      }
+    }
+    function renderPromoBadge(){
+      const box = document.getElementById('promoBadge');
+      if(!box) return;
+      if(!activePromo){
+        box.style.display = 'none';
+        box.innerHTML = '';
+        return;
+      }
+      const title = activePromo.name || 'Promo Today';
+      const cond  = activePromo.min_total>0 ? `满 ${money(activePromo.min_total)} 生效` : '已生效';
+      const extra = activePromo.free_ship ? '免邮' :
+                    (activePromo.ship_fee!=null ? `邮费 ${money(activePromo.ship_fee)}` :
+                    (activePromo.gift ? `🎁 ${activePromo.gift}` : ''));
+      box.style.display = '';
+      box.innerHTML = `<div class="promo-chip">${title}${extra?` · ${extra}`:''}<small>${cond}</small></div>`;
     }
 
-    // 菜单
-    fetch(MENU_URL)
-      .then(res=>res.json())
-      .then(rows=>{
-        const html = rows.map(obj=>{
-          // 多规格价钱
-          let priceBtns = '';
-          for(let i=1;i<=3;i++){
-            if(obj['spec'+i] && obj['price'+i]){
-              priceBtns += `<span class="menu-spec">${obj['spec'+i]} <span class="menu-price">${obj['price'+i]}</span></span>`;
-            }
+    // ======= 渲染菜单 =======
+    fetch(MENU_URL).then(r=>r.json()).then(rows=>{
+      const html = rows.map(obj=>{
+        // 整体售罄（或按库存）
+        const itemSoldOut = isTrue(obj.soldout) || (obj.stock !== undefined && Number(obj.stock) <= 0);
+
+        // 规格/价格
+        let btns = '';
+        for (let i = 1; i <= 3; i++) {
+          const spec   = obj['spec' + i];
+          const rawP   = obj['price' + i];
+          const status = obj['status' + i]; // 可选：status1/status2/status3
+          const specSoldOut = itemSoldOut || isTrue(status);
+          if (!spec) continue;
+
+          if (!rawP || specSoldOut) {
+            btns += `<button class="menu-spec" disabled>${spec} <span class="menu-price">Sold&nbsp;out</span></button>`;
+            continue;
           }
-          let thccbd = obj.thccbd || '';
-          if(!thccbd && (obj.thc || obj.cbd)) thccbd = (obj.thc?obj.thc:'')+(obj.cbd?(' / '+obj.cbd):'');
+          const price = normPrice(rawP);
+          const n = String(obj.name || '').replace(/'/g, "\\'");
+          const s = String(spec || '').replace(/'/g, "\\'");
+          const im= String(obj.img  || '').replace(/'/g, "\\'");
+          btns += `<button class="menu-spec" onclick="addToCart('${n}','${s}',${price},'${im}')">${spec} <span class="menu-price">${money(price)}</span></button>`;
+        }
+        if (!btns) btns = `<button class="menu-spec" disabled>Sold out</button>`;
 
-          return `
-            <div class="menu-item">
-              ${obj.img ? `<img class="menu-img" src="${obj.img}" loading="lazy" onclick="showImgModal('${obj.img}')"/>` : ""}
-              <div class="menu-info">
-                <div class="menu-name">
-                  ${obj.name || ""}
-                  ${obj.badge ? `<span class="menu-badge">${obj.badge}</span>` : ""}
-                  ${obj.type ? `<span class="menu-type">${obj.type}</span>` : ""}
-                </div>
-                <div style="display:flex;align-items:center;gap:9px;margin-bottom:2px;">
-                  ${obj.title ? `<span class="menu-title">${obj.title}</span>` : ""}
-                  ${thccbd ? `<span class="menu-thccbd">THC/CBD: ${thccbd}</span>` : ""}
-                </div>
-                ${obj.desc ? `<div class="menu-desc">${obj.desc}</div>` : ""}
-                <div class="menu-bottom-prices">${priceBtns}</div>
+        // THC/CBD
+        let thccbd = obj.thccbd || '';
+        if(!thccbd && (obj.thc || obj.cbd)) thccbd = (obj.thc?obj.thc:'') + (obj.cbd?(' / '+obj.cbd):'');
+
+        return `
+          <div class="menu-item">
+            ${obj.img ? `<img class="menu-img" src="${obj.img}" loading="lazy" onclick="showImgModal('${obj.img}')"/>` : ""}
+            <div class="menu-info">
+              <div class="menu-name">
+                ${obj.name || ""}
+                ${obj.badge ? `<span class="menu-badge">${obj.badge}</span>` : ""}
+                ${obj.type ? `<span class="menu-type">${obj.type}</span>` : ""}
               </div>
+              <div style="display:flex;align-items:center;gap:9px;margin-bottom:2px;flex-wrap:wrap;">
+                ${obj.title ? `<span class="menu-title">${obj.title}</span>` : ""}
+                ${thccbd ? `<span class="menu-thccbd">THC/CBD: ${thccbd}</span>` : ""}
+              </div>
+              ${obj.desc ? `<div class="menu-desc">${obj.desc}</div>` : ""}
+              <div class="menu-bottom-prices">${btns}</div>
             </div>
-          `;
-        }).join('');
-        document.getElementById('menu').innerHTML = html || `<div style="text-align:center;color:#ccc;margin-top:40px;">暂无菜单内容</div>`;
-      })
-      .catch(err=>{
-        document.getElementById('menu').innerHTML = "<div style='text-align:center;color:var(--bat-gold);margin-top:36vw;font-size:1.08em;'>菜单加载失败，请刷新重试。</div>";
-        console.error(err);
-      });
+          </div>
+        `;
+      }).join('');
+      document.getElementById('menu').innerHTML = html || `<div style="text-align:center;color:#ccc;margin-top:40px;">No items</div>`;
+    }).catch(err=>{
+      document.getElementById('menu').innerHTML = "<div style='text-align:center;color:var(--bat-gold);margin-top:36vw;font-size:1.08em;'>Load menu failed, please refresh.</div>";
+      console.error(err);
+    });
+
+    // ======= 购物车 / 结算 =======
+    function addToCart(name, spec, price, img){
+      const hit = cart.find(x => x.name === name && x.spec === spec);
+      if (hit) hit.qty += 1;
+      else cart.push({ name, spec, price, qty: 1, img });
+
+      renderCartBar();
+      if (document.getElementById('checkoutBg').classList.contains('active')) renderOrderSummary();
+    }
+    function renderCartBar(){
+      const cnt = cart.reduce((a,b)=>a+b.qty,0);
+      const total = cart.reduce((a,b)=>a+b.qty*b.price,0);
+      document.getElementById('cartInfo').textContent = `Shopping Cart ${cnt} Item · ${money(total)}`;
+      document.getElementById('checkoutBtn').disabled = (cnt === 0);
+    }
+    // 简单转义
+    function esc(s){
+      const map = { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' };
+      return String(s ?? '').replace(/[&<>"']/g, m => map[m]);
+    }
+    // 删除某行
+    function removeItem(idx){
+      if (idx < 0 || idx >= cart.length) return;
+      cart.splice(idx, 1);
+      renderCartBar();
+      renderOrderSummary();
+      if (cart.length === 0) closeCheckout();
+    }
+    window.removeItem = removeItem;
+
+    // 订单摘要（含 Promo 运费与赠品）
+    function renderOrderSummary(){
+      const box = document.getElementById('orderSummary');
+      if (!box) return;
+
+      const rowsHtml = cart.map((it, i) => {
+        const sub = it.qty * it.price;
+        return `<tr>
+          <td>${esc(it.name)}</td>
+          <td>${esc(it.spec || '')}</td>
+          <td class="ar">×${it.qty}</td>
+          <td class="ar">${money(it.price)}</td>
+          <td class="ar">${money(sub)}</td>
+          <td class="ar">
+            <button type="button" class="rm-btn" onclick="removeItem(${i})" title="删除">
+              <span class="sr-only">删除</span>🗑️
+            </button>
+          </td>
+        </tr>`;
+      }).join('');
+
+      const isPickup  = getShipMethod() === 'pickup';
+      const subtotal  = cart.reduce((a,b)=> a + b.qty*b.price, 0);
+      const shipping  = getShippingFee();
+      const grand     = subtotal + shipping;
+      const addr      = document.getElementById('custAddr').value.trim();
+
+      const promoApplied = !!activePromo && subtotal >= (activePromo.min_total||0) && !isPickup;
+      const shippingLabel = (shipping === 0)
+        ? (promoApplied && activePromo && activePromo.free_ship ? 'Free (Promo)' : 'Free')
+        : money(shipping);
+
+      box.innerHTML = `
+        <div class="os-head">Order Summary</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Item</th><th>Spec</th>
+              <th class="ar">Qty</th><th class="ar">Price</th><th class="ar">Subtotal</th>
+              <th class="ar"> </th>
+            </tr>
+          </thead>
+          <tbody>${rowsHtml || `<tr><td colspan="6" style="text-align:center;color:#aaa;padding:8px 0">Cart is empty</td></tr>`}</tbody>
+        </table>
+        <div class="os-total" style="flex-direction:column;gap:4px;align-items:flex-end">
+          <div>Subtotal: ${money(subtotal)}</div>
+          ${isPickup ? '' : `<div>Shipping: ${shippingLabel}</div>`}
+          <div style="font-weight:900">Total: ${money(grand)}</div>
+        </div>
+        <div class="os-meta">
+          <div>Method: ${isPickup ? 'Pickup' : 'Delivery'}</div>
+          ${isPickup ? '' : `<div>Address: ${esc(addr)}</div>`}
+          ${activePromo && subtotal >= (activePromo.min_total||0) && activePromo.gift ? `<div>🎁 Gift: ${esc(activePromo.gift)}</div>` : ''}
+        </div>
+      `;
+    }
+    function openCheckout(){
+      if(cart.length===0) return;
+      onShipChange();
+      renderOrderSummary();
+      document.getElementById('checkoutBg').classList.add('active');
+      document.body.classList.add('modal-open');
+    }
+    function closeCheckout(){
+      document.getElementById('checkoutBg').classList.remove('active');
+      document.body.classList.remove('modal-open');
+    }
+
+    // iOS/Safari/TG WebView 绑定兼容
+    function openTelegramLink(url, openedWindow){
+      const ua = navigator.userAgent || '';
+      const inTelegramWebView = /Telegram/i.test(ua);
+
+      if (inTelegramWebView) { location.href = url; return; }
+      if (openedWindow) openedWindow.location.href = url;
+      else {
+        const a = document.createElement('a');
+        a.href = url; a.target = '_blank'; a.rel = 'noopener';
+        document.body.appendChild(a); a.click(); a.remove();
+      }
+      setTimeout(()=>{
+        if (document.visibilityState === 'visible') {
+          alert('如果没有自动打开 Telegram，请点击确认后再次尝试，或复制链接到 Safari 打开：\n' + url);
+        }
+      }, 800);
+    }
+
+    async function submitOrder(){
+      const msg = document.getElementById('checkoutMsg');
+      const name = document.getElementById('custName').value.trim();
+      const phone= document.getElementById('custPhone').value.trim();
+      const addr = document.getElementById('custAddr').value.trim();
+      const notes= document.getElementById('custNotes').value.trim();
+      const ship = getShipMethod();
+
+      msg.className='checkout-msg'; msg.textContent='';
+      if(!cart.length){ msg.className='checkout-msg err'; msg.textContent='Cart is empty'; return; }
+      if(!name || !phone || !addr){ msg.className='checkout-msg err'; msg.textContent='Please fill in your name / phone number / address'; return; }
+      if(cart.some(x => !x.price || x.price <= 0)){ msg.className='checkout-msg err'; msg.textContent='Some product prices are invalid, please refresh and try again'; return; }
+
+      const payload = {
+        items: cart.map(x=>({name:x.name,spec:x.spec,price:x.price,qty:x.qty})),
+        name, phone, address: addr, notes,
+        delivery: ship
+      };
+
+      // 强制绑定（提交时拦截）
+      const tgChatId = localStorage.getItem('tg_chat_id');
+      if (!tgChatId) {
+        msg.className = 'checkout-msg err';
+        msg.innerHTML = 'Please bind Telegram before placing an order ' +
+                        '<a href="#" onclick="bindTelegram();return false;">Bind Now</a>';
+        return;
+      }
+      payload.tg_chat_id = tgChatId;
+
+      try{
+        const res = await fetch(`${API_BASE}/order`, {
+          method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if(res.ok){
+          msg.className='checkout-msg ok';
+          if (data.user_notified){
+            msg.textContent = 'Order successful! You have been notified via Telegram.';
+          } else if (data.tg_deeplink){
+            msg.innerHTML = 'Order placed! Click here to receive this order in Telegram 👉 ' + `<a href="${data.tg_deeplink}" target="_blank" rel="noopener">Enable notifications</a>`;
+          } else {
+            msg.textContent = 'Order Successfully！';
+          }
+          cart.splice(0, cart.length); renderCartBar();
+          document.getElementById('custName').value =
+          document.getElementById('custPhone').value =
+          document.getElementById('custAddr').value =
+          document.getElementById('custNotes').value = '';
+          setTimeout(closeCheckout, 1200);
+        }else{
+          msg.className='checkout-msg err';
+          msg.textContent = data.error || 'Failed, please try again later';
+        }
+      }catch(e){
+        msg.className='checkout-msg err';
+        msg.textContent='Network Error, please try again later';
+      }
+    }
+
+    // 一键绑定（iOS 修复）
+    async function bindTelegram(){
+      if (window._bindingRunning) return;
+      window._bindingRunning = true;
+      let w = null;
+      try{
+        w = window.open('', '_blank'); // 先打开空白页（避免 iOS 拦截）
+        const r = await fetch(`${API_BASE}/bind/new`, {method:'POST'});
+        const data = await r.json();
+        if(!r.ok || !data.tg_deeplink){
+          if (w) w.close();
+          alert(data.error || 'Binding failed, please try again later');
+          return;
+        }
+        openTelegramLink(data.tg_deeplink, w);
+
+        const code = data.code;
+        const start = Date.now();
+        const timer = setInterval(async ()=>{
+          const rr = await fetch(`${API_BASE}/bind/status?code=${encodeURIComponent(code)}`);
+          const s = await rr.json();
+          if(s.status==='ok'){
+            clearInterval(timer);
+            localStorage.setItem('tg_chat_id', s.chat_id);
+            alert('✅ 绑定成功！');
+            renderCartBar();
+          }else if(Date.now()-start>120000){
+            clearInterval(timer);
+          }
+        }, 2000);
+      }catch(e){
+        if (w) w.close();
+        alert('Binding failed, please try again later');
+      }finally{
+        window._bindingRunning = false;
+      }
+    }
+
+    // 事件绑定 & 初始化
+    document.querySelectorAll('input[name="ship"]').forEach(el=>{
+      el.addEventListener('change', onShipChange);
+    });
+    onShipChange();
+    renderCartBar();
+    loadPromo(); // 读取活动
   </script>
-<!-- 🔽 广告弹窗（放在 </body> 之前）🔽 -->
-<div class="ad-modal-bg hidden" id="adModal">
-  <div class="ad-modal">
-    <img id="adImg" src="" alt="Promo" />
-    <button class="ad-close" type="button" onclick="window.closeAd()">×</button>
-  </div>
-</div>
-
-<style>
-  /* 广告弹窗样式 */
-  .ad-modal-bg {
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.78);
-    display: flex;              /* 用类来控制显隐 */
-    align-items: center; justify-content: center;
-    z-index: 10000;
-  }
-  .hidden { display: none !important; }   /* 默认隐藏，避免被其它样式覆盖 */
-
-  .ad-modal {
-    position: relative;
-    max-width: 90vw; max-height: 80vh;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 4px 25px #000a;
-    animation: popIn .35s ease;
-    background: #111;
-  }
-  .ad-modal img {
-    width: 100%; height: auto; display:block;
-    background: #111;
-  }
-  .ad-close {
-    position: absolute; top: 6px; right: 6px;
-    background: rgba(0,0,0,0.6); color: #fff;
-    border: none; border-radius: 50%;
-    width: 32px; height: 32px;
-    font-size: 20px; font-weight: bold;
-    cursor: pointer; line-height: 30px;
-  }
-  .ad-close:hover { background: rgba(0,0,0,0.85); }
-  @keyframes popIn {
-    from { transform: scale(0.85); opacity: 0; }
-    to   { transform: scale(1);     opacity: 1; }
-  }
-</style>
-
-<script>
-  // 关闭：用 class 隐藏，最稳
-  window.closeAd = function () {
-    const modal = document.getElementById('adModal');
-    if (modal) modal.classList.add('hidden');
-  };
-
-  // 绑定背景与按钮点击；Esc 也可关闭
-  (function () {
-    const modal = document.getElementById('adModal');
-    if (!modal) return;
-
-    // 点击黑色背景时关闭（必须点到背景本身）
-    modal.addEventListener('click', function (e) {
-      if (e.target === modal) window.closeAd();
-    });
-
-    const btn = modal.querySelector('.ad-close');
-    if (btn) btn.addEventListener('click', window.closeAd);
-
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') window.closeAd();
-    });
-  })();
-
-  fetch(AD_URL)
-    .then(res => res.json())
-    .then(rows => {
-      if (!rows || !rows.length) return;
-      const r = rows[0] || {};
-      const enabled = String(r.enabled || '').trim().toLowerCase() === 'yes';
-      const adImg = (r.img || '').trim();
-      if (!enabled || !adImg) return;
-
-      const modal = document.getElementById('adModal');
-      const imgEl = document.getElementById('adImg');
-      if (!modal || !imgEl) return;
-
-      imgEl.src = adImg;
-      modal.classList.remove('hidden');  // 显示弹窗
-    })
-    .catch(err => console.error('广告加载失败:', err));
-</script>
-<!-- 🔼 广告弹窗 🔼 -->
 </body>
 </html>
-
-
-
-
-
-
-
