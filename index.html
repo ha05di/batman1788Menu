@@ -142,6 +142,35 @@
 
     .radio-group label{ margin-right:12px; cursor:pointer; }
     .radio-group input{ vertical-align:middle; margin-right:6px; }
+    .radio-group{
+      display:flex;
+      align-items:center;
+      gap:18px;                 /* 两个选项之间的距离 */
+      padding:6px 8px;
+      background:#15161a;
+      border:1px solid #2a2a2e;
+      border-radius:10px;
+      width:max-content;        /* 只包内容，不撑满整行 */
+    }
+    .radio-group label{
+      display:inline-flex;      /* 让文字与圆点同一基线 */
+      align-items:center;
+      gap:8px;                  /* 圆点与文字的距离 */
+      margin:0;                 /* 清掉默认外边距，避免“断层线”错觉 */
+      font-weight:600;
+      line-height:1;            /* 避免高度不齐 */
+    }
+    .radio-group input[type="radio"]{
+      margin:0;                 /* 让圆点垂直居中 */
+      accent-color: var(--bat-gold); /* 选中颜色与主题一致 */
+      transform: translateY(0.5px);  /* 细微校正 */
+    }
+
+    /* 小屏幕可以更紧凑一些 */
+    @media (max-width:480px){
+      .radio-group{ gap:12px; padding:5px 6px; }
+      .radio-group label{ gap:6px; }
+    }
 
     .img-modal-bg{ position:fixed; inset:0; background:rgba(0,0,0,.75); display:none; justify-content:center; align-items:center; z-index:9999; }
     .img-modal-bg.active{ display:flex; }
@@ -778,7 +807,7 @@
             if (s.status === 'ok') {
               clearInterval(timer);
               localStorage.setItem('tg_chat_id', s.chat_id);
-              alert('✅ 绑定成功！');
+              alert('✅ Binding successful！');
               renderCartBar?.();
             }
           }catch(e){}
@@ -809,8 +838,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-
