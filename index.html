@@ -219,6 +219,28 @@
         padding:0;
       }
     }
+    /* 手机：保留表格但可左右滑动，表头不换行 */
+    @media (max-width:600px){
+      .order-summary{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
+      .order-summary table{ min-width: 520px; table-layout:auto; } /* 不再被挤到断词 */
+      .order-summary th{ white-space:nowrap; }
+      .order-summary th,.order-summary td{ padding:8px 6px; }
+      /* Item 太长用省略号 */
+      .order-summary tbody td:nth-child(1){
+        white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:260px;
+      }
+    }
+
+    /* 超窄屏（<=420px）：表头用短标签（不改 HTML） */
+    @media (max-width:420px){
+      .order-summary thead th{ font-size:0; padding:6px 6px; white-space:nowrap; }
+      .order-summary thead th:nth-child(1)::after{ content:"Item";    font-size:.95rem; }
+      .order-summary thead th:nth-child(2)::after{ content:"Spec";    font-size:.95rem; }
+      .order-summary thead th:nth-child(3)::after{ content:"Qty";     font-size:.95rem; }
+      .order-summary thead th:nth-child(4)::after{ content:"Price";   font-size:.95rem; }
+      .order-summary thead th:nth-child(5)::after{ content:"Subt.";   font-size:.95rem; }
+      .order-summary thead th:nth-child(6)::after{ content:"";        font-size:.95rem; }
+    }
 
     .radio-group label{ margin-right:12px; cursor:pointer; }
     .radio-group input{ vertical-align:middle; margin-right:6px; }
@@ -918,5 +940,6 @@
   </script>
 </body>
 </html>
+
 
 
