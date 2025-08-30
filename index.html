@@ -242,6 +242,32 @@
       .order-summary thead th:nth-child(6)::after{ content:"";        font-size:.95rem; }
     }
 
+    /* 把 Spec、Qty、Price 放到同一行 */
+    @media (max-width:640px){
+      /* 这三格改为 inline-flex，能并排显示 */
+      .order-summary tbody td:nth-child(2),
+      .order-summary tbody td:nth-child(3),
+      .order-summary tbody td:nth-child(4){
+        display:inline-flex;
+        align-items:center;
+        gap:6px;               /* 标签与值的间距 */
+        margin-right:16px;     /* 三块之间的间距 */
+        padding:2px 2px;       /* 让行更紧凑 */
+      }
+
+      /* 仍保留标签文案 */
+      .order-summary tbody td:nth-child(2)::before{ content:"Spec";  color:#bbb; margin-right:6px; }
+      .order-summary tbody td:nth-child(3)::before{ content:"Qty";   color:#bbb; margin-right:6px; }
+      .order-summary tbody td:nth-child(4)::before{ content:"Price"; color:#bbb; margin-right:6px; }
+
+      /* Subtotal 仍然单独一行，左右对齐 */
+      .order-summary tbody td:nth-child(5){
+        display:flex;
+        justify-content:space-between;
+        padding-top:6px;
+      }
+    }
+
     .radio-group label{ margin-right:12px; cursor:pointer; }
     .radio-group input{ vertical-align:middle; margin-right:6px; }
     .radio-group{
@@ -940,6 +966,7 @@
   </script>
 </body>
 </html>
+
 
 
 
