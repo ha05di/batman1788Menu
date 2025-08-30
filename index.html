@@ -5,7 +5,7 @@
   <title>Batman1788 Menu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- 可选：Google Analytics -->
+  <!-- Optional: Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-5DBPBMP3K1"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -66,16 +66,8 @@
     .menu-spec{ background:#2d2c22; color:var(--bat-gold); font-size:1.01em; border-radius:7px; padding:6px 12px; border:1.1px solid var(--bat-gold); box-shadow:0 1px 6px #ffe02e22; font-weight:900; cursor:pointer; }
     .menu-price{ color:#ffe02e; font-weight:900; font-size:1.02em; margin-left:3px; }
 
-    /* 售罄的按钮置灰、不可点 */
-    .menu-spec[disabled]{
-      opacity:.55;
-      cursor:not-allowed;
-      filter:grayscale(0.3);
-      border-color:#666;
-      box-shadow:none;
-    }
+    .menu-spec[disabled]{ opacity:.55; cursor:not-allowed; filter:grayscale(0.3); border-color:#666; box-shadow:none; }
 
-    /* 底部购物车条 */
     .cart-bar{
       position:fixed; left:0; right:0; bottom:0; z-index:50; background:#101114; border-top:1px solid #2c2c2e; padding:10px 14px;
       display:flex; align-items:center; justify-content:center; gap:10px;
@@ -84,7 +76,6 @@
     .cart-btn{ background:var(--accent); color:#111; border:none; padding:10px 16px; border-radius:10px; font-weight:900; cursor:pointer; }
     .cart-btn:disabled{ opacity:.5; cursor:not-allowed; }
 
-    /* 结算弹窗（自适应，小屏只纵向滚动） */
     .checkout-bg{
       position:fixed; inset:0; padding:10px;
       background:rgba(0,0,0,.72); display:none; align-items:center; justify-content:center; z-index:99;
@@ -111,7 +102,6 @@
     .checkout-msg.ok{ color:var(--ok); }
     .checkout-msg.err{ color:var(--err); }
 
-    /* 订单摘要 */
     .order-summary{ background:#141519; border:1px solid #2f2f33; border-radius:12px; padding:10px 12px; margin:10px 0; }
     .order-summary .os-head{ font-weight:800; color:#ffe02e; margin-bottom:6px; }
     .order-summary table{ width:100%; border-collapse:collapse; font-size:.95em; table-layout:fixed; }
@@ -121,7 +111,6 @@
     .order-summary .os-total{ display:flex; justify-content:flex-end; font-weight:900; margin-top:6px; }
     .order-summary .os-meta{ color:#bbb; font-size:.92em; margin-top:6px; line-height:1.4; }
 
-    /* 订单摘要-删除按钮（垃圾桶图标） */
     .order-summary .rm-btn{
       background:#3a3b40; color:#fff; border:1px solid #555;
       width:32px; height:28px; border-radius:8px; cursor:pointer;
@@ -131,24 +120,13 @@
     .order-summary .rm-btn:hover{ background:#ff5555; border-color:#ff5555; }
     .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
 
-    /* 自取/送货 单选 */
     .radio-group label{ margin-right:12px; cursor:pointer; }
     .radio-group input{ vertical-align:middle; margin-right:6px; }
 
-    /* Promo 小徽章 */
-    .promo-badge{max-width:530px;margin:8px auto 0;padding:0 12px;}
-    .promo-chip{
-      display:block;background:#232519;border:1px solid #ffe02e66;color:#ffe02e;
-      border-radius:10px;padding:9px 12px;font-weight:800;text-shadow:0 1px 0 #0006;
-    }
-    .promo-chip small{display:block;color:#ddd;font-weight:600;margin-top:3px;}
-
-    /* 图片弹窗 */
     .img-modal-bg{ position:fixed; inset:0; background:rgba(0,0,0,.75); display:none; justify-content:center; align-items:center; z-index:9999; }
     .img-modal-bg.active{ display:flex; }
     .img-modal-bg img{ max-width:90vw; max-height:84vh; border-radius:16px; box-shadow:0 2px 28px #000a; background:#111; }
 
-    /* 悬浮客服 */
     .contact-fab{
       position:fixed; right:21px; bottom:70px; z-index:60; background:#ffe02e; border-radius:50%;
       box-shadow:0 3px 18px #0006; width:52px; height:52px; display:flex; align-items:center; justify-content:center; border:none; cursor:pointer;
@@ -157,7 +135,6 @@
 
     .footer{ position:fixed; left:0; bottom:0; width:100vw; color:#ffc400; background:#18191b; font-size:.98em; text-align:center; padding:12px 0 9px; z-index:22; border-top:1.5px solid #2c2c2e; }
 
-    /* 打开弹窗时可选：锁定页面背景滚动 */
     body.modal-open{ overflow:hidden; }
 
     @media (max-width:700px){
@@ -182,23 +159,20 @@
     </div>
   </div>
 
-  <!-- Promo 徽章 -->
-  <div id="promoBadge" class="promo-badge" style="display:none"></div>
-
-  <!-- 绑定 Telegram -->
+  <!-- Bind Telegram -->
   <div style="max-width:530px;margin:10px auto 0; padding:0 12px; text-align:center;">
     <button type="button" class="menu-spec" onclick="bindTelegram()">One-click binding Telegram</button>
   </div>
 
   <div class="menu-wrap" id="menu"></div>
 
-  <!-- 底部购物车条 -->
+  <!-- Cart bar -->
   <div class="cart-bar">
-    <div class="cart-info" id="cartInfo">Shopping Cart 0 Item · $0</div>
+    <div class="cart-info" id="cartInfo">Shopping Cart 0 Item · $0.00</div>
     <button class="cart-btn" id="checkoutBtn" onclick="openCheckout()" disabled>Check Out</button>
   </div>
 
-  <!-- 结算弹窗 -->
+  <!-- Checkout modal -->
   <div class="checkout-bg" id="checkoutBg">
     <div class="checkout">
       <h3>Fill in the information</h3>
@@ -207,7 +181,7 @@
         <label>Name</label><input id="custName" placeholder="Recipient's name" />
       </div></div>
 
-      <!-- 配送方式 -->
+      <!-- Delivery method -->
       <div class="f"><div class="i">
         <label>Delivery method</label>
         <div class="radio-group">
@@ -225,6 +199,17 @@
         <label>Notes (optional)</label><textarea id="custNotes" rows="3" placeholder="Example: Drop-off time / door note"></textarea>
       </div></div>
 
+      <!-- PROMO 输入区 -->
+      <div class="f"><div class="i">
+        <label>Promo Code</label>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <input id="promoCodeInput" placeholder="Enter promo code" />
+          <button class="btn" type="button" onclick="applyPromoCode()">Apply</button>
+          <button class="btn" type="button" onclick="clearPromoCode()">Clear</button>
+        </div>
+        <div id="promoMsg" class="checkout-msg"></div>
+      </div></div>
+
       <div id="orderSummary" class="order-summary"></div>
 
       <div class="checkout-actions">
@@ -235,7 +220,7 @@
     </div>
   </div>
 
-  <!-- 悬浮客服 -->
+  <!-- Floating contact -->
   <a href="https://t.me/batman1788" target="_blank" class="contact-fab" title="Customer Service">
     <svg width="28" height="28" viewBox="0 0 24 24" fill="#fff" style="vertical-align:middle">
       <circle cx="12" cy="12" r="12" fill="#ffe02e" />
@@ -243,7 +228,7 @@
     </svg>
   </a>
 
-  <!-- 图片弹窗 -->
+  <!-- Image modal -->
   <div class="img-modal-bg" id="imgModal" onclick="this.classList.remove('active')">
     <img id="imgModalPic" src="" />
   </div>
@@ -253,7 +238,7 @@
     <a href="https://t.me/batman1788" target="_blank">Telegram Order</a>
   </div>
 
-  <!-- 广告弹窗 -->
+  <!-- Ad modal -->
   <div class="ad-modal-bg hidden" id="adModal">
     <div class="ad-modal">
       <img id="adImg" src="" alt="Promo" />
@@ -271,22 +256,24 @@
 
   <script>
     // ======= Config =======
-    const API_BASE = ""; // 同域部署留空；若前后端分离，填你的后端完整域名
+    const API_BASE = ""; // same origin
     const SHEET_ID = "1hUlRnvEy-k2Arz8SVKpRsAaBEFTyS6RDJBDfwDmM-Hs";
-    const SHEET_TAB_MENU = "batmenu";
+    const SHEET_TAB_MENU   = "batmenu";
     const SHEET_TAB_NOTICE = "notice";
     const MENU_URL   = `https://opensheet.elk.sh/${SHEET_ID}/${SHEET_TAB_MENU}`;
     const NOTICE_URL = `https://opensheet.elk.sh/${SHEET_ID}/${SHEET_TAB_NOTICE}`;
     const AD_URL     = `https://opensheet.elk.sh/${SHEET_ID}/ad`;
+
+    /* ★ 新增：PROMO 规则（来自 promo sheet）
+       建议列：enabled | type | value | min_subtotal | code | auto | stack | desc */
     const PROMO_URL  = `https://opensheet.elk.sh/${SHEET_ID}/promo`;
-    const PICKUP_ADDRESS = "1 Kingston St, Malvern East VIC 3145, Australia"; // ★ 自取默认地址（改成你的）
+
+    const PICKUP_ADDRESS = "1 Kingston St, Malvern East VIC 3145, Australia"; // ★ 自取默认地址
 
     // ======= Utils & State =======
     const cart = [];
-    let activePromo = null; // 命中的活动（若有）
-
     const CURRENCY = "$";
-    // 显示为整数（四舍五入）+ 千分位
+
     function money(n){
       const v = Number(n) || 0;
       return CURRENCY + new Intl.NumberFormat('en-US', {
@@ -297,10 +284,14 @@
     function normPrice(val){ const n = Number(String(val??'').replace(/[^\d.-]/g,'')); return Number.isFinite(n)? n : 0; }
     function showImgModal(src){ document.getElementById('imgModalPic').src = src; document.getElementById('imgModal').classList.add('active'); }
 
-    // 识别“真/售罄”的写法
-    function isTrue(v){ return /^(y|yes|true|1|sold(?:\s*out)?|售罄|缺货)$/i.test(String(v||'').trim()); }
+    function getShippingFee(){
+      return getShipMethod() === 'delivery' ? 20 : 0;
+    }
+    function isTrue(v){
+      return /^(?:y|yes|true|1|sold(?:\s*out)?|售罄|缺货)$/i.test(String(v||'').trim());
+    }
+    function isYes(v){ return /^(?:y|yes|true|1)$/i.test(String(v||'').trim()); }
 
-    // 配送：delivery / pickup
     function getShipMethod(){
       return document.querySelector('input[name="ship"]:checked')?.value || 'delivery';
     }
@@ -318,22 +309,7 @@
       renderOrderSummary();
     }
 
-    // 运费（含 promo 逻辑）
-    function getShippingFee(){
-      if (getShipMethod() !== 'delivery') return 0; // 自取 0
-
-      if (!activePromo) return 20; // 默认 20
-
-      const subtotal = cart.reduce((a,b)=>a + b.qty*b.price, 0);
-      const pass = subtotal >= (activePromo.min_total || 0);
-      if (!pass) return 20;
-
-      if (activePromo.free_ship) return 0; // 免邮
-      if (activePromo.ship_fee != null) return Number(activePromo.ship_fee) || 0; // 指定邮费
-      return 20;
-    }
-
-    // ======= 广告弹窗 =======
+    // ======= Ad modal =======
     window.closeAd = function(){ const m = document.getElementById('adModal'); if(m) m.classList.add('hidden'); };
     (function(){
       fetch(AD_URL).then(r=>r.json()).then(rows=>{
@@ -345,7 +321,7 @@
       }).catch(()=>{});
     })();
 
-    // ======= 跑马灯 =======
+    // ======= Marquee =======
     (function(){
       fetch(NOTICE_URL).then(r=>r.json()).then(rows=>{
         let notices = rows.map(r=>r.msg).filter(Boolean);
@@ -366,89 +342,55 @@
       });
     })();
 
-    // ======= Promo 读取与展示 =======
-    function melKey(d){ return d.getFullYear()*10000 + (d.getMonth()+1)*100 + d.getDate(); }
-    function parseKey(s){
-      if(!s) return null;
-      const m = String(s).trim().match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})$/);
-      if(!m) return null;
-      return (+m[1])*10000 + (+m[2])*100 + (+m[3]);
+    // ======= PROMO rules (load once) =======
+    let PROMO_RULES = [];
+    let MANUAL_PROMO = null;   // {code,type,value,min,stack,desc}
+    function normalizePromoRow(r){
+      return {
+        enabled: isYes(r.enabled),
+        type: String(r.type||'').trim().toLowerCase(),   // freeship | minus | percent
+        value: Number(r.value || 0) || 0,
+        min: Number(r.min_subtotal || r.min || 0) || 0,
+        code: String(r.code||'').trim().toUpperCase(),
+        auto: isYes(r.auto),
+        stack: isYes(r.stack),
+        desc: String(r.desc||r.note||'').trim()
+      };
     }
-    function yes(v){ return /^(y|yes|true|1)$/i.test(String(v||'').trim()); }
-    async function loadPromo(){
-      try{
-        const rows = await fetch(PROMO_URL).then(r=>r.json());
-        const nowMel = new Date(new Date().toLocaleString("en-US",{timeZone:"Australia/Melbourne"}));
-        const today = melKey(nowMel);
-        const hit = (rows||[]).find(r=>{
-          if(!yes(r.enabled)) return false;
-          const s = parseKey(r.start), e = parseKey(r.end||r.start);
-          if(!s || !e) return false;
-          return today >= s && today <= e;
-        });
-        if(hit){
-          activePromo = {
-            name      : (hit.name||'').trim(),
-            free_ship : yes(hit.free_ship),
-            ship_fee  : (hit.ship_fee!==undefined && hit.ship_fee!=='' ? Number(hit.ship_fee) : null),
-            min_total : Number(hit.min_total||0) || 0,
-            gift      : (hit.gift||'').trim()
-          };
-        }else{
-          activePromo = null;
-        }
-        renderPromoBadge();
-        renderOrderSummary();
-      }catch(e){
-        activePromo = null;
-        renderPromoBadge();
-      }
-    }
-    function renderPromoBadge(){
-      const box = document.getElementById('promoBadge');
-      if(!box) return;
-      if(!activePromo){
-        box.style.display = 'none';
-        box.innerHTML = '';
-        return;
-      }
-      const title = activePromo.name || 'Promo Today';
-      const cond  = activePromo.min_total>0 ? `满 ${money(activePromo.min_total)} 生效` : '已生效';
-      const extra = activePromo.free_ship ? '免邮' :
-                    (activePromo.ship_fee!=null ? `邮费 ${money(activePromo.ship_fee)}` :
-                    (activePromo.gift ? `🎁 ${activePromo.gift}` : ''));
-      box.style.display = '';
-      box.innerHTML = `<div class="promo-chip">${title}${extra?` · ${extra}`:''}<small>${cond}</small></div>`;
+    function loadPromos(){
+      return fetch(PROMO_URL).then(r=>r.json()).then(rows=>{
+        PROMO_RULES = (rows||[]).map(normalizePromoRow).filter(p=>p.enabled);
+      }).catch(()=>{ PROMO_RULES = []; });
     }
 
-    // ======= 渲染菜单 =======
+    // ======= Render menu =======
     fetch(MENU_URL).then(r=>r.json()).then(rows=>{
       const html = rows.map(obj=>{
-        // 整体售罄（或按库存）
+        let btns = '';
         const itemSoldOut = isTrue(obj.soldout) || (obj.stock !== undefined && Number(obj.stock) <= 0);
 
-        // 规格/价格
-        let btns = '';
         for (let i = 1; i <= 3; i++) {
-          const spec   = obj['spec' + i];
-          const rawP   = obj['price' + i];
-          const status = obj['status' + i]; // 可选：status1/status2/status3
+          const spec = obj['spec' + i];
+          const rawP = obj['price' + i];
+          const status = obj['status' + i];
           const specSoldOut = itemSoldOut || isTrue(status);
+
           if (!spec) continue;
 
           if (!rawP || specSoldOut) {
             btns += `<button class="menu-spec" disabled>${spec} <span class="menu-price">Sold&nbsp;out</span></button>`;
             continue;
           }
+
           const price = normPrice(rawP);
           const n = String(obj.name || '').replace(/'/g, "\\'");
-          const s = String(spec || '').replace(/'/g, "\\'");
-          const im= String(obj.img  || '').replace(/'/g, "\\'");
+          const s = String(spec).replace(/'/g, "\\'");
+          const im = String(obj.img || '').replace(/'/g, "\\'");
           btns += `<button class="menu-spec" onclick="addToCart('${n}','${s}',${price},'${im}')">${spec} <span class="menu-price">${money(price)}</span></button>`;
         }
+
         if (!btns) btns = `<button class="menu-spec" disabled>Sold out</button>`;
 
-        // THC/CBD
         let thccbd = obj.thccbd || '';
         if(!thccbd && (obj.thc || obj.cbd)) thccbd = (obj.thc?obj.thc:'') + (obj.cbd?(' / '+obj.cbd):'');
 
@@ -466,7 +408,7 @@
                 ${thccbd ? `<span class="menu-thccbd">THC/CBD: ${thccbd}</span>` : ""}
               </div>
               ${obj.desc ? `<div class="menu-desc">${obj.desc}</div>` : ""}
-              <div class="menu-bottom-prices">${btns}</div>
+              <div class="menu-bottom-prices">${btns || '<span style="color:#ccc">No price</span>'}</div>
             </div>
           </div>
         `;
@@ -477,12 +419,11 @@
       console.error(err);
     });
 
-    // ======= 购物车 / 结算 =======
+    // ======= Cart / checkout =======
     function addToCart(name, spec, price, img){
       const hit = cart.find(x => x.name === name && x.spec === spec);
       if (hit) hit.qty += 1;
       else cart.push({ name, spec, price, qty: 1, img });
-
       renderCartBar();
       if (document.getElementById('checkoutBg').classList.contains('active')) renderOrderSummary();
     }
@@ -492,12 +433,10 @@
       document.getElementById('cartInfo').textContent = `Shopping Cart ${cnt} Item · ${money(total)}`;
       document.getElementById('checkoutBtn').disabled = (cnt === 0);
     }
-    // 简单转义
     function esc(s){
       const map = { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' };
       return String(s ?? '').replace(/[&<>"']/g, m => map[m]);
     }
-    // 删除某行
     function removeItem(idx){
       if (idx < 0 || idx >= cart.length) return;
       cart.splice(idx, 1);
@@ -507,7 +446,87 @@
     }
     window.removeItem = removeItem;
 
-    // 订单摘要（含 Promo 运费与赠品）
+    // ======= Promo engine =======
+    function getApplicablePromos(subtotal){
+      const autos = PROMO_RULES.filter(p=>p.auto && subtotal >= p.min);
+      const manualOk = (MANUAL_PROMO && subtotal >= MANUAL_PROMO.min) ? [MANUAL_PROMO] : [];
+      // 简单策略：自动促销全部生效；若手动优惠码存在，也允许与自动叠加（若未来要更严，可用 p.stack 控制）
+      return [...autos, ...manualOk];
+    }
+    function calcPromo(subtotal, baseShipping){
+      const promos = getApplicablePromos(subtotal);
+      let freeship = false;
+      let discount = 0;
+      let lines = [];
+
+      promos.forEach(p=>{
+        if(p.type === 'freeship'){
+          freeship = true;
+          lines.push(p.desc || 'Free shipping');
+        }else if(p.type === 'minus' && p.value > 0){
+          discount += p.value;
+          lines.push(p.desc || (`-$${p.value} off`));
+        }else if(p.type === 'percent' && p.value > 0){
+          const d = subtotal * (p.value/100);
+          discount += d;
+          lines.push(p.desc || (`${p.value}% off`));
+        }
+      });
+
+      // 折扣最多不超过小计
+      discount = Math.min(discount, subtotal);
+
+      let shipping = baseShipping;
+      if (freeship && getShipMethod()==='delivery') shipping = 0;
+
+      const afterDiscount = Math.max(0, subtotal - discount);
+      const grand = afterDiscount + shipping;
+
+      return {promos, freeship, discount, shipping, afterDiscount, grand, lines};
+    }
+
+    // ======= Promo UI actions =======
+    async function applyPromoCode(){
+      const inp = document.getElementById('promoCodeInput');
+      const msg = document.getElementById('promoMsg');
+      const code = String(inp.value||'').trim().toUpperCase();
+      msg.className = 'checkout-msg';
+
+      if(!code){
+        msg.className = 'checkout-msg err';
+        msg.textContent = 'Please enter a promo code';
+        return;
+      }
+
+      // 确保已加载规则
+      if(!PROMO_RULES.length){
+        await loadPromos().catch(()=>{});
+      }
+
+      const rule = PROMO_RULES.find(p=>!p.auto && p.code === code);
+      if(!rule){
+        MANUAL_PROMO = null;
+        msg.className = 'checkout-msg err';
+        msg.textContent = 'Invalid promo code';
+        renderOrderSummary();
+        return;
+      }
+      MANUAL_PROMO = rule;
+      msg.className = 'checkout-msg ok';
+      msg.textContent = rule.desc ? `Applied: ${rule.desc}` : 'Promo applied';
+      renderOrderSummary();
+    }
+    function clearPromoCode(){
+      MANUAL_PROMO = null;
+      const msg = document.getElementById('promoMsg');
+      msg.className = 'checkout-msg';
+      msg.textContent = '';
+      renderOrderSummary();
+    }
+    window.applyPromoCode = applyPromoCode;
+    window.clearPromoCode = clearPromoCode;
+
+    // ======= 渲染订单摘要 =======
     function renderOrderSummary(){
       const box = document.getElementById('orderSummary');
       if (!box) return;
@@ -528,16 +547,18 @@
         </tr>`;
       }).join('');
 
-      const isPickup  = getShipMethod() === 'pickup';
-      const subtotal  = cart.reduce((a,b)=> a + b.qty*b.price, 0);
-      const shipping  = getShippingFee();
-      const grand     = subtotal + shipping;
-      const addr      = document.getElementById('custAddr').value.trim();
+      const subtotal = cart.reduce((a,b)=> a + b.qty*b.price, 0);
+      const baseShipping = getShippingFee();
 
-      const promoApplied = !!activePromo && subtotal >= (activePromo.min_total||0) && !isPickup;
-      const shippingLabel = (shipping === 0)
-        ? (promoApplied && activePromo && activePromo.free_ship ? 'Free (Promo)' : 'Free')
-        : money(shipping);
+      // ★ 计算促销
+      const {discount, shipping, grand, lines} = calcPromo(subtotal, baseShipping);
+
+      const method   = getShipMethod() === 'pickup' ? 'Pickup' : 'Delivery';
+      const addr     = document.getElementById('custAddr').value.trim();
+
+      const promoLines = lines.length
+        ? `<div style="color:#9effa8;">Promotions: ${lines.map(esc).join(' · ')}</div>`
+        : '';
 
       box.innerHTML = `
         <div class="os-head">Order Summary</div>
@@ -553,45 +574,45 @@
         </table>
         <div class="os-total" style="flex-direction:column;gap:4px;align-items:flex-end">
           <div>Subtotal: ${money(subtotal)}</div>
-          ${isPickup ? '' : `<div>Shipping: ${shippingLabel}</div>`}
+          ${discount>0 ? `<div style="color:#9effa8;">Discount: -${money(discount).replace('$','')}</div>` : ``}
+          <div>Shipping: ${money(shipping)}</div>
           <div style="font-weight:900">Total: ${money(grand)}</div>
         </div>
-        <div class="os-meta">
-          <div>Method: ${isPickup ? 'Pickup' : 'Delivery'}</div>
-          ${isPickup ? '' : `<div>Address: ${esc(addr)}</div>`}
-          ${activePromo && subtotal >= (activePromo.min_total||0) && activePromo.gift ? `<div>🎁 Gift: ${esc(activePromo.gift)}</div>` : ''}
+        ${promoLines}
+        <div class="os-meta" style="margin-top:8px;">
+          <div>Method: ${method}</div>
+          <div>Address: ${esc(addr)}</div>
         </div>
       `;
     }
+
     function openCheckout(){
       if(cart.length===0) return;
       onShipChange();
       renderOrderSummary();
       document.getElementById('checkoutBg').classList.add('active');
       document.body.classList.add('modal-open');
+      // 打开时加载一次 PROMO（若尚未加载）
+      if(!PROMO_RULES.length) loadPromos().catch(()=>{});
     }
     function closeCheckout(){
       document.getElementById('checkoutBg').classList.remove('active');
       document.body.classList.remove('modal-open');
     }
 
-    // iOS/Safari/TG WebView 绑定兼容
     function openTelegramLink(url, openedWindow){
       const ua = navigator.userAgent || '';
       const inTelegramWebView = /Telegram/i.test(ua);
 
       if (inTelegramWebView) { location.href = url; return; }
-      if (openedWindow) openedWindow.location.href = url;
-      else {
+      if (openedWindow) {
+        openedWindow.location.href = url;
+      } else {
         const a = document.createElement('a');
         a.href = url; a.target = '_blank'; a.rel = 'noopener';
         document.body.appendChild(a); a.click(); a.remove();
       }
-      setTimeout(()=>{
-        if (document.visibilityState === 'visible') {
-          alert('如果没有自动打开 Telegram，请点击确认后再次尝试，或复制链接到 Safari 打开：\n' + url);
-        }
-      }, 800);
+      setTimeout(()=>{ if (document.visibilityState === 'visible') { alert('如果没有自动打开 Telegram，请点击确认后再次尝试，或复制链接到 Safari 打开：\n' + url); } }, 800);
     }
 
     async function submitOrder(){
@@ -607,13 +628,25 @@
       if(!name || !phone || !addr){ msg.className='checkout-msg err'; msg.textContent='Please fill in your name / phone number / address'; return; }
       if(cart.some(x => !x.price || x.price <= 0)){ msg.className='checkout-msg err'; msg.textContent='Some product prices are invalid, please refresh and try again'; return; }
 
+      const subtotal = cart.reduce((a,b)=> a + b.qty*b.price, 0);
+      const baseShipping = getShippingFee();
+      const promoCalc = calcPromo(subtotal, baseShipping);
+
       const payload = {
         items: cart.map(x=>({name:x.name,spec:x.spec,price:x.price,qty:x.qty})),
         name, phone, address: addr, notes,
-        delivery: ship
+        delivery: ship,
+        // ★ 把结算数字与促销带上（后端可选用）
+        checkout: {
+          subtotal,
+          discount: Math.round(promoCalc.discount),
+          shipping_fee: Math.round(promoCalc.shipping),
+          total: Math.round(promoCalc.grand),
+          promo_applied: promoCalc.promos.map(p=>({code:p.code||'', type:p.type, value:p.value, min:p.min, desc:p.desc}))
+        }
       };
 
-      // 强制绑定（提交时拦截）
+      // 绑定校验
       const tgChatId = localStorage.getItem('tg_chat_id');
       if (!tgChatId) {
         msg.className = 'checkout-msg err';
@@ -624,9 +657,7 @@
       payload.tg_chat_id = tgChatId;
 
       try{
-        const res = await fetch(`${API_BASE}/order`, {
-          method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)
-        });
+        const res = await fetch(`${API_BASE}/order`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
         const data = await res.json();
         if(res.ok){
           msg.className='checkout-msg ok';
@@ -642,6 +673,8 @@
           document.getElementById('custPhone').value =
           document.getElementById('custAddr').value =
           document.getElementById('custNotes').value = '';
+          document.getElementById('promoCodeInput').value = '';
+          MANUAL_PROMO = null;
           setTimeout(closeCheckout, 1200);
         }else{
           msg.className='checkout-msg err';
@@ -653,51 +686,88 @@
       }
     }
 
-    // 一键绑定（iOS 修复）
+    // ======= One-click bind Telegram =======
+    function isIOS(){ return /iP(hone|od|ad)/i.test(navigator.userAgent); }
+
+    function addTgFallback(link){
+      if(document.getElementById('tgFallback')) return;
+      const div = document.createElement('div');
+      div.id = 'tgFallback';
+      div.style = 'margin-top:8px;text-align:center;color:#ffe02e;';
+      div.innerHTML = `如果没有自动打开 Telegram，请 <a href="${link}" target="_blank" rel="noopener noreferrer">点这里</a> 手动打开。`;
+      const holder = document.querySelector('[onclick*="bindTelegram"]')?.parentNode || document.body;
+      holder.appendChild(div);
+    }
+
+    function openTelegramLinkSmart(link, preOpenedWin){
+      if (isIOS()) {
+        location.href = link;
+        setTimeout(()=>addTgFallback(link), 800);
+        return;
+      }
+      if (preOpenedWin) { try { preOpenedWin.location.href = link; return; } catch(e){} }
+      let opened = false;
+      try { const w = window.open(link, '_blank', 'noopener,noreferrer'); opened = !!w; } catch(e) { opened = false; }
+      if (!opened) location.href = link;
+      setTimeout(()=>addTgFallback(link), 800);
+    }
+
     async function bindTelegram(){
       if (window._bindingRunning) return;
       window._bindingRunning = true;
-      let w = null;
+
+      const needPreOpen = !isIOS();
+      let pre = null;
       try{
-        w = window.open('', '_blank'); // 先打开空白页（避免 iOS 拦截）
+        if (needPreOpen) pre = window.open('', '_blank');
         const r = await fetch(`${API_BASE}/bind/new`, {method:'POST'});
         const data = await r.json();
+
         if(!r.ok || !data.tg_deeplink){
-          if (w) w.close();
+          if (pre) pre.close();
           alert(data.error || 'Binding failed, please try again later');
           return;
         }
-        openTelegramLink(data.tg_deeplink, w);
+        openTelegramLinkSmart(data.tg_deeplink, pre);
 
         const code = data.code;
         const start = Date.now();
+        const maxWait = 120000;
         const timer = setInterval(async ()=>{
-          const rr = await fetch(`${API_BASE}/bind/status?code=${encodeURIComponent(code)}`);
-          const s = await rr.json();
-          if(s.status==='ok'){
-            clearInterval(timer);
-            localStorage.setItem('tg_chat_id', s.chat_id);
-            alert('✅ 绑定成功！');
-            renderCartBar();
-          }else if(Date.now()-start>120000){
-            clearInterval(timer);
-          }
+          try{
+            const rr = await fetch(`${API_BASE}/bind/status?code=${encodeURIComponent(code)}`);
+            const s  = await rr.json();
+            if (s.status === 'ok') {
+              clearInterval(timer);
+              localStorage.setItem('tg_chat_id', s.chat_id);
+              alert('✅ 绑定成功！');
+              renderCartBar?.();
+            }
+          }catch(e){}
+          if (Date.now() - start > maxWait) clearInterval(timer);
         }, 2000);
+
       }catch(e){
-        if (w) w.close();
+        if (pre) pre.close();
         alert('Binding failed, please try again later');
       }finally{
         window._bindingRunning = false;
       }
     }
 
-    // 事件绑定 & 初始化
-    document.querySelectorAll('input[name="ship"]').forEach(el=>{
-      el.addEventListener('change', onShipChange);
-    });
+    // Wire up radio events & initial states
+    document.querySelectorAll('input[name="ship"]').forEach(el=> el.addEventListener('change', onShipChange));
     onShipChange();
     renderCartBar();
-    loadPromo(); // 读取活动
+    // 预加载一次 PROMO
+    loadPromos().catch(()=>{});
+
+    // Expose
+    window.addToCart = addToCart;
+    window.openCheckout = openCheckout;
+    window.closeCheckout = closeCheckout;
+    window.submitOrder = submitOrder;
+    window.bindTelegram = bindTelegram;
   </script>
 </body>
 </html>
