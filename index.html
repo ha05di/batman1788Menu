@@ -595,7 +595,7 @@
         </table>
         <div class="os-total" style="flex-direction:column;gap:4px;align-items:flex-end">
           <div>Subtotal: ${money(subtotal)}</div>
-          ${discount>0 ? `<div style="color:#9effa8;">Discount: -${money(discount).replace('$','')}</div>` : ``}
+          ${discount>0 ? `<div style="color:var(--err);font-weight:900;">Discount: -${money(discount)}</div>` : ``}
           <div>Shipping: ${money(shipping)}</div>
           <div style="font-weight:900">Total: ${money(grand)}</div>
         </div>
@@ -789,4 +789,5 @@
   </script>
 </body>
 </html>
+
 
