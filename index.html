@@ -166,6 +166,58 @@
     @media (max-width:380px){
       .order-summary tbody td:nth-child(4)::before{ content:""; margin:0; }
     }
+    /* === 手机端强制回到真正的“表格布局”，并禁止数字断词 === */
+    @media (max-width:640px){
+      /* 1) 取消任何卡片式的 display 影响 */
+      .order-summary thead{ display: table-header-group !important; }
+      .order-summary tbody{ display: table-row-group !important; }
+      .order-summary tbody tr{ display: table-row !important; position: static !important; }
+      .order-summary tbody td{ display: table-cell !important; padding: 6px 4px !important; }
+
+      /* 2) 表格按内容自适应，且不在任意位置断词/断数字 */
+      .order-summary table{ table-layout:auto !important; }
+      .order-summary th, .order-summary td{
+        word-break: normal !important;
+        overflow-wrap: normal !important;
+        white-space: normal;
+      }
+
+      /* 3) 列宽 & 对齐（让 Spec / Qty / Price 同一行且不折行） */
+      .order-summary th:nth-child(1), .order-summary td:nth-child(1){
+        width:auto;                /* Item 列吃剩余宽度 */
+      }
+      .order-summary tbody td:nth-child(1){
+        white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      }
+
+      .order-summary th:nth-child(2), .order-summary td:nth-child(2){
+        width:52px; text-align:center;
+      } /* Spec */
+
+      .order-summary th:nth-child(3), .order-summary td:nth-child(3){
+        width:58px; text-align:center; white-space:nowrap !important;
+      } /* Qty  */
+
+      .order-summary th:nth-child(4), .order-summary td:nth-child(4){
+        width:74px; text-align:right; white-space:nowrap !important;
+      } /* Price */
+
+      .order-summary th:nth-child(5), .order-summary td:nth-child(5){
+        width:88px; text-align:right; white-space:nowrap !important;
+      } /* Subtotal */
+
+      .order-summary th:nth-child(6), .order-summary td:nth-child(6){
+        width:36px; text-align:right; position: static !important;
+      } /* 删除按钮 */
+
+      /* 数字对齐更舒服，且绝不被拆开（×1 / $130） */
+      .order-summary tbody td:nth-child(3),
+      .order-summary tbody td:nth-child(4),
+      .order-summary tbody td:nth-child(5){
+        white-space:nowrap !important;
+        font-variant-numeric: tabular-nums;
+      }
+    }
 
 
     .radio-group label{ margin-right:12px; cursor:pointer; }
@@ -866,6 +918,7 @@
   </script>
 </body>
 </html>
+
 
 
 
