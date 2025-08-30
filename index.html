@@ -575,7 +575,10 @@
       const addr     = document.getElementById('custAddr').value.trim();
 
       const promoLines = lines.length
-        ? `<div style="color:#9effa8;">Promotions: ${lines.map(esc).join(' · ')}</div>`
+        ? `<div class="promo-lines" style="margin-top:6px;">
+             <div style="color:#9effa8;">· Promotions:</div>
+             ${lines.map(txt => `<div style="color:#9effa8;">· ${esc(txt)}</div>`).join('')}
+           </div>`
         : '';
 
       box.innerHTML = `
@@ -786,3 +789,4 @@
   </script>
 </body>
 </html>
+
