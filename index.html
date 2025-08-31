@@ -103,153 +103,182 @@
     .checkout-msg.err{ color:var(--err); }
 
     /* ========= Order Summary (桌面 + 手机) ========= */
-/* ========= Order Summary (桌面 + 手机) ========= */
-.order-summary{
-  background:#141519;
-  border:1px solid #2f2f33;
-  border-radius:12px;
-  padding:10px 12px;
-  margin:10px 0;
-}
-.order-summary .os-head{
-  font-weight:800;
-  color:#ffe02e;
-  margin-bottom:6px;
-}
+    /* ========= Order Summary (桌面 + 手机) ========= */
+    .order-summary{
+      background:#141519;
+      border:1px solid #2f2f33;
+      border-radius:12px;
+      padding:10px 12px;
+      margin:10px 0;
+    }
+    .order-summary .os-head{
+      font-weight:800;
+      color:#ffe02e;
+      margin-bottom:6px;
+    }
 
-/* ---- 桌面端：标准表格 ---- */
-.order-summary table{
-  width:100%;
-  border-collapse:collapse;
-  font-size:.95em;
-  table-layout:fixed;
-}
-.order-summary th,
-.order-summary td{
-  padding:6px 8px;
-  border-bottom:1px dashed #2a2a2a;
-  word-break:normal;
-  overflow-wrap:normal;
-}
-.order-summary th{
-  color:#ddd;
-  font-weight:700;
-  text-align:left;
-  white-space:nowrap;   /* 表头不拆行 */
-}
-.order-summary .ar{ text-align:right; }
+    /* ---- 桌面端：标准表格 ---- */
+    .order-summary table{
+      width:100%;
+      border-collapse:collapse;
+      font-size:.95em;
+      table-layout:fixed;
+    }
+    .order-summary th,
+    .order-summary td{
+      padding:6px 8px;
+      border-bottom:1px dashed #2a2a2a;
+      word-break:normal;
+      overflow-wrap:normal;
+    }
+    .order-summary th{
+      color:#ddd;
+      font-weight:700;
+      text-align:left;
+      white-space:nowrap;   /* 表头不拆行 */
+    }
+    .order-summary .ar{ text-align:right; }
 
-/* 列宽与对齐（桌面） */
-.order-summary th:nth-child(1), .order-summary td:nth-child(1){ width:40%; }                  /* Item */
-.order-summary th:nth-child(2), .order-summary td:nth-child(2){ width:10%; text-align:center; } /* Spec */
-.order-summary th:nth-child(3), .order-summary td:nth-child(3){ width:10%; text-align:center; } /* Qty  */
-.order-summary th:nth-child(4), .order-summary td:nth-child(4){ width:20%; text-align:right; }  /* Price */
-.order-summary th:nth-child(5), .order-summary td:nth-child(5){ width:20%; text-align:right; }  /* Subtotal */
-.order-summary th:nth-child(6), .order-summary td:nth-child(6){ width:36px;  text-align:right; }/* 删除 */
+    /* 列宽与对齐（桌面） */
+    .order-summary th:nth-child(1), .order-summary td:nth-child(1){ width:40%; }                  /* Item */
+    .order-summary th:nth-child(2), .order-summary td:nth-child(2){ width:10%; text-align:center; } /* Spec */
+    .order-summary th:nth-child(3), .order-summary td:nth-child(3){ width:10%; text-align:center; } /* Qty  */
+    .order-summary th:nth-child(4), .order-summary td:nth-child(4){ width:20%; text-align:right; }  /* Price */
+    .order-summary th:nth-child(5), .order-summary td:nth-child(5){ width:20%; text-align:right; }  /* Subtotal */
+    .order-summary th:nth-child(6), .order-summary td:nth-child(6){ width:36px;  text-align:right; }/* 删除 */
 
-.order-summary .item-cell{
-  display:block;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;        /* 桌面长名省略号 */
-}
+    .order-summary .item-cell{
+      display:block;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;        /* 桌面长名省略号 */
+    }
 
-.order-summary .os-total{
-  display:flex; justify-content:flex-end;
-  font-weight:900; margin-top:6px;
-}
-.order-summary .os-meta{
-  color:#bbb; font-size:.92em; margin-top:6px; line-height:1.4;
-}
+    .order-summary .os-total{
+      display:flex; justify-content:flex-end;
+      font-weight:900; margin-top:6px;
+    }
+    .order-summary .os-meta{
+      color:#bbb; font-size:.92em; margin-top:6px; line-height:1.4;
+    }
 
-/* 删除按钮 */
-.order-summary .rm-btn{
-  background:#3a3b40; color:#fff; border:1px solid #555;
-  width:32px; height:28px; border-radius:8px; cursor:pointer;
-  display:inline-flex; align-items:center; justify-content:center;
-  font-size:16px; line-height:1;
-}
-.order-summary .rm-btn:hover{ background:#ff5555; border-color:#ff5555; }
-.sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
+    /* 删除按钮 */
+    .order-summary .rm-btn{
+      background:#3a3b40; color:#fff; border:1px solid #555;
+      width:32px; height:28px; border-radius:8px; cursor:pointer;
+      display:inline-flex; align-items:center; justify-content:center;
+      font-size:16px; line-height:1;
+    }
+    .order-summary .rm-btn:hover{ background:#ff5555; border-color:#ff5555; }
+    .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
 
-/* ---- 手机端 ≤640px：商品名完整；Spec/Qty/Price 同排并对齐；隐藏小计 ---- */
-@media (max-width:640px){
-  /* 隐藏表头，使用卡片式 */
-  .order-summary table{ table-layout:auto !important; }
-  .order-summary table thead{ display:none !important; }
+    /* ---- 手机端 ≤640px：商品名完整；Spec/Qty/Price 同排并对齐；隐藏小计 ---- */
+    @media (max-width:640px){
+      /* 隐藏表头，使用卡片式 */
+      .order-summary table{ table-layout:auto !important; }
+      .order-summary table thead{ display:none !important; }
 
-  .order-summary table tbody tr{
-    display:block !important;
-    position:relative !important;
-    padding:10px 0 8px;
-    border-bottom:1px dashed #2a2a2a;
-  }
-  .order-summary table tbody td{
-    display:block !important;
-    border-bottom:0 !important;
-    padding:6px 2px !important;
-    word-break:normal !important;
-    overflow-wrap:normal !important;
-  }
+      .order-summary table tbody tr{
+        display:block !important;
+        position:relative !important;
+        padding:10px 0 8px;
+        border-bottom:1px dashed #2a2a2a;
+      }
+      .order-summary table tbody td{
+        display:block !important;
+        border-bottom:0 !important;
+        padding:6px 2px !important;
+        word-break:normal !important;
+        overflow-wrap:normal !important;
+      }
 
-  /* 1) 商品名：显示完整（允许换行），右上角留空间给删除键 */
-  .order-summary table tbody td:nth-child(1){
-    font-weight:800; color:var(--bat-gold);
-    white-space:normal !important; overflow:visible !important; text-overflow:clip !important;
-    padding-right:44px;
-    margin-bottom:2px;
-  }
-  /* 兼容含 .item-cell 的结构，强制取消省略号 */
-  .order-summary .item-cell{
-    white-space:normal !important; overflow:visible !important; text-overflow:clip !important;
-  }
+      /* 1) 商品名：显示完整（允许换行），右上角留空间给删除键 */
+      .order-summary table tbody td:nth-child(1){
+        font-weight:800; color:var(--bat-gold);
+        white-space:normal !important; overflow:visible !important; text-overflow:clip !important;
+        padding-right:44px;
+        margin-bottom:2px;
+      }
+      /* 兼容含 .item-cell 的结构，强制取消省略号 */
+      .order-summary .item-cell{
+        white-space:normal !important; overflow:visible !important; text-overflow:clip !important;
+      }
 
-  /* 2) 把 Spec / Qty / Price 摆同一排且对齐 */
-  .order-summary table tbody td:nth-child(2),
-  .order-summary table tbody td:nth-child(3),
-  .order-summary table tbody td:nth-child(4){
-    display:inline-flex !important;
-    align-items:baseline;
-    gap:6px;
-    margin-right:16px;                /* 三块之间一致的间距 */
-    padding:2px 0 !important;
-    white-space:nowrap !important;    /* ×1 / $130 不拆 */
-    font-variant-numeric:tabular-nums;
-  }
-  /* 统一标签宽度，让三块更整齐对齐 */
-  .order-summary table tbody td:nth-child(2)::before,
-  .order-summary table tbody td:nth-child(3)::before,
-  .order-summary table tbody td:nth-child(4)::before{
-    display:inline-block; min-width:42px;   /* ← 可按需要 38~48 调整 */
-    color:#bbb; margin-right:6px;
-  }
-  .order-summary table tbody td:nth-child(2)::before{ content:"Spec"; }
-  .order-summary table tbody td:nth-child(3)::before{ content:"Qty"; }
-  .order-summary table tbody td:nth-child(4)::before{ content:"Price"; }
-  /* 若之前加过分隔点，这里统一移除 */
-  .order-summary table tbody td:nth-child(2)::after,
-  .order-summary table tbody td:nth-child(3)::after{ content:none !important; }
+      /* 2) 把 Spec / Qty / Price 摆同一排且对齐 */
+      .order-summary table tbody td:nth-child(2),
+      .order-summary table tbody td:nth-child(3),
+      .order-summary table tbody td:nth-child(4){
+        display:inline-flex !important;
+        align-items:baseline;
+        gap:6px;
+        margin-right:16px;                /* 三块之间一致的间距 */
+        padding:2px 0 !important;
+        white-space:nowrap !important;    /* ×1 / $130 不拆 */
+        font-variant-numeric:tabular-nums;
+      }
+      /* 统一标签宽度，让三块更整齐对齐 */
+      .order-summary table tbody td:nth-child(2)::before,
+      .order-summary table tbody td:nth-child(3)::before,
+      .order-summary table tbody td:nth-child(4)::before{
+        display:inline-block; min-width:42px;   /* ← 可按需要 38~48 调整 */
+        color:#bbb; margin-right:6px;
+      }
+      .order-summary table tbody td:nth-child(2)::before{ content:"Spec"; }
+      .order-summary table tbody td:nth-child(3)::before{ content:"Qty"; }
+      .order-summary table tbody td:nth-child(4)::before{ content:"Price"; }
+      /* 若之前加过分隔点，这里统一移除 */
+      .order-summary table tbody td:nth-child(2)::after,
+      .order-summary table tbody td:nth-child(3)::after{ content:none !important; }
 
-  /* 3) 每行小计（Subtotal）隐藏 */
-  .order-summary table tbody td:nth-child(5){
-    display:none !important;
-  }
+      /* 3) 每行小计（Subtotal）隐藏 */
+      .order-summary table tbody td:nth-child(5){
+        display:none !important;
+      }
 
-  /* 删除按钮固定到行右上角 */
-  .order-summary table tbody td:nth-child(6){
-    position:absolute !important;
-    right:0; top:6px;
-    display:block !important; padding:0 !important; width:auto !important;
-    text-align:right;
-  }
-}
+      /* 删除按钮固定到行右上角 */
+      .order-summary table tbody td:nth-child(6){
+        position:absolute !important;
+        right:0; top:6px;
+        display:block !important; padding:0 !important; width:auto !important;
+        text-align:right;
+      }
+    }
 
-/* 超窄屏（可选）：隐藏“Price”标签，只留金额，让同排更易放下 */
-@media (max-width:360px){
-  .order-summary table tbody td:nth-child(4)::before{ content:""; margin:0; min-width:0; }
-}
+    /* 超窄屏（可选）：隐藏“Price”标签，只留金额，让同排更易放下 */
+    @media (max-width:360px){
+      .order-summary table tbody td:nth-child(4)::before{ content:""; margin:0; min-width:0; }
+    }
+    /* 手机端：把第二行排成 “SPEC - Q   Qty ×1   Price $130” */
+    @media (max-width:640px){
+      /* 统一让三块并排、同一行且不换行 */
+      .order-summary table tbody td:nth-child(2),
+      .order-summary table tbody td:nth-child(3),
+      .order-summary table tbody td:nth-child(4){
+        display:inline-flex !important;
+        align-items:baseline;
+        white-space:nowrap !important;      /* ×1 / $130 不断开 */
+        margin-right:18px;                  /* 三组之间的间距 */
+        padding:2px 0 !important;
+        font-variant-numeric:tabular-nums;
+      }
 
+      /* 先清掉你之前可能加过的分隔点/等宽标签 */
+      .order-summary table tbody td:nth-child(2)::after,
+      .order-summary table tbody td:nth-child(3)::after{ content:none !important; }
+      .order-summary table tbody td:nth-child(2)::before,
+      .order-summary table tbody td:nth-child(3)::before,
+      .order-summary table tbody td:nth-child(4)::before{
+        min-width:0 !important;             /* 覆盖之前的固定宽度 */
+        margin-right:6px;
+        color:#bbb;
+        font-weight:600;
+      }
 
+      /* 按目标文案输出 —— 注意 Spec 要大写并带连字符 */
+      .order-summary table tbody td:nth-child(2)::before{ content:"SPEC -"; margin-right:8px; }
+      .order-summary table tbody td:nth-child(3)::before{ content:"Qty"; }
+      .order-summary table tbody td:nth-child(4)::before{ content:"Price"; }
+    }
 
     .radio-group label{ margin-right:12px; cursor:pointer; }
     .radio-group input{ vertical-align:middle; margin-right:6px; }
@@ -949,6 +978,7 @@
   </script>
 </body>
 </html>
+
 
 
 
