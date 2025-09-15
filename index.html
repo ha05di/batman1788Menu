@@ -172,6 +172,46 @@
     .order-summary .rm-btn:hover{ background:#ff5555; border-color:#ff5555; }
     .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
 
+    /* 卡片式 Order Summary */
+    .order-summary{ background:#141519; border:1px solid #2f2f33; border-radius:12px; padding:10px 12px; margin:10px 0; }
+    .os-head{ font-weight:800; color:#ffe02e; margin-bottom:8px; }
+    .os-cards{ display:flex; flex-direction:column; gap:10px; }
+    .os-card{
+      display:grid;
+      grid-template-columns: 56px 1fr auto;
+      gap:10px; align-items:center;
+      background:#191a1f; border:1px solid #2a2b31; border-radius:10px; padding:8px;
+    }
+    .os-thumb{
+      width:56px; height:56px; border-radius:8px; object-fit:cover; background:#111;
+      border:1px solid #3a3a3a;
+    }
+    .os-title{ font-weight:700; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .os-sub{ font-size:.86em; color:#b8b8b8; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .os-right{ text-align:right; min-width:92px; }
+    .os-qty{ color:#ddd; font-weight:700; }
+    .os-price{ color:#ffe02e; font-weight:800; }
+    .os-subtotal{ color:#9fe39f; font-weight:800; }
+
+    .rm-btn{
+      background:#3a3b40; color:#fff; border:1px solid #555; width:32px; height:28px; border-radius:8px; cursor:pointer;
+      display:inline-flex; align-items:center; justify-content:center; font-size:16px; line-height:1; margin-left:6px;
+    }
+    .rm-btn:hover{ background:#ff5555; border-color:#ff5555; }
+
+    .os-total{ display:flex; flex-direction:column; gap:4px; align-items:flex-end; font-weight:900; margin-top:8px; }
+    .os-meta{ color:#bbb; font-size:.92em; margin-top:8px; line-height:1.4; }
+    .promo-lines{ margin-top:6px; }
+    .promo-lines .line{ color:#9effa8; }
+
+    /* 更小屏优化 */
+    @media (max-width:380px){
+      .os-card{ grid-template-columns: 48px 1fr auto; padding:7px; }
+      .os-thumb{ width:48px; height:48px; }
+      .os-right{ min-width:86px; font-size:.95em; }
+      .os-title{ font-size:.95em; }
+    }
+
     /* ---- 手机端 ≤640px：商品名完整；Spec/Qty/Price 同排并对齐；隐藏小计 ---- */
     @media (max-width:640px){
       /* 隐藏表头，使用卡片式 */
@@ -738,58 +778,55 @@
       const box = document.getElementById('orderSummary');
       if (!box) return;
 
-      const rowsHtml = cart.map((it, i) => {
+      const cards = cart.map((it, i) => {
         const sub = it.qty * it.price;
-        return `<tr>
-          <td><span class="item-cell" title="${esc(it.name)}">${esc(it.name)}</span></td>
-          <td>${esc(it.spec || '')}</td>
-          <td class="ar">×${it.qty}</td>
-          <td class="ar">${money(it.price)}</td>
-          <td class="ar">${money(sub)}</td>
-          <td class="ar">
-            <button type="button" class="rm-btn" onclick="removeItem(${i})" title="删除">
-              <span class="sr-only">删除</span>🗑️
-            </button>
-          </td>
-        </tr>`;
+        const img = it.img ? `<img class="os-thumb" src="${esc(it.img)}" alt="" loading="lazy">`
+                           : `<div class="os-thumb" aria-hidden="true"></div>`;
+        return `
+          <div class="os-card">
+            ${img}
+            <div>
+              <div class="os-title" title="${esc(it.disp || it.name)}">${esc(it.disp || it.name)}</div>
+              ${it.spec ? `<div class="os-sub">${esc(it.spec)}</div>` : ``}
+            </div>
+            <div class="os-right">
+              <div class="os-qty">×${it.qty}</div>
+              <div class="os-price">${money(it.price)}</div>
+              <div class="os-subtotal">${money(sub)}</div>
+            </div>
+            <div style="grid-column: 3 / 4; grid-row: 1 / 4; align-self:center;">
+              <button type="button" class="rm-btn" onclick="removeItem(${i})" title="Remove">🗑️</button>
+            </div>
+          </div>`;
       }).join('');
 
       const subtotal = cart.reduce((a,b)=> a + b.qty*b.price, 0);
       const baseShipping = getShippingFee();
 
-      // ★ 计算促销
+      // 计算促销
       const {discount, shipping, grand, lines} = calcPromo(subtotal, baseShipping);
 
       const method   = getShipMethod() === 'pickup' ? 'Pickup' : 'Delivery';
       const addr     = document.getElementById('custAddr').value.trim();
 
-      const promoLines = lines.length
-        ? `<div class="promo-lines" style="margin-top:6px;">
-             <div style="color:#9effa8;">· Promotions:</div>
-             ${lines.map(txt => `<div style="color:#9effa8;">· ${esc(txt)}</div>`).join('')}
-           </div>`
-        : '';
+      const promoLinesHtml = (lines && lines.length)
+        ? `<div class="promo-lines"><div class="line">· Promotions:</div>${
+            lines.map(t=>`<div class="line">· ${esc(t)}</div>`).join('')
+          }</div>` : '';
 
       box.innerHTML = `
         <div class="os-head">Order Summary</div>
-        <table>
-          <thead>
-            <tr>
-              <th>Item</th><th>Spec</th>
-              <th class="ar">Qty</th><th class="ar">Price</th><th class="ar">Subtotal</th>
-              <th class="ar"> </th>
-            </tr>
-          </thead>
-          <tbody>${rowsHtml || `<tr><td colspan="6" style="text-align:center;color:#aaa;padding:8px 0">Cart is empty</td></tr>`}</tbody>
-        </table>
-        <div class="os-total" style="flex-direction:column;gap:4px;align-items:flex-end">
-          <div>Subtotal: ${money(subtotal)}</div>
-          ${discount>0 ? `<div style="color:var(--err);font-weight:900;">Discount: -${money(discount)}</div>` : ``}
-          <div>Shipping: ${money(shipping)}</div>
-          <div style="font-weight:900">Total: ${money(grand)}</div>
+        <div class="os-cards">
+          ${cards || `<div style="color:#aaa;text-align:center;padding:8px 0;">Cart is empty</div>`}
         </div>
-        ${promoLines}
-        <div class="os-meta" style="margin-top:8px;">
+        <div class="os-total">
+          <div>Subtotal: ${money(subtotal)}</div>
+          ${discount>0 ? `<div style="color:#ff7676;">Discount: -${money(discount)}</div>` : ``}
+          <div>Shipping: ${money(shipping)}</div>
+          <div>Total: ${money(grand)}</div>
+        </div>
+        ${promoLinesHtml}
+        <div class="os-meta">
           <div>Method: ${method}</div>
           <div>Address: ${esc(addr)}</div>
         </div>
@@ -978,6 +1015,7 @@
   </script>
 </body>
 </html>
+
 
 
 
