@@ -667,7 +667,7 @@
 
       if (!asap || !schedule || !row || !input || !earliestSpan) return;
 
-      const MIN_OFFSET_MIN = 30; // 最早可约：当前 + 30 分钟
+      const MIN_OFFSET_MIN = 60; // 最早可约：当前 + 30 分钟
       const now = new Date();
       const earliest = new Date(now.getTime() + MIN_OFFSET_MIN * 60 * 1000);
 
@@ -767,12 +767,12 @@
         <div class="os-section">
           <div class="os-sec-title">Delivery time</div>
           <div class="ship-time">
-            <label class="radio"><input type="radio" name="shipTimeMode" value="asap" checked> ASAP（尽快）</label>
-            <label class="radio"><input type="radio" name="shipTimeMode" value="schedule"> 指定时间</label>
+            <label class="radio"><input type="radio" name="shipTimeMode" value="asap" checked> ASAP </label>
+            <label class="radio"><input type="radio" name="shipTimeMode" value="schedule"> Specified time </label>
 
             <div id="scheduleRow" class="schedule-row" style="display:none;">
               <input id="deliveryTime" type="datetime-local" step="900" />
-              <div class="hint">最早可约：<span id="earliestTime"></span></div>
+              <div class="hint">Earliest time available：<span id="earliestTime"></span></div>
             </div>
           </div>
         </div>
@@ -1025,3 +1025,4 @@
   </script>
 </body>
 </html>
+
