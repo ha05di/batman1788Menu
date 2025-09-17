@@ -1039,208 +1039,251 @@
     window.bindTelegram = bindTelegram;
   </script>
 
-  <!-- === Drop-in: 本地记忆 + 最近地址芯片 + Google Places 自动补全 === -->
-  <script>
-  (() => {
-    const CFG = {
-      idName:  'custName',
-      idPhone: 'custPhone',
-      idAddr:  'custAddr',
-      idLat:   'custLat',     // 自动创建隐藏输入
-      idLng:   'custLng',     // 自动创建隐藏输入
-      country: 'au',          // 仅限澳洲，若不限制可设为 '' 或删除该行
-      recentLimit: 6,
-      // 如需更换你的 Key：把下面换成你的 Google Maps Key
-      mapsKey: 'AIzaSyBHClfXbgjbTeUWp4rW1yFJ8Cl_n5-khgY',
-      profileKey: 'bat1788.profile',
-      recentKey:  'bat1788.recentAddresses',
-      styleId:    'bat1788-addr-styles'
-    };
-
-    const $id = (x) => document.getElementById(x);
-    const $make = (tag, attrs={}) => Object.assign(document.createElement(tag), attrs);
-
-    function injectStyles() {
-      if ($id(CFG.styleId)) return;
-      const css = `
-        .addr-chips { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.5rem; }
-        .addr-chip { padding:.35rem .6rem; border-radius:999px; background:#f0f2f5; border:1px solid #e5e7eb;
-                     font-size:.85rem; cursor:pointer; white-space:nowrap; max-width:100%; overflow:hidden; text-overflow:ellipsis; }
-        .addr-chip:hover { background:#e8eefc; border-color:#c7d2fe; }
-        .addr-chips-bar { display:flex; justify-content:space-between; align-items:center; margin-top:.5rem; }
-        .addr-chips-title { font-size:.9rem; color:#666; }
-        .addr-chips-clear { font-size:.85rem; color:#888; cursor:pointer; text-decoration:underline; }
-      `;
-      const style = $make('style', { id: CFG.styleId });
-      style.appendChild(document.createTextNode(css));
-      document.head.appendChild(style);
-    }
-
-    function ensureHiddenLatLng(addrInput) {
-      if (!$id(CFG.idLat)) {
-        const latInput = $make('input', { id: CFG.idLat, type: 'hidden' });
-        addrInput.insertAdjacentElement('afterend', latInput);
-      }
-      if (!$id(CFG.idLng)) {
-        const lngInput = $make('input', { id: CFG.idLng, type: 'hidden' });
-        addrInput.insertAdjacentElement('afterend', lngInput);
-      }
-    }
-
-    function ensureChipsUI(addrInput) {
-      if (!document.getElementById('addrChips') || !document.getElementById('addrChipsClear')) {
-        const bar = $make('div', { className: 'addr-chips-bar' });
-        const title = $make('div', { className: 'addr-chips-title', textContent: '最近使用地址' });
-        const clear = $make('div', { id:'addrChipsClear', className:'addr-chips-clear', textContent: '清空' });
-        bar.appendChild(title); bar.appendChild(clear);
-
-        const chips = $make('div', { id:'addrChips', className:'addr-chips' });
-
-        addrInput.insertAdjacentElement('afterend', chips);
-        addrInput.insertAdjacentElement('afterend', bar);
-      }
-    }
-
-    function loadProfile() {
-      try {
-        const p = JSON.parse(localStorage.getItem(CFG.profileKey) || '{}');
-        if (p.name && $id(CFG.idName))   $id(CFG.idName).value = p.name;
-        if (p.phone && $id(CFG.idPhone)) $id(CFG.idPhone).value = p.phone;
-        if (p.addr && $id(CFG.idAddr))   $id(CFG.idAddr).value = p.addr;
-        if (p.lat && $id(CFG.idLat))     $id(CFG.idLat).value = p.lat;
-        if (p.lng && $id(CFG.idLng))     $id(CFG.idLng).value = p.lng;
-      } catch(e) {}
-    }
-
-    function saveProfile(extra = {}) {
-      const name  = $id(CFG.idName)?.value?.trim()  || '';
-      const phone = $id(CFG.idPhone)?.value?.trim() || '';
-      const addr  = $id(CFG.idAddr)?.value?.trim()  || '';
-      const lat   = $id(CFG.idLat)?.value || '';
-      const lng   = $id(CFG.idLng)?.value || '';
-      const profile = { name, phone, addr, lat, lng, ...extra };
-      localStorage.setItem(CFG.profileKey, JSON.stringify(profile));
-
-      if (addr) {
-        let arr = [];
-        try { arr = JSON.parse(localStorage.getItem(CFG.recentKey) || '[]'); } catch(e) {}
-        arr = arr.filter(a => a && a.text && a.text !== addr);
-        arr.unshift({ text: addr, lat, lng, at: Date.now() });
-        if (arr.length > CFG.recentLimit) arr = arr.slice(0, CFG.recentLimit);
-        localStorage.setItem(CFG.recentKey, JSON.stringify(arr));
-        renderAddrChips();
-      }
-    }
-
-    function getRecent() {
-      try { return JSON.parse(localStorage.getItem(CFG.recentKey) || '[]'); } catch(e) { return []; }
-    }
-
-    function renderAddrChips() {
-      const wrap = document.getElementById('addrChips');
-      if (!wrap) return;
-      wrap.innerHTML = '';
-      const list = getRecent();
-      if (!list.length) return;
-      list.forEach(item => {
-        const chip = $make('div', { className:'addr-chip', title:item.text, textContent:item.text });
-        chip.addEventListener('click', () => {
-          if ($id(CFG.idAddr)) $id(CFG.idAddr).value = item.text;
-          if ($id(CFG.idLat))  $id(CFG.idLat).value  = item.lat || '';
-          if ($id(CFG.idLng))  $id(CFG.idLng).value  = item.lng || '';
-          saveProfile();
-        });
-        wrap.appendChild(chip);
-      });
-    }
-
-    function bindAutoSave() {
-      $id(CFG.idName)?.addEventListener('blur',  () => saveProfile());
-      $id(CFG.idPhone)?.addEventListener('blur', () => saveProfile());
-      $id(CFG.idAddr)?.addEventListener('blur',  () => saveProfile());
-      $id(CFG.idAddr)?.addEventListener('change',() => saveProfile());
-      $id('addrChipsClear')?.addEventListener('click', () => {
-        localStorage.removeItem(CFG.recentKey);
-        renderAddrChips();
-      });
-    }
-
-    // ===== Google Places 自动补全 =====
-    let autocomplete = null;
-    function setupPlaces() {
-      const input = $id(CFG.idAddr);
-      if (!input || !window.google || !google.maps || !google.maps.places) return;
-
-      const opts = {
-        fields: ['formatted_address', 'geometry'],
-        types: ['address']
-      };
-      if (CFG.country) opts.componentRestrictions = { country: CFG.country };
-
-      autocomplete = new google.maps.places.Autocomplete(input, opts);
-      autocomplete.addListener('place_changed', () => {
-        const place = autocomplete.getPlace();
-        const formatted = place.formatted_address || input.value.trim();
-        const lat = place.geometry?.location?.lat ? place.geometry.location.lat() : '';
-        const lng = place.geometry?.location?.lng ? place.geometry.location.lng() : '';
-        if ($id(CFG.idAddr)) $id(CFG.idAddr).value = formatted || input.value.trim();
-        if ($id(CFG.idLat))  $id(CFG.idLat).value  = lat || '';
-        if ($id(CFG.idLng))  $id(CFG.idLng).value  = lng || '';
-        saveProfile({ addr: formatted, lat, lng });
-      });
-    }
-
-    function loadGoogleMapsIfNeeded() {
-      if (window.google?.maps?.places) { setupPlaces(); return; }
-      window.__bat1788_initPlaces = setupPlaces;
-      const s = $make('script');
-      const base = 'https://maps.googleapis.com/maps/api/js';
-      const params = new URLSearchParams({ key: CFG.mapsKey, libraries: 'places', callback: '__bat1788_initPlaces' });
-      s.src = `${base}?${params.toString()}`;
-      s.async = true; s.defer = true;
-      document.head.appendChild(s);
-    }
-
-    // ===== 启动 =====
-    document.addEventListener('DOMContentLoaded', () => {
-      const addrInput = $id(CFG.idAddr);
-      if (!addrInput) return;
-      injectStyles();
-      ensureHiddenLatLng(addrInput);
-      ensureChipsUI(addrInput);
-      loadProfile();
-      renderAddrChips();
-      bindAutoSave();
-      loadGoogleMapsIfNeeded();
-    });
-  })();
-  </script>
-  <style id="addr-chip-dark-fix">
-  /* 深色主题适配：最近地址芯片 */
-  .addr-chips{ margin-top:8px !important; display:flex !important; flex-wrap:wrap !important; gap:8px !important; }
-  .addr-chips-title{ color:#bbb !important; font-weight:600 !important; }
-  .addr-chips-clear{ color:#ffc400 !important; cursor:pointer !important; text-decoration:none !important; }
-  .addr-chips-clear:hover{ text-decoration:underline !important; }
-
-  .addr-chip{
-    background:#2b2c30 !important;
-    color:#fff !important;
-    border:1px solid #46474b !important;
-    padding:.38rem .65rem !important;
-    border-radius:999px !important;
-    font-size:.9rem !important;
-    white-space:nowrap !important;
-    max-width:100% !important;
-    overflow:hidden !important;
-    text-overflow:ellipsis !important;
-    cursor:pointer !important;
-    box-shadow:0 1px 6px #0004 !important;
+<!-- === Drop-in: 本地记忆 + 最近地址【输入框下拉】+ Google Places 自动补全 === -->
+<style id="addr-suggest-styles">
+  .addr-suggest{
+    position:absolute; inset:auto auto auto auto; display:none;
+    background:#1b1c20; border:1px solid #2f2f33; border-radius:10px;
+    box-shadow:0 8px 24px rgba(0,0,0,.35); overflow:hidden; z-index:20050;
   }
-  .addr-chip:hover{ background:#34363c !important; border-color:#6b6c70 !important; }
+  .addr-suggest .head{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:8px 10px; font-size:12px; color:#bbb; border-bottom:1px solid #2a2a2e;
+  }
+  .addr-suggest .clear{ color:var(--bat-gold,#ffe02e); cursor:pointer; }
+  .addr-suggest .item{
+    padding:10px 12px; font-size:.95rem; color:#eee; cursor:pointer;
+    display:flex; align-items:center; gap:8px;
+  }
+  .addr-suggest .item:hover,.addr-suggest .item.active{ background:#2b2c30; }
+  .addr-suggest .empty{ padding:10px 12px; color:#888; }
+  /* 让 Google Places 下拉不被覆盖时机影响，我们的层级更高 */
+  .pac-container{ z-index:20000!important; border-radius:10px; overflow:hidden; }
+</style>
+<script>
+(()=> {
+  const CFG = {
+    idName: 'custName',
+    idPhone:'custPhone',
+    idAddr: 'custAddr',
+    idLat:  'custLat',
+    idLng:  'custLng',
+    country:'au',                // 不限国家可设为 '' 或删掉
+    recentLimit: 6,
+    mapsKey: 'YOUR_GOOGLE_MAPS_API_KEY', // 换成你的 Google Maps Key
+    profileKey:'bat1788.profile',
+    recentKey: 'bat1788.recentAddresses'
+  };
 
-  /* Google Places 下拉别被遮住 */
-  .pac-container{ z-index:20000 !important; border-radius:10px !important; overflow:hidden !important; }
+  const $id = (x)=>document.getElementById(x);
+  const $make = (tag, attrs={}) => Object.assign(document.createElement(tag), attrs);
+
+  // —— 数据层：读取/写入 profile 与最近地址 —— //
+  function loadProfile(){
+    try{
+      const p = JSON.parse(localStorage.getItem(CFG.profileKey)||'{}');
+      if(p.name && $id(CFG.idName))   $id(CFG.idName).value = p.name;
+      if(p.phone && $id(CFG.idPhone)) $id(CFG.idPhone).value= p.phone;
+      if(p.addr && $id(CFG.idAddr))   $id(CFG.idAddr).value = p.addr;
+      if(p.lat && $id(CFG.idLat))     $id(CFG.idLat).value  = p.lat;
+      if(p.lng && $id(CFG.idLng))     $id(CFG.idLng).value  = p.lng;
+    }catch(e){}
+  }
+  function getRecent(){ try{return JSON.parse(localStorage.getItem(CFG.recentKey)||'[]');}catch(e){return [];} }
+  function saveRecent(addr, lat='', lng=''){
+    if(!addr) return;
+    let arr = getRecent().filter(a=>a && a.text && a.text!==addr);
+    arr.unshift({text:addr, lat, lng, at:Date.now()});
+    if(arr.length>CFG.recentLimit) arr = arr.slice(0, CFG.recentLimit);
+    localStorage.setItem(CFG.recentKey, JSON.stringify(arr));
+  }
+  function saveProfile(extra={}){
+    const name  = $id(CFG.idName)?.value?.trim()||'';
+    const phone = $id(CFG.idPhone)?.value?.trim()||'';
+    const addr  = $id(CFG.idAddr)?.value?.trim()||'';
+    const lat   = $id(CFG.idLat)?.value||'';
+    const lng   = $id(CFG.idLng)?.value||'';
+    const p = {name, phone, addr, lat, lng, ...extra};
+    localStorage.setItem(CFG.profileKey, JSON.stringify(p));
+    if(addr) saveRecent(addr, p.lat, p.lng);
+    if (suggest.isOpen) suggest.render(); // 实时刷新下拉
+  }
+
+  // —— UI：输入框下拉建议（最近地址） —— //
+  const suggest = (()=> {
+    let hostInput = null, box = null, idx = -1, items = [];
+
+    function ensureBox(){
+      if(box) return box;
+      box = $make('div', {className:'addr-suggest', id:'addrSuggest'});
+      document.body.appendChild(box);
+      return box;
+    }
+    function placeUnder(input){
+      const r = input.getBoundingClientRect();
+      const top = r.bottom + window.scrollY + 6;
+      const left = r.left + window.scrollX;
+      Object.assign(ensureBox().style, {
+        top: top+'px', left: left+'px', width: r.width+'px'
+      });
+    }
+    function filterList(q){
+      q = (q||'').trim().toLowerCase();
+      let list = getRecent();
+      if(q) list = list.filter(it => it.text.toLowerCase().includes(q));
+      return list;
+    }
+    function render(){
+      if(!hostInput) return;
+      const list = filterList(hostInput.value);
+      const b = ensureBox();
+      b.innerHTML = '';
+      const head = $make('div', {className:'head'});
+      head.appendChild($make('div', {textContent:'最近使用地址'}));
+      const clr = $make('div', {className:'clear', textContent:'清空'});
+      clr.addEventListener('mousedown', e=>e.preventDefault());
+      clr.addEventListener('click', ()=>{
+        localStorage.removeItem(CFG.recentKey);
+        render();
+      });
+      head.appendChild(clr);
+      b.appendChild(head);
+
+      items = [];
+      if(!list.length){
+        b.appendChild($make('div',{className:'empty', textContent:'没有历史地址'}));
+      }else{
+        list.forEach((it,i)=>{
+          const row = $make('div',{className:'item', textContent:it.text, title:it.text});
+          row.addEventListener('mousedown', e=>e.preventDefault()); // 防止 blur
+          row.addEventListener('click', ()=> select(i));
+          items.push({el:row, data:it});
+          b.appendChild(row);
+        });
+      }
+      idx = (items.length? 0 : -1);
+      highlight();
+    }
+    function open(input){
+      hostInput = input;
+      placeUnder(input);
+      render();
+      ensureBox().style.display = 'block';
+      suggest.isOpen = true;
+      window.addEventListener('scroll', onWindow, true);
+      window.addEventListener('resize', onWindow, true);
+      document.addEventListener('click', onDocClick, true);
+    }
+    function close(){
+      if(!suggest.isOpen) return;
+      ensureBox().style.display = 'none';
+      suggest.isOpen = false; idx = -1; items = [];
+      window.removeEventListener('scroll', onWindow, true);
+      window.removeEventListener('resize', onWindow, true);
+      document.removeEventListener('click', onDocClick, true);
+    }
+    function onWindow(){ if(hostInput) placeUnder(hostInput); }
+    function onDocClick(e){
+      const b = ensureBox();
+      if(e.target===hostInput || b.contains(e.target)) return;
+      close();
+    }
+    function move(delta){
+      if(!items.length) return;
+      idx = (idx + delta + items.length) % items.length;
+      highlight();
+    }
+    function highlight(){
+      items.forEach((it,i)=> it.el.classList.toggle('active', i===idx));
+    }
+    function select(i){
+      if(i<0 || i>=items.length) return;
+      const {text, lat, lng} = items[i].data;
+      if($id(CFG.idAddr)) $id(CFG.idAddr).value = text;
+      if($id(CFG.idLat))  $id(CFG.idLat).value  = lat||'';
+      if($id(CFG.idLng))  $id(CFG.idLng).value  = lng||'';
+      saveProfile();
+      hostInput?.dispatchEvent(new Event('change', {bubbles:true}));
+      close();
+    }
+
+    return { open, close, render, move, select, isOpen:false };
+  })();
+
+  // —— 绑定输入框事件 —— //
+  function bindFieldEvents(){
+    const nameEl  = $id(CFG.idName);
+    const phoneEl = $id(CFG.idPhone);
+    const addrEl  = $id(CFG.idAddr);
+
+    // 确保隐藏经纬度存在
+    if(!$id(CFG.idLat)){ addrEl.insertAdjacentHTML('afterend', `<input id="${CFG.idLat}" type="hidden">`); }
+    if(!$id(CFG.idLng)){ addrEl.insertAdjacentHTML('afterend', `<input id="${CFG.idLng}" type="hidden">`); }
+
+    nameEl && nameEl.addEventListener('blur',  ()=>saveProfile());
+    phoneEl&& phoneEl.addEventListener('blur',  ()=>saveProfile());
+    addrEl && addrEl.addEventListener('blur',   ()=>saveProfile());
+    addrEl && addrEl.addEventListener('change', ()=>saveProfile());
+
+    // 打开/刷新下拉
+    addrEl && addrEl.addEventListener('focus', ()=>{
+      suggest.open(addrEl);
+    });
+    addrEl && addrEl.addEventListener('input', ()=>{
+      if(!suggest.isOpen) suggest.open(addrEl); else suggest.render();
+    });
+    // 键盘交互
+    addrEl && addrEl.addEventListener('keydown', (e)=>{
+      if(!suggest.isOpen) return;
+      if(e.key==='ArrowDown'){ e.preventDefault(); suggest.move(1); }
+      else if(e.key==='ArrowUp'){ e.preventDefault(); suggest.move(-1); }
+      else if(e.key==='Enter'){ e.preventDefault(); suggest.select(0); } // 选当前高亮；如果没高亮，选首项
+      else if(e.key==='Escape'){ suggest.close(); }
+    });
+  }
+
+  // —— Google Places 自动补全 —— //
+  let autocomplete = null;
+  function setupPlaces(){
+    const input = $id(CFG.idAddr);
+    if(!input || !window.google?.maps?.places) return;
+    const opts = { fields:['formatted_address','geometry'], types:['address'] };
+    if(CFG.country) opts.componentRestrictions = {country:CFG.country};
+    autocomplete = new google.maps.places.Autocomplete(input, opts);
+    autocomplete.addListener('place_changed', ()=>{
+      const place = autocomplete.getPlace();
+      const formatted = place.formatted_address || input.value.trim();
+      const lat = place.geometry?.location?.lat ? place.geometry.location.lat() : '';
+      const lng = place.geometry?.location?.lng ? place.geometry.location.lng() : '';
+      if($id(CFG.idAddr)) $id(CFG.idAddr).value = formatted;
+      if($id(CFG.idLat))  $id(CFG.idLat).value  = lat||'';
+      if($id(CFG.idLng))  $id(CFG.idLng).value  = lng||'';
+      saveProfile({addr:formatted, lat, lng});
+      suggest.close();
+    });
+  }
+  function loadGoogleMapsIfNeeded(){
+    if(window.google?.maps?.places){ setupPlaces(); return; }
+    window.__bat1788_initPlaces = setupPlaces;
+    const s = $make('script');
+    const base = 'https://maps.googleapis.com/maps/api/js';
+    s.src = `${base}?key=${encodeURIComponent(CFG.mapsKey)}&libraries=places&callback=__bat1788_initPlaces`;
+    s.async = true; s.defer = true;
+    document.head.appendChild(s);
+  }
+
+  // —— 启动 —— //
+  document.addEventListener('DOMContentLoaded', ()=>{
+    const addr = $id(CFG.idAddr);
+    if(!addr) return;
+    loadProfile();
+    bindFieldEvents();
+    loadGoogleMapsIfNeeded();
+  });
+})();
+</script>
 </style>
 </body>
 </html>
+
 
