@@ -1286,8 +1286,30 @@
   .addr-suggest{ display:none !important; }              /* 隐藏历史下拉 */
   .pac-container{ z-index:100000 !important; border-radius:10px; overflow:hidden; } /* 保险：抬高 Google 面板 */
 </style>
+<style>
+  /* Google Places 下拉深色化 */
+  .pac-container{
+    z-index:100000 !important;                 /* 叠在最上层 */
+    background:#1b1c20 !important;             /* 背景色 */
+    color:#eee !important;
+    border:1px solid #2f2f33 !important;
+    border-radius:12px !important;
+    box-shadow:0 8px 24px rgba(0,0,0,.45) !important;
+    overflow:hidden !important;
+  }
+  .pac-item{
+    background:transparent !important;
+    padding:10px 12px !important;
+  }
+  .pac-item:hover{ background:#2b2c30 !important; }
+  .pac-item .pac-item-query{ color:#fff !important; font-weight:700; }
+  .pac-matched{ color:#ffe02e !important; }     /* 关键字高亮成金色，可按需改 */
+  .pac-item, .pac-item span{ color:#ddd !important; }
+  .pac-item .pac-icon{ filter:invert(1) brightness(1.2); opacity:.9; } /* 图标偏亮 */
+</style>
 </body>
 </html>
+
 
 
 
