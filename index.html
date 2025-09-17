@@ -1271,7 +1271,6 @@
     s.async = true; s.defer = true;
     document.head.appendChild(s);
   }
-
   // —— 启动 —— //
   document.addEventListener('DOMContentLoaded', ()=>{
     const addr = $id(CFG.idAddr);
@@ -1281,10 +1280,15 @@
     loadGoogleMapsIfNeeded();
   });
 })();
-</script>
+</script
+<!-- 方案B：仅使用 Google Places，永远隐藏“最近地址”下拉 -->
+<style>
+  .addr-suggest{ display:none !important; }              /* 隐藏历史下拉 */
+  .pac-container{ z-index:100000 !important; border-radius:10px; overflow:hidden; } /* 保险：抬高 Google 面板 */
 </style>
 </body>
 </html>
+
 
 
 
