@@ -240,6 +240,27 @@
     .ad-modal img{ width:100%; height:auto; display:block; }
     .ad-close{ position:absolute; top:6px; right:6px; background:rgba(0,0,0,.6); color:#fff; border:none; border-radius:50%; width:32px; height:32px; font-size:20px; font-weight:bold; cursor:pointer; line-height:30px; }
     .ad-close:hover{ background:rgba(0,0,0,.85); }
+
+    /* 手机号小一点，地址长一点 */
+    .phone-addr{ 
+      display:grid !important;          /* 覆盖原来的 flex */
+      grid-template-columns: .75fr 1.45fr;  /* 比例：电话:地址 */
+      gap:10px; 
+      align-items:end;
+    }
+    .phone-addr .i{ flex:none !important; } /* 防止旧规则影响 */
+    .phone-addr .i input{ width:100%; }
+
+    /* 响应式再把地址放更大些 */
+    @media (max-width:700px){
+      .phone-addr{ grid-template-columns: .7fr 1.6fr; }
+    }
+    @media (max-width:480px){
+      .phone-addr{ grid-template-columns: .6fr 1.8fr; }
+    }
+
+    /* 保险：Google 下拉浮在最上层（你已加可忽略） */
+    .pac-container{ z-index:100000 !important; }
   </style>
 </head>
 <body>
@@ -286,7 +307,7 @@
         </div>
       </div></div>
 
-      <div class="f">
+      <div class="f phone-addr">
         <div class="i"><label>Phone No.</label><input id="custPhone" placeholder="+61 ..." /></div>
         <div class="i"><label>Address</label><input id="custAddr" placeholder="Full address" /></div>
       </div>
@@ -1309,6 +1330,7 @@
 </style>
 </body>
 </html>
+
 
 
 
