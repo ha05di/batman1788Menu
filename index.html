@@ -667,13 +667,15 @@
 
       if (!asap || !schedule || !row || !input || !earliestSpan) return;
 
-      const MIN_OFFSET_MIN = 60; // 最早可约：当前 + 30 分钟
+      // ✅ 最早可约：当前 + 60 分钟（1小时）
+      const MIN_OFFSET_MIN = 60;
       const now = new Date();
       const earliest = new Date(now.getTime() + MIN_OFFSET_MIN * 60 * 1000);
 
+      // datetime-local 需要完整本地格式：YYYY-MM-DDTHH:MM
       const pad = n => String(n).padStart(2,'0');
       const toLocalInput = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
-      
+
       // 🟡 显示用：仅“月/日 hh:mm AM/PM”，不显示年份
       function formatEarliestDisplay(d){
         const mm = pad(d.getMonth()+1);
@@ -685,14 +687,16 @@
         return `${mm}/${dd} ${hh}:${mi} ${ampm}`;
       }
 
+      // 约束与提示
       input.min = toLocalInput(earliest);
-      earliestSpan.textContent = toLocalInput(earliest).replace('T',' ');
+      earliestSpan.textContent = formatEarliestDisplay(earliest);
 
       function toggleRow(){ row.style.display = schedule.checked ? 'block' : 'none'; }
       asap.addEventListener('change', toggleRow);
       schedule.addEventListener('change', () => { toggleRow(); if(!input.value) input.value = input.min; });
       toggleRow();
 
+      // 不能早于 min；用上面格式显示提示
       input.addEventListener('change', () => {
         if (input.value && input.value < input.min) {
           alert(`请选择不早于 ${earliestSpan.textContent} 的时间`);
@@ -1036,5 +1040,6 @@
   </script>
 </body>
 </html>
+
 
 
