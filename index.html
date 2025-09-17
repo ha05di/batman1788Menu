@@ -2,8 +2,30 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <title>Batman1788 Menu</title>
+  <title>Batman1788 | Melbourne Cannabis Menu & Delivery</title>
+  <link rel="icon" href="/static/favicon.png" type="image/png" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- 🔥 SEO Meta -->
+  <meta name="description" content="Batman1788 - Melbourne Cannabis Menu. Same-day weed delivery, premium strains, vapes, and more. Order via Telegram." />
+  <meta name="keywords" content="Batman1788, Melbourne cannabis, weed delivery, marijuana menu, vapes, premium strains, Melbourne weed, Malvern weed" />
+  <meta name="author" content="Batman1788" />
+
+  <!-- 🔥 Open Graph (for link previews) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Batman1788 | Melbourne Cannabis Menu & Delivery" />
+  <meta property="og:description" content="View our premium cannabis menu. Same-day delivery in Melbourne. Order via Telegram easily." />
+  <meta property="og:url" content="https://www.batman1788.shop/" />
+  <meta property="og:image" content="https://www.batman1788.shop/static/batman_logo.png" />
+  <meta property="og:image:width" content="300" />
+  <meta property="og:image:height" content="300" />
+  <meta property="og:site_name" content="Batman1788" />
+
+  <!-- 🔥 Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Batman1788 | Melbourne Cannabis Menu & Delivery" />
+  <meta name="twitter:description" content="Batman1788 - Melbourne cannabis delivery menu. Same-day service, premium strains, vapes & more." />
+  <meta name="twitter:image" content="https://www.batman1788.shop/static/batman_logo.png" />
 
   <!-- Optional: Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-5DBPBMP3K1"></script>
@@ -12,6 +34,35 @@
     function gtag(){ dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'G-5DBPBMP3K1');
+  </script>
+
+  <!-- Organization Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Batman1788",
+    "url": "https://www.batman1788.shop/",
+    "logo": "https://www.batman1788.shop/static/batman_logo.png",
+    "sameAs": [
+      "https://t.me/batman1788"
+    ]
+  }
+  </script>
+
+  <!-- WebSite Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "url": "https://www.batman1788.shop/",
+    "name": "Batman1788",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://www.batman1788.shop/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
   </script>
 
   <style>
@@ -33,6 +84,20 @@
       background:var(--bat-black); color:var(--bat-gold);
       text-shadow:0 2px 24px #000, 0 1px 0 #fff3; border-bottom:1.5px solid #2c2c2e;
       position:sticky; top:0; z-index:9;
+    }
+    /* 🔥 营运时间条 */
+    .open-hours{
+      text-align:center;
+      color:#ffc400;
+      background:#18191b;
+      font-weight:800;
+      padding:4px 0 5px;
+      border-bottom:1.5px solid #2c2c2e;
+      font-size:0.92rem;
+      letter-spacing:0.3px;
+    }
+    @media (max-width:480px){
+      .open-hours{ font-size:0.86rem; padding:3px 0 4px; }
     }
 
     .marquee-wrap{ background:#2a2927; border-bottom:1.2px solid #282828; overflow:hidden; position:sticky; top:0; z-index:22; height:38px; }
@@ -65,7 +130,6 @@
     .menu-bottom-prices{ display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
     .menu-spec{ background:#2d2c22; color:var(--bat-gold); font-size:1.01em; border-radius:7px; padding:6px 12px; border:1.1px solid var(--bat-gold); box-shadow:0 1px 6px #ffe02e22; font-weight:900; cursor:pointer; }
     .menu-price{ color:#ffe02e; font-weight:900; font-size:1.02em; margin-left:3px; }
-
     .menu-spec[disabled]{ opacity:.55; cursor:not-allowed; filter:grayscale(0.3); border-color:#666; box-shadow:none; }
 
     .cart-bar{
@@ -76,15 +140,10 @@
     .cart-btn{ background:var(--accent); color:#111; border:none; padding:10px 16px; border-radius:10px; font-weight:900; cursor:pointer; }
     .cart-btn:disabled{ opacity:.5; cursor:not-allowed; }
 
-    .checkout-bg{
-      position:fixed; inset:0; padding:10px;
-      background:rgba(0,0,0,.72); display:none; align-items:center; justify-content:center; z-index:99;
-    }
+    .checkout-bg{ position:fixed; inset:0; padding:10px; background:rgba(0,0,0,.72); display:none; align-items:center; justify-content:center; z-index:99; }
     .checkout-bg.active{ display:flex; }
     .checkout{
-      width:min(560px, 92vw);
-      max-height:calc(100vh - 40px);
-      overflow-y:auto; overflow-x:hidden; -webkit-overflow-scrolling:touch;
+      width:min(560px, 92vw); max-height:calc(100vh - 40px); overflow-y:auto; overflow-x:hidden; -webkit-overflow-scrolling:touch;
       background:#1f2024; border:1px solid #444; border-radius:16px; padding:16px; box-shadow:0 4px 30px #000a;
     }
     .checkout *{ min-width:0; }
@@ -102,251 +161,49 @@
     .checkout-msg.ok{ color:var(--ok); }
     .checkout-msg.err{ color:var(--err); }
 
-    /* ========= Order Summary (桌面 + 手机) ========= */
-    /* ========= Order Summary (桌面 + 手机) ========= */
-    .order-summary{
-      background:#141519;
-      border:1px solid #2f2f33;
-      border-radius:12px;
-      padding:10px 12px;
-      margin:10px 0;
-    }
-    .order-summary .os-head{
-      font-weight:800;
-      color:#ffe02e;
-      margin-bottom:6px;
-    }
-
-    /* ---- 桌面端：标准表格 ---- */
-    .order-summary table{
-      width:100%;
-      border-collapse:collapse;
-      font-size:.95em;
-      table-layout:fixed;
-    }
-    .order-summary th,
-    .order-summary td{
-      padding:6px 8px;
-      border-bottom:1px dashed #2a2a2a;
-      word-break:normal;
-      overflow-wrap:normal;
-    }
-    .order-summary th{
-      color:#ddd;
-      font-weight:700;
-      text-align:left;
-      white-space:nowrap;   /* 表头不拆行 */
-    }
+    .order-summary{ background:#141519; border:1px solid #2f2f33; border-radius:12px; padding:10px 12px; margin:10px 0; }
+    .order-summary .os-head{ font-weight:800; color:#ffe02e; margin-bottom:6px; }
+    .order-summary table{ width:100%; border-collapse:collapse; font-size:.95em; table-layout:fixed; }
+    .order-summary th,.order-summary td{ padding:6px 4px; border-bottom:1px dashed #2a2a2a; word-break:break-word; overflow-wrap:anywhere; }
+    .order-summary th{ color:#ddd; font-weight:700; text-align:left; }
     .order-summary .ar{ text-align:right; }
+    .order-summary th:nth-child(1), .order-summary td:nth-child(1){ width:40%; }
+    .order-summary th:nth-child(2), .order-summary td:nth-child(2){ width:10%; }
+    .order-summary th:nth-child(3), .order-summary td:nth-child(3){ width:10%; }
+    .order-summary th:nth-child(4), .order-summary td:nth-child(4){ width:20%; }
+    .order-summary th:nth-child(5), .order-summary td:nth-child(5){ width:20%; }
+    .order-summary th:nth-child(6), .order-summary td:nth-child(6){ width:30px; }
 
-    /* 列宽与对齐（桌面） */
-    .order-summary th:nth-child(1), .order-summary td:nth-child(1){ width:40%; }                  /* Item */
-    .order-summary th:nth-child(2), .order-summary td:nth-child(2){ width:10%; text-align:center; } /* Spec */
-    .order-summary th:nth-child(3), .order-summary td:nth-child(3){ width:10%; text-align:center; } /* Qty  */
-    .order-summary th:nth-child(4), .order-summary td:nth-child(4){ width:20%; text-align:right; }  /* Price */
-    .order-summary th:nth-child(5), .order-summary td:nth-child(5){ width:20%; text-align:right; }  /* Subtotal */
-    .order-summary th:nth-child(6), .order-summary td:nth-child(6){ width:36px;  text-align:right; }/* 删除 */
+    .order-summary .item-cell{ display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .order-summary .os-total{ display:flex; justify-content:flex-end; font-weight:900; margin-top:6px; }
+    .order-summary .os-meta{ color:#bbb; font-size:.92em; margin-top:6px; line-height:1.4; }
 
-    .order-summary .item-cell{
-      display:block;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;        /* 桌面长名省略号 */
-    }
-
-    .order-summary .os-total{
-      display:flex; justify-content:flex-end;
-      font-weight:900; margin-top:6px;
-    }
-    .order-summary .os-meta{
-      color:#bbb; font-size:.92em; margin-top:6px; line-height:1.4;
-    }
-
-    /* 删除按钮 */
     .order-summary .rm-btn{
-      background:#3a3b40; color:#fff; border:1px solid #555;
-      width:32px; height:28px; border-radius:8px; cursor:pointer;
-      display:inline-flex; align-items:center; justify-content:center;
-      font-size:16px; line-height:1;
+      background:#3a3b40; color:#fff; border:1px solid #555; width:32px; height:28px; border-radius:8px; cursor:pointer;
+      display:inline-flex; align-items:center; justify-content:center; font-size:16px; line-height:1;
     }
     .order-summary .rm-btn:hover{ background:#ff5555; border-color:#ff5555; }
+
+    /* ===== Delivery time UI ===== */
+    .os-section { margin-top:12px; padding:12px; background:#141519; border:1px solid #2f2f33; border-radius:12px; }
+    .os-sec-title { font-weight:800; color:#ffe02e; margin-bottom:8px; }
+    .ship-time .radio { margin-right:16px; cursor:pointer; }
+    .schedule-row { margin-top:8px; }
+    .schedule-row input[type="datetime-local"]{
+      width:100%; background:#121316; color:#fff; border:1px solid #3a3a3a; border-radius:10px; padding:10px 12px; outline:none;
+    }
+    .schedule-row .hint { font-size:12px; color:#bbb; margin-top:6px; }
+
     .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
-
-    /* 卡片式 Order Summary */
-    .order-summary{ background:#141519; border:1px solid #2f2f33; border-radius:12px; padding:10px 12px; margin:10px 0; }
-    .os-head{ font-weight:800; color:#ffe02e; margin-bottom:8px; }
-    .os-cards{ display:flex; flex-direction:column; gap:10px; }
-    .os-card{
-      display:grid;
-      grid-template-columns: 56px 1fr auto;
-      gap:10px; align-items:center;
-      background:#191a1f; border:1px solid #2a2b31; border-radius:10px; padding:8px;
-    }
-    .os-thumb{
-      width:56px; height:56px; border-radius:8px; object-fit:cover; background:#111;
-      border:1px solid #3a3a3a;
-    }
-    .os-title{ font-weight:700; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .os-sub{ font-size:.86em; color:#b8b8b8; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .os-right{ text-align:right; min-width:92px; }
-    .os-qty{ color:#ddd; font-weight:700; }
-    .os-price{ color:#ffe02e; font-weight:800; }
-    .os-subtotal{ color:#9fe39f; font-weight:800; }
-
-    .rm-btn{
-      background:#3a3b40; color:#fff; border:1px solid #555; width:32px; height:28px; border-radius:8px; cursor:pointer;
-      display:inline-flex; align-items:center; justify-content:center; font-size:16px; line-height:1; margin-left:6px;
-    }
-    .rm-btn:hover{ background:#ff5555; border-color:#ff5555; }
-
-    .os-total{ display:flex; flex-direction:column; gap:4px; align-items:flex-end; font-weight:900; margin-top:8px; }
-    .os-meta{ color:#bbb; font-size:.92em; margin-top:8px; line-height:1.4; }
-    .promo-lines{ margin-top:6px; }
-    .promo-lines .line{ color:#9effa8; }
-
-    /* 更小屏优化 */
-    @media (max-width:380px){
-      .os-card{ grid-template-columns: 48px 1fr auto; padding:7px; }
-      .os-thumb{ width:48px; height:48px; }
-      .os-right{ min-width:86px; font-size:.95em; }
-      .os-title{ font-size:.95em; }
-    }
-
-    /* ---- 手机端 ≤640px：商品名完整；Spec/Qty/Price 同排并对齐；隐藏小计 ---- */
-    @media (max-width:640px){
-      /* 隐藏表头，使用卡片式 */
-      .order-summary table{ table-layout:auto !important; }
-      .order-summary table thead{ display:none !important; }
-
-      .order-summary table tbody tr{
-        display:block !important;
-        position:relative !important;
-        padding:10px 0 8px;
-        border-bottom:1px dashed #2a2a2a;
-      }
-      .order-summary table tbody td{
-        display:block !important;
-        border-bottom:0 !important;
-        padding:6px 2px !important;
-        word-break:normal !important;
-        overflow-wrap:normal !important;
-      }
-
-      /* 1) 商品名：显示完整（允许换行），右上角留空间给删除键 */
-      .order-summary table tbody td:nth-child(1){
-        font-weight:800; color:var(--bat-gold);
-        white-space:normal !important; overflow:visible !important; text-overflow:clip !important;
-        padding-right:44px;
-        margin-bottom:2px;
-      }
-      /* 兼容含 .item-cell 的结构，强制取消省略号 */
-      .order-summary .item-cell{
-        white-space:normal !important; overflow:visible !important; text-overflow:clip !important;
-      }
-
-      /* 2) 把 Spec / Qty / Price 摆同一排且对齐 */
-      .order-summary table tbody td:nth-child(2),
-      .order-summary table tbody td:nth-child(3),
-      .order-summary table tbody td:nth-child(4){
-        display:inline-flex !important;
-        align-items:baseline;
-        gap:6px;
-        margin-right:16px;                /* 三块之间一致的间距 */
-        padding:2px 0 !important;
-        white-space:nowrap !important;    /* ×1 / $130 不拆 */
-        font-variant-numeric:tabular-nums;
-      }
-      /* 统一标签宽度，让三块更整齐对齐 */
-      .order-summary table tbody td:nth-child(2)::before,
-      .order-summary table tbody td:nth-child(3)::before,
-      .order-summary table tbody td:nth-child(4)::before{
-        display:inline-block; min-width:42px;   /* ← 可按需要 38~48 调整 */
-        color:#bbb; margin-right:6px;
-      }
-      .order-summary table tbody td:nth-child(2)::before{ content:"Spec"; }
-      .order-summary table tbody td:nth-child(3)::before{ content:"Qty"; }
-      .order-summary table tbody td:nth-child(4)::before{ content:"Price"; }
-      /* 若之前加过分隔点，这里统一移除 */
-      .order-summary table tbody td:nth-child(2)::after,
-      .order-summary table tbody td:nth-child(3)::after{ content:none !important; }
-
-      /* 3) 每行小计（Subtotal）隐藏 */
-      .order-summary table tbody td:nth-child(5){
-        display:none !important;
-      }
-
-      /* 删除按钮固定到行右上角 */
-      .order-summary table tbody td:nth-child(6){
-        position:absolute !important;
-        right:0; top:6px;
-        display:block !important; padding:0 !important; width:auto !important;
-        text-align:right;
-      }
-    }
-
-    /* 超窄屏（可选）：隐藏“Price”标签，只留金额，让同排更易放下 */
-    @media (max-width:360px){
-      .order-summary table tbody td:nth-child(4)::before{ content:""; margin:0; min-width:0; }
-    }
-    /* 手机端：把第二行排成 “SPEC - Q   Qty ×1   Price $130” */
-    @media (max-width:640px){
-      /* 统一让三块并排、同一行且不换行 */
-      .order-summary table tbody td:nth-child(2),
-      .order-summary table tbody td:nth-child(3),
-      .order-summary table tbody td:nth-child(4){
-        display:inline-flex !important;
-        align-items:baseline;
-        white-space:nowrap !important;      /* ×1 / $130 不断开 */
-        margin-right:18px;                  /* 三组之间的间距 */
-        padding:2px 0 !important;
-        font-variant-numeric:tabular-nums;
-      }
-
-      /* 先清掉你之前可能加过的分隔点/等宽标签 */
-      .order-summary table tbody td:nth-child(2)::after,
-      .order-summary table tbody td:nth-child(3)::after{ content:none !important; }
-      .order-summary table tbody td:nth-child(2)::before,
-      .order-summary table tbody td:nth-child(3)::before,
-      .order-summary table tbody td:nth-child(4)::before{
-        min-width:0 !important;             /* 覆盖之前的固定宽度 */
-        margin-right:6px;
-        color:#bbb;
-        font-weight:600;
-      }
-
-      /* 按目标文案输出 —— 注意 Spec 要大写并带连字符 */
-      .order-summary table tbody td:nth-child(2)::before{ content:"SPEC -"; margin-right:8px; }
-      .order-summary table tbody td:nth-child(3)::before{ content:"Qty"; }
-      .order-summary table tbody td:nth-child(4)::before{ content:"Price"; }
-    }
 
     .radio-group label{ margin-right:12px; cursor:pointer; }
     .radio-group input{ vertical-align:middle; margin-right:6px; }
     .radio-group{
-      display:flex;
-      align-items:center;
-      gap:18px;                 /* 两个选项之间的距离 */
-      padding:6px 8px;
-      background:#15161a;
-      border:1px solid #2a2a2e;
-      border-radius:10px;
-      width:max-content;        /* 只包内容，不撑满整行 */
+      display:flex; align-items:center; gap:18px; padding:6px 8px; background:#15161a; border:1px solid #2a2a2e; border-radius:10px; width:max-content;
     }
-    .radio-group label{
-      display:inline-flex;      /* 让文字与圆点同一基线 */
-      align-items:center;
-      gap:8px;                  /* 圆点与文字的距离 */
-      margin:0;                 /* 清掉默认外边距，避免“断层线”错觉 */
-      font-weight:600;
-      line-height:1;            /* 避免高度不齐 */
-    }
-    .radio-group input[type="radio"]{
-      margin:0;                 /* 让圆点垂直居中 */
-      accent-color: var(--bat-gold); /* 选中颜色与主题一致 */
-      transform: translateY(0.5px);  /* 细微校正 */
-    }
+    .radio-group label{ display:inline-flex; align-items:center; gap:8px; margin:0; font-weight:600; line-height:1; }
+    .radio-group input[type="radio"]{ margin:0; accent-color: var(--bat-gold); transform: translateY(0.5px); }
 
-    /* 小屏幕可以更紧凑一些 */
     @media (max-width:480px){
       .radio-group{ gap:12px; padding:5px 6px; }
       .radio-group label{ gap:6px; }
@@ -376,10 +233,20 @@
       .contact-fab{ right:12px; bottom:72px; width:44px; height:44px; }
       .contact-fab svg{ width:22px; height:22px; }
     }
+
+    .ad-modal-bg{ position:fixed; inset:0; background:rgba(0,0,0,.78); display:flex; align-items:center; justify-content:center; z-index:10000; }
+    .hidden{ display:none!important; }
+    .ad-modal{ position:relative; max-width:90vw; max-height:80vh; border-radius:16px; overflow:hidden; box-shadow:0 4px 25px #000a; background:#111; }
+    .ad-modal img{ width:100%; height:auto; display:block; }
+    .ad-close{ position:absolute; top:6px; right:6px; background:rgba(0,0,0,.6); color:#fff; border:none; border-radius:50%; width:32px; height:32px; font-size:20px; font-weight:bold; cursor:pointer; line-height:30px; }
+    .ad-close:hover{ background:rgba(0,0,0,.85); }
   </style>
 </head>
 <body>
-  <div class="header">Batman1788 Menu</div>
+  <!-- H1 作为主标题，更利于品牌词 -->
+  <h1 class="header">Batman1788 — Menu & Delivery</h1>
+
+  <div class="open-hours">OPEN Daily 10:00AM - 10:00PM</div>
 
   <div class="marquee-wrap">
     <div id="marqueeInner" style="white-space:nowrap;display:flex;">
@@ -450,8 +317,8 @@
   </div>
 
   <!-- Floating contact -->
-  <a href="https://t.me/batman1788" target="_blank" class="contact-fab" title="Customer Service">
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="#fff" style="vertical-align:middle">
+  <a href="https://t.me/batman1788" target="_blank" class="contact-fab" title="Customer Service" aria-label="Customer Service on Telegram">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="#fff" style="vertical-align:middle" role="img" aria-hidden="true">
       <circle cx="12" cy="12" r="12" fill="#ffe02e" />
       <path d="M17 10.5c0-.83-.67-1.5-1.5-1.5h-7C7.67 9 7 9.67 7 10.5v3c0 .83.67 1.5 1.5 1.5H9v2l3-2h3.5c.83 0 1.5-.67 1.5-1.5v-3z" fill="#18191b"/>
     </svg>
@@ -459,29 +326,22 @@
 
   <!-- Image modal -->
   <div class="img-modal-bg" id="imgModal" onclick="this.classList.remove('active')">
-    <img id="imgModalPic" src="" />
+    <img id="imgModalPic" src="" alt="Preview" />
   </div>
 
   <div class="footer">
     Batman1788 © Menu |
-    <a href="https://t.me/batman1788" target="_blank">Telegram Order</a>
+    <a href="https://t.me/batman1788" target="_blank" rel="noopener">Telegram Order</a>
   </div>
 
   <!-- Ad modal -->
-  <div class="ad-modal-bg hidden" id="adModal">
+  <div class="ad-modal-bg hidden" id="adModal" aria-hidden="true">
     <div class="ad-modal">
       <img id="adImg" src="" alt="Promo" />
-      <button class="ad-close" type="button" onclick="window.closeAd()">×</button>
+      <button class="ad-close" type="button" onclick="window.closeAd()" aria-label="Close">×</button>
     </div>
   </div>
-  <style>
-    .ad-modal-bg{ position:fixed; inset:0; background:rgba(0,0,0,.78); display:flex; align-items:center; justify-content:center; z-index:10000; }
-    .hidden{ display:none!important; }
-    .ad-modal{ position:relative; max-width:90vw; max-height:80vh; border-radius:16px; overflow:hidden; box-shadow:0 4px 25px #000a; background:#111; }
-    .ad-modal img{ width:100%; height:auto; display:block; }
-    .ad-close{ position:absolute; top:6px; right:6px; background:rgba(0,0,0,.6); color:#fff; border:none; border-radius:50%; width:32px; height:32px; font-size:20px; font-weight:bold; cursor:pointer; line-height:30px; }
-    .ad-close:hover{ background:rgba(0,0,0,.85); }
-  </style>
+
 
   <script>
     // ======= Config =======
@@ -513,13 +373,14 @@
     function normPrice(val){ const n = Number(String(val??'').replace(/[^\d.-]/g,'')); return Number.isFinite(n)? n : 0; }
     function showImgModal(src){ document.getElementById('imgModalPic').src = src; document.getElementById('imgModal').classList.add('active'); }
 
-    function getShippingFee(){
-      return getShipMethod() === 'delivery' ? 20 : 0;
-    }
-    function isTrue(v){
-      return /^(?:y|yes|true|1|sold(?:\s*out)?|售罄|缺货)$/i.test(String(v||'').trim());
-    }
+    function getShippingFee(){ return getShipMethod() === 'delivery' ? 20 : 0; }
+    function isTrue(v){ return /^(?:y|yes|true|1|sold(?:\s*out)?|售罄|缺货)$/i.test(String(v||'').trim()); }
     function isYes(v){ return /^(?:y|yes|true|1)$/i.test(String(v||'').trim()); }
+
+    // ★ 去掉名字末尾括号里的短代号（1~6 个字符，英文/数字/中文皆可）
+    function stripCodeMark(name){
+      return String(name||'').replace(/\s*[\(\[（【]\s*[A-Za-z0-9\u4e00-\u9fff]{1,6}\s*[\)\]）】]\s*$/, '');
+    }
 
     // ★ Melbourne 当天 YYYY-MM-DD
     function ymdMel(){
@@ -537,9 +398,7 @@
       return s <= today && today <= e;
     }
 
-    function getShipMethod(){
-      return document.querySelector('input[name="ship"]:checked')?.value || 'delivery';
-    }
+    function getShipMethod(){ return document.querySelector('input[name="ship"]:checked')?.value || 'delivery'; }
     function onShipChange(){
       const method = getShipMethod();
       const addrInput = document.getElementById('custAddr');
@@ -621,7 +480,6 @@
           const rawP = obj['price' + i];
           const status = obj['status' + i];
           const specSoldOut = itemSoldOut || isTrue(status);
-
           if (!spec) continue;
 
           if (!rawP || specSoldOut) {
@@ -630,10 +488,17 @@
           }
 
           const price = normPrice(rawP);
-          const n = String(obj.name || '').replace(/'/g, "\\'");
-          const s = String(spec).replace(/'/g, "\\'");
-          const im = String(obj.img || '').replace(/'/g, "\\'");
-          btns += `<button class="menu-spec" onclick="addToCart('${n}','${s}',${price},'${im}')">${spec} <span class="menu-price">${money(price)}</span></button>`;
+
+          // ★ 名称显示/传值：显示去码的 dispName；传值用 rawName，同时把 dispName 也传给购物车
+          const rawName = String(obj.name || '');
+          const dispName = stripCodeMark(rawName);
+
+          const nRaw = rawName.replace(/\\/g,'\\\\').replace(/'/g, "\\'");
+          const nDisp = dispName.replace(/\\/g,'\\\\').replace(/'/g, "\\'");
+          const s = String(spec).replace(/\\/g,'\\\\').replace(/'/g, "\\'");
+          const im = String(obj.img || '').replace(/\\/g,'\\\\').replace(/'/g, "\\'");
+
+          btns += `<button class="menu-spec" onclick="addToCart('${nRaw}','${s}',${price},'${im}','${nDisp}')">${spec} <span class="menu-price">${money(price)}</span></button>`;
         }
 
         if (!btns) btns = `<button class="menu-spec" disabled>Sold out</button>`;
@@ -641,12 +506,16 @@
         let thccbd = obj.thccbd || '';
         if(!thccbd && (obj.thc || obj.cbd)) thccbd = (obj.thc?obj.thc:'') + (obj.cbd?(' / '+obj.cbd):'');
 
+        // ★ 标题显示 dispName（隐藏代码）
+        const rawNameTitle = String(obj.name || '');
+        const dispNameTitle = stripCodeMark(rawNameTitle);
+
         return `
           <div class="menu-item">
-            ${obj.img ? `<img class="menu-img" src="${obj.img}" loading="lazy" onclick="showImgModal('${obj.img}')"/>` : ""}
+            ${obj.img ? `<img class="menu-img" src="${obj.img}" loading="lazy" onclick="showImgModal('${obj.img}')" alt="${(dispNameTitle||'item')}"/>` : ""}
             <div class="menu-info">
               <div class="menu-name">
-                ${obj.name || ""}
+                ${dispNameTitle || ""}
                 ${obj.badge ? `<span class="menu-badge">${obj.badge}</span>` : ""}
                 ${obj.type ? `<span class="menu-type">${obj.type}</span>` : ""}
               </div>
@@ -667,10 +536,10 @@
     });
 
     // ======= Cart / checkout =======
-    function addToCart(name, spec, price, img){
+    function addToCart(name, spec, price, img, disp){
       const hit = cart.find(x => x.name === name && x.spec === spec);
       if (hit) hit.qty += 1;
-      else cart.push({ name, spec, price, qty: 1, img });
+      else cart.push({ name, disp: disp || stripCodeMark(name), spec, price, qty: 1, img });
       renderCartBar();
       if (document.getElementById('checkoutBg').classList.contains('active')) renderOrderSummary();
     }
@@ -695,42 +564,57 @@
 
     // ======= Promo engine =======
     function getApplicablePromos(subtotal){
-      const autos = PROMO_RULES.filter(p=>p.auto && subtotal >= p.min);
+      const autos = PROMO_RULES.filter(p => p.auto && subtotal >= p.min);
       const manualOk = (MANUAL_PROMO && subtotal >= MANUAL_PROMO.min) ? [MANUAL_PROMO] : [];
       return [...autos, ...manualOk];
     }
+
     function calcPromo(subtotal, baseShipping){
-      const promos = getApplicablePromos(subtotal);
-      let freeship = false;
-      let discount = 0;
-      let lines = [];
+      const eligibles = getApplicablePromos(subtotal);
 
-      promos.forEach(p=>{
-        if(p.type === 'freeship'){
-          freeship = true;
-          lines.push(p.desc || 'Free shipping');
-        }else if(p.type === 'minus' && p.value > 0){
-          discount += p.value;
-          lines.push(p.desc || (`-$${p.value} off`));
-        }else if(p.type === 'percent' && p.value > 0){
-          const d = subtotal * (p.value/100);
-          discount += d;
-          lines.push(p.desc || (`${p.value}% off`));
-        }else if (p.type === 'info' || p.type === 'gift' || ((p.type==='percent'||p.type==='minus') && p.value<=0)) {
-          // 只展示文案，不改价
-          if (p.desc) lines.push(p.desc);
-        }
-      });
+      // 按可叠加/不可叠加拆开
+      const stackable = eligibles.filter(p => p.stack !== false);   // 默认 true；只有明确 no 才是 false
+      const nonstack  = eligibles.filter(p => p.stack === false);
 
-      discount = Math.min(discount, subtotal);
+      function evalList(list){
+        let freeship = false;
+        let discount = 0;
+        const lines = [];
 
-      let shipping = baseShipping;
-      if (freeship && getShipMethod()==='delivery') shipping = 0;
+        list.forEach(p => {
+          const t = p.type;
+          if (t === 'freeship'){
+            freeship = true;
+            if (p.desc) lines.push(p.desc);
+          } else if (t === 'minus' && p.value > 0){
+            discount += p.value;
+            lines.push(p.desc || (`-$${p.value} off`));
+          } else if (t === 'percent' && p.value > 0){
+            const d = subtotal * (p.value/100);
+            discount += d;
+            lines.push(p.desc || (`${p.value}% off`));
+          } else if (t === 'info' || t === 'gift' || ((t==='minus'||t==='percent') && p.value<=0)){
+            if (p.desc) lines.push(p.desc);
+          }
+        });
 
-      const afterDiscount = Math.max(0, subtotal - discount);
-      const grand = afterDiscount + shipping;
+        discount = Math.min(discount, subtotal);
 
-      return {promos, freeship, discount, shipping, afterDiscount, grand, lines};
+        let shipping = baseShipping;
+        if (getShipMethod() === 'delivery' && freeship) shipping = 0;
+
+        const afterDiscount = Math.max(0, subtotal - discount);
+        const grand = afterDiscount + shipping;
+
+        return { promos: list, freeship, discount, shipping, afterDiscount, grand, lines };
+      }
+
+      let best = evalList(stackable);
+      for (const p of nonstack){
+        const cand = evalList([p]);
+        if (cand.grand < best.grand) best = cand;
+      }
+      return best;
     }
 
     // ======= Promo UI actions =======
@@ -773,64 +657,134 @@
     window.applyPromoCode = applyPromoCode;
     window.clearPromoCode = clearPromoCode;
 
-    // ======= 渲染订单摘要 =======
+    // ======= 送达时间：UI 初始化与取值 =======
+    function setupDeliveryTimeUI() {
+      const asap = document.querySelector('input[name="shipTimeMode"][value="asap"]');
+      const schedule = document.querySelector('input[name="shipTimeMode"][value="schedule"]');
+      const row = document.getElementById('scheduleRow');
+      const input = document.getElementById('deliveryTime');
+      const earliestSpan = document.getElementById('earliestTime');
+
+      if (!asap || !schedule || !row || !input || !earliestSpan) return;
+
+      const MIN_OFFSET_MIN = 30; // 最早可约：当前 + 30 分钟
+      const now = new Date();
+      const earliest = new Date(now.getTime() + MIN_OFFSET_MIN * 60 * 1000);
+
+      const pad = n => String(n).padStart(2,'0');
+      const toLocalInput = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+
+      input.min = toLocalInput(earliest);
+      earliestSpan.textContent = toLocalInput(earliest).replace('T',' ');
+
+      function toggleRow(){ row.style.display = schedule.checked ? 'block' : 'none'; }
+      asap.addEventListener('change', toggleRow);
+      schedule.addEventListener('change', () => { toggleRow(); if(!input.value) input.value = input.min; });
+      toggleRow();
+
+      input.addEventListener('change', () => {
+        if (input.value && input.value < input.min) {
+          alert(`请选择不早于 ${earliestSpan.textContent} 的时间`);
+          input.value = input.min;
+        }
+      });
+    }
+
+    function getDeliveryTimePayload() {
+      const mode = document.querySelector('input[name="shipTimeMode"]:checked')?.value || 'asap';
+      if (mode === 'asap') {
+        return { delivery_mode: 'asap', delivery_time: null };
+      }
+      const val = document.getElementById('deliveryTime').value; // 本地时间
+      if (!val) throw new Error('NO_DELIVERY_TIME');
+
+      const [datePart, timePart] = val.split('T');
+      const [y,m,d] = datePart.split('-').map(Number);
+      const [hh,mm] = timePart.split(':').map(Number);
+      const localDate = new Date(y, m-1, d, hh, mm);
+      return { delivery_mode: 'scheduled', delivery_time: localDate.toISOString() };
+    }
+
+    // ======= 渲染订单摘要（含送达时间 UI）=======
     function renderOrderSummary(){
       const box = document.getElementById('orderSummary');
       if (!box) return;
 
-      const cards = cart.map((it, i) => {
+      const rowsHtml = cart.map((it, i) => {
         const sub = it.qty * it.price;
-        const img = it.img ? `<img class="os-thumb" src="${esc(it.img)}" alt="" loading="lazy">`
-                           : `<div class="os-thumb" aria-hidden="true"></div>`;
-        return `
-          <div class="os-card">
-            ${img}
-            <div>
-              <div class="os-title" title="${esc(it.disp || it.name)}">${esc(it.disp || it.name)}</div>
-              ${it.spec ? `<div class="os-sub">${esc(it.spec)}</div>` : ``}
-            </div>
-            <div class="os-right">
-              <div class="os-qty">×${it.qty}</div>
-              <div class="os-price">${money(it.price)}</div>
-              <div class="os-subtotal">${money(sub)}</div>
-            </div>
-            <div style="grid-column: 3 / 4; grid-row: 1 / 4; align-self:center;">
-              <button type="button" class="rm-btn" onclick="removeItem(${i})" title="Remove">🗑️</button>
-            </div>
-          </div>`;
+        return `<tr>
+          <td><span class="item-cell" title="${esc(it.disp || it.name)}">${esc(it.disp || it.name)}</span></td>
+          <td>${esc(it.spec || '')}</td>
+          <td class="ar">×${it.qty}</td>
+          <td class="ar">${money(it.price)}</td>
+          <td class="ar">${money(sub)}</td>
+          <td class="ar">
+            <button type="button" class="rm-btn" onclick="removeItem(${i})" title="删除">
+              <span class="sr-only">删除</span>🗑️
+            </button>
+          </td>
+        </tr>`;
       }).join('');
 
       const subtotal = cart.reduce((a,b)=> a + b.qty*b.price, 0);
       const baseShipping = getShippingFee();
 
-      // 计算促销
       const {discount, shipping, grand, lines} = calcPromo(subtotal, baseShipping);
 
       const method   = getShipMethod() === 'pickup' ? 'Pickup' : 'Delivery';
       const addr     = document.getElementById('custAddr').value.trim();
 
-      const promoLinesHtml = (lines && lines.length)
-        ? `<div class="promo-lines"><div class="line">· Promotions:</div>${
-            lines.map(t=>`<div class="line">· ${esc(t)}</div>`).join('')
-          }</div>` : '';
+      const promoLines = lines.length
+        ? `<div class="promo-lines" style="margin-top:6px;">
+             <div style="color:#9effa8;">· Promotions:</div>
+             ${lines.map(txt => `<div style="color:#9effa8;">· ${esc(txt)}</div>`).join('')}
+           </div>`
+        : '';
 
       box.innerHTML = `
         <div class="os-head">Order Summary</div>
-        <div class="os-cards">
-          ${cards || `<div style="color:#aaa;text-align:center;padding:8px 0;">Cart is empty</div>`}
-        </div>
-        <div class="os-total">
+        <table>
+          <thead>
+            <tr>
+              <th>Item</th><th>Spec</th>
+              <th class="ar">Qty</th><th class="ar">Price</th><th class="ar">Subtotal</th>
+              <th class="ar"> </th>
+            </tr>
+          </thead>
+          <tbody>${rowsHtml || `<tr><td colspan="6" style="text-align:center;color:#aaa;padding:8px 0">Cart is empty</td></tr>`}</tbody>
+        </table>
+
+        <div class="os-total" style="flex-direction:column;gap:4px;align-items:flex-end">
           <div>Subtotal: ${money(subtotal)}</div>
-          ${discount>0 ? `<div style="color:#ff7676;">Discount: -${money(discount)}</div>` : ``}
+          ${discount>0 ? `<div style="color:var(--err);font-weight:900;">Discount: -${money(discount)}</div>` : ``}
           <div>Shipping: ${money(shipping)}</div>
-          <div>Total: ${money(grand)}</div>
+          <div style="font-weight:900">Total: ${money(grand)}</div>
         </div>
-        ${promoLinesHtml}
-        <div class="os-meta">
+
+        ${promoLines}
+
+        <!-- Delivery time UI -->
+        <div class="os-section">
+          <div class="os-sec-title">Delivery time</div>
+          <div class="ship-time">
+            <label class="radio"><input type="radio" name="shipTimeMode" value="asap" checked> ASAP（尽快）</label>
+            <label class="radio"><input type="radio" name="shipTimeMode" value="schedule"> 指定时间</label>
+
+            <div id="scheduleRow" class="schedule-row" style="display:none;">
+              <input id="deliveryTime" type="datetime-local" step="900" />
+              <div class="hint">最早可约：<span id="earliestTime"></span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="os-meta" style="margin-top:8px;">
           <div>Method: ${method}</div>
           <div>Address: ${esc(addr)}</div>
         </div>
       `;
+
+      // 渲染后初始化送达时间交互
+      setupDeliveryTimeUI();
     }
 
     function openCheckout(){
@@ -863,16 +817,52 @@
 
     async function submitOrder(){
       const msg = document.getElementById('checkoutMsg');
-      const name = document.getElementById('custName').value.trim();
-      const phone= document.getElementById('custPhone').value.trim();
-      const addr = document.getElementById('custAddr').value.trim();
-      const notes= document.getElementById('custNotes').value.trim();
-      const ship = getShipMethod();
+      const submitBtn = document.querySelector('.btn.primary');
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Submitting...";
 
-      msg.className='checkout-msg'; msg.textContent='';
-      if(!cart.length){ msg.className='checkout-msg err'; msg.textContent='Cart is empty'; return; }
-      if(!name || !phone || !addr){ msg.className='checkout-msg err'; msg.textContent='Please fill in your name / phone number / address'; return; }
-      if(cart.some(x => !x.price || x.price <= 0)){ msg.className='checkout-msg err'; msg.textContent='Some product prices are invalid, please refresh and try again'; return; }
+      const name  = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
+      const addr  = document.getElementById('custAddr').value.trim();
+      const notes = document.getElementById('custNotes').value.trim();
+      const ship  = getShipMethod();
+
+      msg.className='checkout-msg';
+      msg.textContent='';
+
+      if(!cart.length){
+        msg.className='checkout-msg err';
+        msg.textContent='Cart is empty';
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Submit Order";
+        return;
+      }
+      if(!name || !phone || !addr){
+        msg.className='checkout-msg err';
+        msg.textContent='Please fill in your name / phone number / address';
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Submit Order";
+        return;
+      }
+      if(cart.some(x => !x.price || x.price <= 0)){
+        msg.className='checkout-msg err';
+        msg.textContent='Some product prices are invalid, please refresh and try again';
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Submit Order";
+        return;
+      }
+
+      // 读取预约时间（含校验）
+      let timePayload;
+      try {
+        timePayload = getDeliveryTimePayload();
+      } catch(e) {
+        msg.className='checkout-msg err';
+        msg.textContent='Please choose a delivery time';
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Submit Order";
+        return;
+      }
 
       const subtotal = cart.reduce((a,b)=> a + b.qty*b.price, 0);
       const baseShipping = getShippingFee();
@@ -887,8 +877,19 @@
           discount: Math.round(promoCalc.discount),
           shipping_fee: Math.round(promoCalc.shipping),
           total: Math.round(promoCalc.grand),
-          promo_applied: promoCalc.promos.map(p=>({code:p.code||'', type:p.type, value:p.value, min:p.min, desc:p.desc, start:p.start||'', end:p.end||''}))
-        }
+          promo_applied: promoCalc.promos.map(p=>({
+            code:p.code||'',
+            type:p.type,
+            value:p.value,
+            min:p.min,
+            desc:p.desc,
+            start:p.start||'',
+            end:p.end||''
+          }))
+        },
+        // ★ 新增：送达时间
+        delivery_mode: timePayload.delivery_mode,   // 'asap' | 'scheduled'
+        delivery_time: timePayload.delivery_time    // ISO 或 null
       };
 
       const tgChatId = localStorage.getItem('tg_chat_id');
@@ -896,12 +897,18 @@
         msg.className = 'checkout-msg err';
         msg.innerHTML = 'Please bind Telegram before placing an order ' +
                         '<a href="#" onclick="bindTelegram();return false;">Bind Now</a>';
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Submit Order";
         return;
       }
       payload.tg_chat_id = tgChatId;
 
       try{
-        const res = await fetch(`${API_BASE}/order`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
+        const res = await fetch(`${API_BASE}/order`, {
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify(payload)
+        });
         const data = await res.json();
         if(res.ok){
           msg.className='checkout-msg ok';
@@ -924,9 +931,12 @@
           msg.className='checkout-msg err';
           msg.textContent = data.error || 'Failed, please try again later';
         }
-      }catch(e){
+     }catch(e){
         msg.className='checkout-msg err';
         msg.textContent='Network Error, please try again later';
+      }finally{
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Submit Order";
       }
     }
 
@@ -938,7 +948,7 @@
       const div = document.createElement('div');
       div.id = 'tgFallback';
       div.style = 'margin-top:8px;text-align:center;color:#ffe02e;';
-      div.innerHTML = `如果没有自动打开 Telegram，请 <a href="${link}" target="_blank" rel="noopener noreferrer">点这里</a> 手动打开。`;
+      div.innerHTML = `If Telegram does not open automatically, please <a href="${link}" target="_blank" rel="noopener noreferrer">Click here</a> Open manually.`;
       const holder = document.querySelector('[onclick*="bindTelegram"]')?.parentNode || document.body;
       holder.appendChild(div);
     }
@@ -1015,16 +1025,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
