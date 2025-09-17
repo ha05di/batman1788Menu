@@ -673,6 +673,17 @@
 
       const pad = n => String(n).padStart(2,'0');
       const toLocalInput = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+      
+      // 🟡 显示用：仅“月/日 hh:mm AM/PM”，不显示年份
+      function formatEarliestDisplay(d){
+        const mm = pad(d.getMonth()+1);
+        const dd = pad(d.getDate());
+        let hh = d.getHours();
+        const ampm = hh >= 12 ? 'PM' : 'AM';
+        hh = hh % 12; if (hh === 0) hh = 12; // 12小时制
+        const mi = pad(d.getMinutes());
+        return `${mm}/${dd} ${hh}:${mi} ${ampm}`;
+      }
 
       input.min = toLocalInput(earliest);
       earliestSpan.textContent = toLocalInput(earliest).replace('T',' ');
@@ -1025,4 +1036,5 @@
   </script>
 </body>
 </html>
+
 
