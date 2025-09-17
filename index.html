@@ -1215,5 +1215,32 @@
     });
   })();
   </script>
+  <style id="addr-chip-dark-fix">
+  /* 深色主题适配：最近地址芯片 */
+  .addr-chips{ margin-top:8px !important; display:flex !important; flex-wrap:wrap !important; gap:8px !important; }
+  .addr-chips-title{ color:#bbb !important; font-weight:600 !important; }
+  .addr-chips-clear{ color:#ffc400 !important; cursor:pointer !important; text-decoration:none !important; }
+  .addr-chips-clear:hover{ text-decoration:underline !important; }
+
+  .addr-chip{
+    background:#2b2c30 !important;
+    color:#fff !important;
+    border:1px solid #46474b !important;
+    padding:.38rem .65rem !important;
+    border-radius:999px !important;
+    font-size:.9rem !important;
+    white-space:nowrap !important;
+    max-width:100% !important;
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+    cursor:pointer !important;
+    box-shadow:0 1px 6px #0004 !important;
+  }
+  .addr-chip:hover{ background:#34363c !important; border-color:#6b6c70 !important; }
+
+  /* Google Places 下拉别被遮住 */
+  .pac-container{ z-index:20000 !important; border-radius:10px !important; overflow:hidden !important; }
+</style>
 </body>
 </html>
+
